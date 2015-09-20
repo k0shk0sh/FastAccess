@@ -1,0 +1,13 @@
+<resources>
+
+    <declare-styleable name="ColorPreference">
+        <attr name="itemLayout" format="reference"/>
+        <attr name="choices" format="reference"/>
+        <attr name="numColumns" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="FontTextView">
+        <attr name="colorful" format="boolean"/>
+    </declare-styleable>
+
+</resources>

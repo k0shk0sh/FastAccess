@@ -1,0 +1,43 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".Home">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/phoneList"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/phone_applications"/>
+        <item
+            android:id="@+id/myList"
+            android:icon="@drawable/ic_grid"
+            android:title="@string/selected_apps"/>
+        <item
+            android:id="@+id/play"
+            android:icon="@drawable/ic_play"
+            android:title="@string/start"/>
+        <item
+            android:id="@+id/stop"
+            android:icon="@drawable/ic_stop"
+            android:title="@string/stop"/>
+        <item
+            android:id="@+id/deleteAll"
+            android:icon="@drawable/ic_delete"
+            android:title="@string/remove_selected_app"/>
+    </group>
+    <item android:title="@string/others">
+        <menu>
+            <item
+                android:id="@+id/team"
+                android:icon="@drawable/ic_members"
+                android:title="@string/the_team"/>
+            <item
+                android:id="@+id/action_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/action_settings"/>
+            <item
+                android:id="@+id/rate"
+                android:icon="@drawable/ic_star"
+                android:title="@string/rate"/>
+        </menu>
+    </item>
+</menu>

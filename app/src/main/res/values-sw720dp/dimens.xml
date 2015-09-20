@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="icon_size">96dp</dimen>
+    <dimen name="fa_size">96dp</dimen>
+    <dimen name="fa_size_small">96dp</dimen>
+    <dimen name="fa_size_medium">112dp</dimen>
+    <dimen name="fa_size_large">144dp</dimen>
+
+</resources>
