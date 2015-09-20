@@ -49,7 +49,7 @@ public class AppController extends Application {
                 .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                 .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                 .build());
-        tracker = analytics().newTracker(R.xml.app_tracker);
+        tracker = analytics().newTracker(R.xml.app_tracker);//create your own app_tracker.xml in xml folder
         tracker.enableAutoActivityTracking(true);
     }
 
