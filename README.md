@@ -8,6 +8,8 @@
 
 <p><b>Fast Access was previously paid app, but i have decided to make it FREE and open source</b></p>
 
+<h1>LICENSE</h1>
+<p>
 <b>Copyright 2015 @ Kosh</b>
 <p>This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,3 +22,4 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.</p>
 </p>
+

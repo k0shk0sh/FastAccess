@@ -82,7 +82,7 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
         viewpager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         tabs.setupWithViewPager(viewpager);
         setupTabs();
-        if (new AppsModel().getAll() != null && new AppsModel().getAll().size() != 0) {
+        if (new AppsModel().countAll() != 0) {
             startFloating();
         }
     }
@@ -197,10 +197,10 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
     }
 
     private void openMarket() {
-        Intent i = null;
+        Intent i;
         try {
             i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.styleme.floating.toolbox.pro"));
-        } catch (android.content.ActivityNotFoundException anfe) {
+        } catch (Exception e) {
             i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google" + ".com/store/apps/details?id=com.styleme.floating.toolbox.pro"));
         }
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

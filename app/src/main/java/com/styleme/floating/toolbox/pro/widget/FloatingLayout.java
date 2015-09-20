@@ -365,7 +365,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             context.startActivity(intent);
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())
                     .setAction("Open App")
@@ -374,7 +373,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
         } catch (Exception e) {
             e.printStackTrace();
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())
                     .setAction("Open App Exception")
@@ -392,7 +390,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
     public void onReset() {
         adapter.clear();
         HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
         eventBuilder
                 .setCategory(this.getClass().getSimpleName())
                 .setAction("onReset")
@@ -418,12 +415,11 @@ public class FloatingLayout implements OnFloatingTouchListener {
         public void onLoadComplete(Loader<List<AppsModel>> loader, List<AppsModel> data) {
             if (data == null || data.size() == 0) {
                 context.stopService(new Intent(context, FloatingService.class));
-                Notifier.cancelNotification(context);
+                Notifier.cancelNotification(context);//in case if the service is stopped previously and its in the notification bar
                 return;
             }
             if (adapter != null) adapter.insert(data);
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())
                     .setAction("onLoadCompleteListener")
