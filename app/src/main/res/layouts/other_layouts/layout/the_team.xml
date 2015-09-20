@@ -98,6 +98,47 @@
 
             </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/github"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.styleme.floating.toolbox.pro.widget.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Source Code"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/githubFab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="16dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_github"
+                        app:fabSize="normal"
+                        app:rippleColor="@color/primary_dark"/>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
 
             <android.support.v7.widget.CardView
                 android:id="@+id/info_card"

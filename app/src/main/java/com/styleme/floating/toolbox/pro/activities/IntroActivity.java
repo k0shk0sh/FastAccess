@@ -30,7 +30,6 @@ public class IntroActivity extends BaseActivity {
     @Bind(R.id.done)
     ImageButton done;
 
-
     @OnClick(R.id.done)
     public void onDone() {
         AppHelper.setHasSeenWhatsNew(this);

@@ -32,6 +32,8 @@ public class TheTeam extends AppCompatActivity {
     CoordinatorLayout mainContent;
     @Bind(R.id.contactMe)
     FloatingActionButton contactMe;
+    @Bind(R.id.githubFab)
+    FloatingActionButton githubFab;
 
     @OnClick(R.id.fab_detail)
     public void onPlus() {
@@ -46,6 +48,13 @@ public class TheTeam extends AppCompatActivity {
             e.printStackTrace();
             Snackbar.make(mainContent, R.string.error_email, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    @OnClick(R.id.githubFab)
+    public void onGithub() {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse("https://github.com/k0shk0sh/Fast-Access-Floating-Toolbox-"));
+        startActivity(i);
     }
 
     @Override
