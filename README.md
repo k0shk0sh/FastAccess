@@ -6,7 +6,7 @@
   <img src="https://github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/blob/master/art/1024x500.png" alt="FA" />
 </p>
 
-Fast Access was previously paid app, but i have decided to make it FREE and open source
+<p><b>Fast Access was previously paid app, but i have decided to make it FREE and open source</b></p>
 
 <b>Copyright 2015 @ Kosh</b>
 <p>This program is free software: you can redistribute it and/or modify
