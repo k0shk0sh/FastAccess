@@ -119,7 +119,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
 
     private void initView() {
         if (floatingImage == null) floatingImage = new ImageView(context);
-        floatingImage.setFitsSystemWindows(true);
         setupFloatingImage(false);
         floatingImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -253,7 +252,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
 
     private void configure() {
         if (isShowed) {
-            popupWindow.getListView().setFitsSystemWindows(true);
             popupWindow.getListView().setVerticalScrollBarEnabled(false);
             popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
             popupWindow.getListView().setDividerHeight(0);
