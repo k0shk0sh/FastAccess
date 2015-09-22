@@ -99,7 +99,7 @@ public class FloatingRecyclerLayout implements OnFloatingTouchListener, OnItemCl
         } else if (size.equalsIgnoreCase("large")) {
             gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_large);
         }
-        mParams.width = WRAP_CONTENT;
+        mParams.width = gapSize;
         mParams.height = WRAP_CONTENT;
         if (AppHelper.isSavePositionEnabled(context)) {
             mParams.x = AppHelper.getPositionX(context);
@@ -125,7 +125,7 @@ public class FloatingRecyclerLayout implements OnFloatingTouchListener, OnItemCl
         v.setVisibility(View.GONE);
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(myAppsAdapter);
         inflatorParams = mParams;
         windowManager.addView(v, inflatorParams);
@@ -191,6 +191,7 @@ public class FloatingRecyclerLayout implements OnFloatingTouchListener, OnItemCl
         if (!v.isShown()) {
             LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) ((LinearLayout) v).getChildAt(0).getLayoutParams();
             param.topMargin = floatingImage.getHeight();
+            param.height = (int) (szWindow.y / 1.2);
             v.setVisibility(View.VISIBLE);
         } else {
             v.setVisibility(View.GONE);

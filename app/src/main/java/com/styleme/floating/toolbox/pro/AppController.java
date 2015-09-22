@@ -39,7 +39,7 @@ public class AppController extends Application {
         appController = this;
         mIconCache = new IconCache(this);
         CustomActivityOnCrash.setRestartActivityClass(Home.class);
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             CustomActivityOnCrash.setShowErrorDetails(false);
         }
         CustomActivityOnCrash.install(this);

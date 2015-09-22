@@ -297,7 +297,7 @@ public class AppHelper {
     }
 
     public static int getFaIconSize(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt("fa_icon_size", 30);
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("fa_icon_size", 20);
     }
 
     public static boolean isManualSize(Context context) {
@@ -311,4 +311,5 @@ public class AppHelper {
     public static boolean isAutoStart(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("autoStart", true);
     }
+
 }

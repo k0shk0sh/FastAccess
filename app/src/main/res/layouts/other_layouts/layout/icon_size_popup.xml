@@ -20,18 +20,6 @@
             android:theme="@style/ToolbarStyle"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-            <!--<ImageView-->
-            <!--android:id="@+id/back"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:background="?selectableItemBackground"-->
-            <!--android:paddingBottom="15dp"-->
-            <!--android:paddingLeft="15dp"-->
-            <!--android:paddingRight="15dp"-->
-            <!--android:paddingTop="15dp"-->
-            <!--android:src="@drawable/ic_back"/>-->
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -56,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:dsb_max="200"
-            app:dsb_min="30"
+            app:dsb_min="20"
             app:dsb_progressColor="@color/accent"
             app:dsb_rippleColor="@color/accent"
             app:dsb_trackColor="@color/primary"/>

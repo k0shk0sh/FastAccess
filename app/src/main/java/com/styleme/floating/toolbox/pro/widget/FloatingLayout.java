@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 import static android.view.WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
@@ -86,7 +85,8 @@ public class FloatingLayout implements OnFloatingTouchListener {
     private void initWindows() {
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getSize(szWindow);
-        mParams = new LayoutParams(TYPE_PRIORITY_PHONE, FLAG_NOT_FOCUSABLE | FLAG_LAYOUT_NO_LIMITS | FLAG_NOT_TOUCH_MODAL, PixelFormat.TRANSLUCENT);
+        mParams = new LayoutParams(TYPE_PRIORITY_PHONE /* to appear on top of keyboard */, FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCH_MODAL,
+                PixelFormat.TRANSLUCENT);
         setupParams();
         mParams.gravity = Gravity.LEFT | Gravity.TOP;
         initView();
@@ -119,6 +119,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
 
     private void initView() {
         if (floatingImage == null) floatingImage = new ImageView(context);
+        floatingImage.setFitsSystemWindows(true);
         setupFloatingImage(false);
         floatingImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -252,12 +253,11 @@ public class FloatingLayout implements OnFloatingTouchListener {
 
     private void configure() {
         if (isShowed) {
-            if (popupWindow.getListView() != null) {
-                popupWindow.getListView().setVerticalScrollBarEnabled(false);
-                popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
-                popupWindow.getListView().setDividerHeight(0);
-                popupWindow.getListView().setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
-            }
+            popupWindow.getListView().setFitsSystemWindows(true);
+            popupWindow.getListView().setVerticalScrollBarEnabled(false);
+            popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
+            popupWindow.getListView().setDividerHeight(0);
+            popupWindow.getListView().setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
         }
     }
 
@@ -285,15 +285,16 @@ public class FloatingLayout implements OnFloatingTouchListener {
             case MotionEvent.ACTION_MOVE:
                 paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
                 paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
-                if (paramsF.y > (szWindow.y - floatingImage.getHeight())) {
-                    paramsF.y = (szWindow.y - mParams.height);
-                } else if (paramsF.y < 0) {
-                    paramsF.y = 1;
-                } else if (paramsF.x > (szWindow.x - floatingImage.getWidth())) {
-                    paramsF.x = szWindow.x - floatingImage.getWidth();
-                } else if (paramsF.x < 0) {
-                    paramsF.x = 1;
-                }
+                /* no longer needed since the FLAG_NO_LIMITS was causing this issue */
+//                if (paramsF.y > (szWindow.y - floatingImage.getHeight())) {
+//                    paramsF.y = (szWindow.y - mParams.height);
+//                } else if (paramsF.y < 0) {
+//                    paramsF.y = 1;
+//                } else if (paramsF.x > (szWindow.x - floatingImage.getWidth())) {
+//                    paramsF.x = szWindow.x - floatingImage.getWidth();
+//                } else if (paramsF.x < 0) {
+//                    paramsF.x = 1;
+//                }
                 try {
                     windowManager.updateViewLayout(floatingImage, paramsF);
                 } catch (Exception e) {
