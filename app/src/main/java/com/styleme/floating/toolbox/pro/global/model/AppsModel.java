@@ -34,6 +34,8 @@ public class AppsModel extends Model {
     @Column
     @Expose
     private int appPosition;
+    @Column
+    private int countEntry;
     private Bitmap bitmap;
     private ComponentName componentName;
     private IconCache iconCache;
@@ -164,6 +166,11 @@ public class AppsModel extends Model {
         return new Select().from(AppsModel.class).orderBy("appPosition ASC").execute();
     }
 
+    public List<AppsModel> getAllByUsage() {
+        return new Select().from(AppsModel.class).orderBy("countEntry DESC").execute();
+    }
+
+
     public void deleteAll() {
         new Delete().from(AppsModel.class).execute();
     }
@@ -190,5 +197,23 @@ public class AppsModel extends Model {
 
     public int countAll() {
         return new Select().from(AppsModel.class).count();
+    }
+
+    public int getCountEntry() {
+        return countEntry;
+    }
+
+    public void setCountEntry(int countEntry) {
+        this.countEntry = countEntry;
+    }
+
+    public void updateEntry(String packageName) {
+        if (packageName != null && !packageName.isEmpty()) {
+            AppsModel app = getAppByPackage(packageName);
+            if (app != null) {
+                app.setCountEntry(app.getCountEntry() + 1);
+                app.save();
+            }
+        }
     }
 }

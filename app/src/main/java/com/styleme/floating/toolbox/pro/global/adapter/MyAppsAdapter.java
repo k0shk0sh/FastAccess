@@ -56,7 +56,7 @@ public class MyAppsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             AppsModel app = modelList.get(position);
             if (app != null) {
                 h.appName.setText(app.getAppName());
-
+                h.countEntry.setText(String.format("%d", app.getCountEntry()));
                 h.appIcon.setImageDrawable(new FastBitmapDrawable(app.getBitmap()));
                 h.appIcon.setContentDescription(app.getAppName());
                 h.iconHolder.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +171,8 @@ public class MyAppsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         View iconHolder;
         @Bind(R.id.appName)
         TextView appName;
+        @Bind(R.id.countEntry)
+        TextView countEntry;
 
         AppsHolder(View view) {
             super(view);

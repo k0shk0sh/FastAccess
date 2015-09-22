@@ -2,6 +2,7 @@ package com.styleme.floating.toolbox.pro.global.helper;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -147,6 +148,18 @@ public class AppHelper {
         drawable.addState(new int[]{android.R.attr.state_selected}, getColorDrawable(color));
         drawable.addState(new int[]{android.R.attr.state_activated}, getColorDrawable(color));
         return drawable;
+    }
+
+    public static ColorStateList textSelector(Context context) {
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_focused},
+                new int[]{}
+        };
+        int[] colors = new int[]{
+                Color.BLACK,
+                getAccentColor(context)
+        };
+        return new ColorStateList(states, colors);
     }
 
     public static void setHasSeenWhatsNew(Context context) {
@@ -310,6 +323,10 @@ public class AppHelper {
 
     public static boolean isAutoStart(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("autoStart", true);
+    }
+
+    public static boolean isAutoOrder(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("auto_order", false);
     }
 
 }

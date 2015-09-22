@@ -312,7 +312,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 new CountDownTimer(500, 5) {
                     public void onTick(long t) {
                         long step = (500 - t) / 5;
-                        paramsF.x = (int) (double) bounceValue(step, x);
+                        paramsF.x = (int) (double) bounceValue(step, x) - floatingImage.getWidth();
                         try {
                             windowManager.updateViewLayout(floatingImage, paramsF);
                         } catch (Exception ignored) {}
@@ -334,7 +334,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 new CountDownTimer(500, 5) {
                     public void onTick(long t) {
                         long step = (500 - t) / 5;
-                        paramsF.x = szWindow.x + (int) (double) bounceValue(step, x) - floatingImage.getWidth();
+                        paramsF.x = szWindow.x + (int) (double) bounceValue(step, x);
                         try {
                             windowManager.updateViewLayout(floatingImage, paramsF);
                         } catch (Exception ignored) {}
@@ -363,6 +363,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
             Intent intent = manager.getLaunchIntentForPackage(appsModel.getPackageName());
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             context.startActivity(intent);
+            appsModel.updateEntry(appsModel.getPackageName());
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())
@@ -417,7 +418,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 Notifier.cancelNotification(context);//in case if the service is stopped previously and its in the notification bar
                 return;
             }
-            if (adapter != null) adapter.insert(data);
+            if (adapter != null) {adapter.insert(data);}
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())
@@ -433,7 +434,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
             setupFloatingImage(true);
             animateHidden();
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())
                     .setAction("onEvent")

@@ -41,9 +41,9 @@ public class MyPopupAppsLoader extends AsyncTaskLoader<List<AppsModel>> {
 
     @Override
     public List<AppsModel> loadInBackground() {
-        AppListCreator appListCreator = new AppListCreator(getContext());
+        AppListCreator appListCreator = new AppListCreator();
         List<AppsModel> entries = new ArrayList<>();
-        for (AppsModel model : appListCreator.getAppList()) {
+        for (AppsModel model : appListCreator.getAppList(getContext())) {
             if (model != null) {
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(model.getPackageName(), model.getActivityInfoName()));

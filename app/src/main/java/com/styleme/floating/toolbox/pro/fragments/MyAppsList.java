@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import com.styleme.floating.toolbox.pro.AppController;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.global.adapter.MyAppsAdapter;
+import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
 import com.styleme.floating.toolbox.pro.global.loader.MyAppsLoader;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
 import com.styleme.floating.toolbox.pro.global.model.EventType;
@@ -135,16 +136,20 @@ public class MyAppsList extends Fragment implements MyAppsOnItemClickListener, L
 
     @Override
     public void onItemPositionChange(int fromPosition, int toPosition) {
-        AppsModel old = adapter.getModelList().get(fromPosition);
-        old.setAppPosition(toPosition);
-        old.save();
-        AppsModel newModel = adapter.getModelList().get(toPosition);
-        newModel.setAppPosition(fromPosition);
-        newModel.save();
-        Collections.swap(adapter.getModelList(), fromPosition, toPosition);
-        adapter.notifyItemMoved(fromPosition, toPosition);
-        Intent intent = new Intent(MyAppsReceiver.REARRANGED);
-        AppController.getController().sendBroadcast(intent);
+        if (!AppHelper.isAutoOrder(getActivity())) {
+            AppsModel old = adapter.getModelList().get(fromPosition);
+            old.setAppPosition(toPosition);
+            old.save();
+            AppsModel newModel = adapter.getModelList().get(toPosition);
+            newModel.setAppPosition(fromPosition);
+            newModel.save();
+            Collections.swap(adapter.getModelList(), fromPosition, toPosition);
+            adapter.notifyItemMoved(fromPosition, toPosition);
+            Intent intent = new Intent(MyAppsReceiver.REARRANGED);
+            AppController.getController().sendBroadcast(intent);
+        } else {
+            Snackbar.make(recycler, "This feature does not work when auto ordering enabled.", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void notifyChange() {

@@ -31,9 +31,9 @@ public class MyAppsLoader extends AsyncTaskLoader<List<AppsModel>> {
 
     @Override
     public List<AppsModel> loadInBackground() {
-        AppListCreator appListCreator = new AppListCreator(getContext());
+        AppListCreator appListCreator = new AppListCreator();
         List<AppsModel> entries = new ArrayList<>();
-        for (AppsModel model : appListCreator.getAppList()) {
+        for (AppsModel model : appListCreator.getAppList(getContext())) {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(model.getPackageName(), model.getActivityInfoName()));
             ResolveInfo app = mPm.resolveActivity(intent, 0);
