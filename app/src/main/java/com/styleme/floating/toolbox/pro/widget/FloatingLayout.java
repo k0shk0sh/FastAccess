@@ -63,7 +63,8 @@ public class FloatingLayout implements OnFloatingTouchListener {
     private Point szWindow = new Point();
     private ImageView floatingImage;
     private MyPopupAppsLoader onMyAppsLoader;
-    Tracker tracker = AppController.getController().tracker();
+    private Tracker tracker = AppController.getController().tracker();
+    private boolean isShowed = true;
 
     public FloatingLayout(Context context) {
         this.context = context;
@@ -218,8 +219,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
         tracker.send(eventBuilder.build());
     }
 
-    boolean isShowed = true;
-
     @Override
     public void onClick() {
         animateShowing();
@@ -252,10 +251,12 @@ public class FloatingLayout implements OnFloatingTouchListener {
 
     private void configure() {
         if (isShowed) {
-            popupWindow.getListView().setVerticalScrollBarEnabled(false);
-            popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
-            popupWindow.getListView().setDividerHeight(0);
-            popupWindow.getListView().setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
+            if (popupWindow.getListView() != null) {
+                popupWindow.getListView().setVerticalScrollBarEnabled(false);
+                popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
+                popupWindow.getListView().setDividerHeight(0);
+                popupWindow.getListView().setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
+            }
         }
     }
 

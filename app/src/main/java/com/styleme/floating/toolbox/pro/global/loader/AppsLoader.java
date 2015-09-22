@@ -2,12 +2,15 @@ package com.styleme.floating.toolbox.pro.global.loader;
 
 
 import android.content.AsyncTaskLoader;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 import com.styleme.floating.toolbox.pro.AppController;
+import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
 import com.styleme.floating.toolbox.pro.global.helper.IconCache;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
 import com.styleme.floating.toolbox.pro.global.receiver.ApplicationsReceiver;
@@ -31,20 +34,43 @@ public class AppsLoader extends AsyncTaskLoader<List<AppsModel>> {
 
     @Override
     public List<AppsModel> loadInBackground() {
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> list = mPm.queryIntentActivities(mainIntent, 0);
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-        Collections.sort(list, new ResolveInfo.DisplayNameComparator(mPm));
-        List<AppsModel> entries = new ArrayList<AppsModel>(list.size());
-        for (ResolveInfo resolveInfo : list) {
-            if (!resolveInfo.activityInfo.applicationInfo.packageName.equals(getContext().getPackageName())) {
-                AppsModel check = new AppsModel().getAppByPackage(resolveInfo.activityInfo.applicationInfo.packageName);
-                if (check == null) {
-                    AppsModel model = new AppsModel(mPm, resolveInfo, mIconCache, null);
-                    entries.add(model);
+        List<AppsModel> entries = new ArrayList<AppsModel>();
+        try {
+            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            List<ResolveInfo> list = mPm.queryIntentActivities(mainIntent, 0);
+            if (list == null) {
+                list = new ArrayList<>();
+            }
+            Collections.sort(list, new ResolveInfo.DisplayNameComparator(mPm));
+            for (ResolveInfo resolveInfo : list) {
+                if (!resolveInfo.activityInfo.applicationInfo.packageName.equals(getContext().getPackageName())) {
+                    AppsModel check = new AppsModel().getAppByPackage(resolveInfo.activityInfo.applicationInfo.packageName);
+                    if (check == null) {
+                        AppsModel model = new AppsModel(mPm, resolveInfo, mIconCache, null);
+                        entries.add(model);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // fallback to avoid Caused by android.os.TransactionTooLargeException
+            List<PackageInfo> packageInfos = AppHelper.getInstalledPackages(getContext(), 0);
+            for (PackageInfo info : packageInfos) {
+                if (info != null) {
+                    if (!info.applicationInfo.packageName.equals(getContext().getPackageName())) {
+                        AppsModel check = new AppsModel().getAppByPackage(info.applicationInfo.packageName);
+                        if (check == null) {
+                            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+                            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            mainIntent.setComponent(new ComponentName(info.packageName, info.applicationInfo.name));
+                            ResolveInfo resolveInfo = mPm.resolveActivity(mainIntent, 0);
+                            if (resolveInfo != null) {
+                                AppsModel model = new AppsModel(mPm, resolveInfo, mIconCache, null);
+                                entries.add(model);
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.styleme.floating.toolbox.pro.global.helper;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
@@ -20,11 +21,15 @@ import android.webkit.MimeTypeMap;
 
 import com.styleme.floating.toolbox.pro.R;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -327,6 +332,44 @@ public class AppHelper {
 
     public static boolean isAutoOrder(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("auto_order", false);
+    }
+
+    /**
+     * Solution for Caused by android.os.TransactionTooLargeException that may occur for users with loads of apps.
+     * found in {@link //stackoverflow.com/a/30062632/1627904 }
+     * modified to add pm list packages {-3} to only get non-system apps.
+     */
+    public static List<PackageInfo> getInstalledPackages(Context context, int flags) {
+        final PackageManager pm = context.getPackageManager();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+            return pm.getInstalledPackages(flags);
+        try {
+            return pm.getInstalledPackages(flags);
+        } catch (Exception ignored) {}
+        Process process;
+        List<PackageInfo> result = new ArrayList<>();
+        BufferedReader bufferedReader = null;
+        try {
+            process = Runtime.getRuntime().exec("pm list packages -3"); // -3 to only get the non-system apps.
+            bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                final String packageName = line.substring(line.indexOf(':') + 1);
+                final PackageInfo packageInfo = pm.getPackageInfo(packageName, flags);
+                result.add(packageInfo);
+            }
+            process.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null)
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+        return result;
     }
 
 }
