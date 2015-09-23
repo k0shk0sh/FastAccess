@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.widget.ListPopupWindow;
@@ -152,7 +153,9 @@ public class FloatingLayout implements OnFloatingTouchListener {
             popupWindow = new ListPopupWindow(context, null, R.attr.listPopupWindowStyle);
             popupWindow.setWidth(WRAP_CONTENT);
             popupWindow.setHeight(WRAP_CONTENT);
-            popupWindow.setBackgroundDrawable(context.getResources().getDrawable(R.color.transparent));
+            Drawable drawable = AppHelper.getColorDrawable(AppHelper.getFABackground(context));
+            drawable.setAlpha(AppHelper.getBackgroundAlpha(context));
+            popupWindow.setBackgroundDrawable(drawable);
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
@@ -490,6 +493,15 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        } else if (eventsModel != null && eventsModel.getEventType() == EventType.FA_BACKGROUND) {
+            if (popupWindow != null) {
+                Drawable drawable = AppHelper.getColorDrawable(AppHelper.getFABackground(context));
+                drawable.setAlpha(AppHelper.getBackgroundAlpha(context));
+                popupWindow.setBackgroundDrawable(drawable);
+                if (!popupWindow.isShowing()) {
+                    popupWindow.show();
+                }
             }
         }
     }

@@ -67,8 +67,16 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         customImage.setOnPreferenceClickListener(this);
         customIcon = getPreferenceManager().findPreference("customIcon");
         customIcon.setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("fa_background_alpha").setOnPreferenceClickListener(this);
         primary.onColorSelect(this);
         accent.onColorSelect(this);
+        ColorPreference fa_background = (ColorPreference) getPreferenceManager().findPreference("fa_background");
+        fa_background.onColorSelect(new ColorSelector() {
+            @Override
+            public void onColorSelected(int color) {
+                AppController.getController().eventBus().post(new EventsModel(EventType.FA_BACKGROUND));
+            }
+        });
     }
 
     @Override
@@ -104,6 +112,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 iconSizeFragment.setCancelable(false);
                 iconSizeFragment.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "FAICON");
             }
+            return true;
+        } else if (preference.getKey().equalsIgnoreCase("fa_background_alpha")) {
+            BackgroundAlphaFragment backgroundAlphaFragment = new BackgroundAlphaFragment();
+            backgroundAlphaFragment.setCancelable(false);
+            backgroundAlphaFragment.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "ALPHA");
             return true;
         }
         return false;

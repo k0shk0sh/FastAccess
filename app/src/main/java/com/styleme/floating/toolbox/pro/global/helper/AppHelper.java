@@ -146,7 +146,7 @@ public class AppHelper {
         return MimeTypeMap.getFileExtensionFromUrl(file);
     }
 
-    private static Drawable getColorDrawable(int colorCode) {
+    public static Drawable getColorDrawable(int colorCode) {
         return new ColorDrawable(colorCode);
     }
 
@@ -398,5 +398,17 @@ public class AppHelper {
             }
         }
         return gapSize;
+    }
+
+    public static int getFABackground(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("fa_background", context.getResources().getColor(R.color.transparent));
+    }
+
+    public static int getBackgroundAlpha(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("fa_background_alpha", 100);
+    }
+
+    public static void setBackgroundAlpha(Context context, int alpha) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("fa_background_alpha", alpha).apply();
     }
 }

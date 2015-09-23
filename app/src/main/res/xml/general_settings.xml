@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="UI Customization">
-
         <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
             android:defaultValue="@color/primary"
             android:key="primary_color"
@@ -114,16 +113,32 @@
             android:title="@string/sticky_title"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
     </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
-    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="@string/advance">
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="auto_order"
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="Other Settings">
+        <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
+            android:defaultValue="@color/transparent"
+            android:key="fa_background"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="Background color of floating apps list"
+            android:title="Floating Apps Background"
+            app:choices="@array/fa_background"
+            app:itemLayout="@layout/dash_grid_item_color"
+            app:numColumns="5"/>
+        <Preference
+            android:key="fa_background_alpha"
             android:layout="@layout/custom_settings"
-            android:persistent="true"
-            android:summary="Auto order selected Apps by their usage.\nThis will override your current order of the selected Apps."
-            android:title="Auto Order"
-            android:visibility="gone"
-            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+            android:persistent="false"
+            android:summary="Adjust background color transparency"
+            android:title="Background Transparency"/>
+        <!--<CheckBoxPreference-->
+        <!--android:defaultValue="false"-->
+        <!--android:key="auto_order"-->
+        <!--android:layout="@layout/custom_settings"-->
+        <!--android:persistent="true"-->
+        <!--android:summary="Auto order selected Apps by their usage.\nThis will override your current order of the selected Apps."-->
+        <!--android:title="Auto Order"-->
+        <!--android:visibility="gone"-->
+        <!--android:widgetLayout="@layout/preference_dynamiccheckbox"/>-->
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="manualSize"
