@@ -2,7 +2,6 @@ package com.styleme.floating.toolbox.pro.global.loader;
 
 
 import android.content.AsyncTaskLoader;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -17,6 +16,7 @@ import com.styleme.floating.toolbox.pro.global.receiver.ApplicationsReceiver;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AppsLoader extends AsyncTaskLoader<List<AppsModel>> {
@@ -52,30 +52,11 @@ public class AppsLoader extends AsyncTaskLoader<List<AppsModel>> {
                     }
                 }
             }
+            return entries;
         } catch (Exception e) {
             e.printStackTrace();
-            // fallback to avoid Caused by android.os.TransactionTooLargeException
-            List<PackageInfo> packageInfos = AppHelper.getInstalledPackages(getContext(), 0);
-            for (PackageInfo info : packageInfos) {
-                if (info != null) {
-                    if (!info.applicationInfo.packageName.equals(getContext().getPackageName())) {
-                        AppsModel check = new AppsModel().getAppByPackage(info.applicationInfo.packageName);
-                        if (check == null) {
-                            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-                            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-                            mainIntent.setComponent(new ComponentName(info.packageName, info.applicationInfo.name));
-                            ResolveInfo resolveInfo = mPm.resolveActivity(mainIntent, 0);
-                            if (resolveInfo != null) {
-                                AppsModel model = new AppsModel(mPm, resolveInfo, mIconCache, null);
-                                entries.add(model);
-                            }
-                        }
-                    }
-                }
-            }
+            return AppHelper.getInstalledPackages(getContext(), mIconCache);
         }
-
-        return entries;
     }
 
     @Override
@@ -137,5 +118,13 @@ public class AppsLoader extends AsyncTaskLoader<List<AppsModel>> {
     public void forceLoad() {
         super.forceLoad();
     }
+
+
+    private Comparator<PackageInfo> sortApps = new Comparator<PackageInfo>() {
+        @Override
+        public int compare(PackageInfo one, PackageInfo two) {
+            return one.applicationInfo.loadLabel(mPm).toString().compareTo(two.applicationInfo.loadLabel(mPm).toString());
+        }
+    };
 
 }

@@ -1,8 +1,10 @@
 package com.styleme.floating.toolbox.pro.global.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -20,6 +22,7 @@ import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
 
 import com.styleme.floating.toolbox.pro.R;
+import com.styleme.floating.toolbox.pro.global.model.AppsModel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +32,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -337,26 +341,32 @@ public class AppHelper {
     /**
      * Solution for Caused by android.os.TransactionTooLargeException that may occur for users with loads of apps.
      * found in {@link //stackoverflow.com/a/30062632/1627904 }
-     * modified to add pm list packages {-3} to only get non-system apps.
      */
-    public static List<PackageInfo> getInstalledPackages(Context context, int flags) {
+    public static List<AppsModel> getInstalledPackages(Context context, IconCache iconCache) {
         final PackageManager pm = context.getPackageManager();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-            return pm.getInstalledPackages(flags);
-        try {
-            return pm.getInstalledPackages(flags);
-        } catch (Exception ignored) {}
         Process process;
-        List<PackageInfo> result = new ArrayList<>();
+        List<AppsModel> result = new ArrayList<>();
         BufferedReader bufferedReader = null;
         try {
-            process = Runtime.getRuntime().exec("pm list packages -3"); // -3 to only get the non-system apps.
+            process = Runtime.getRuntime().exec("pm list packages");
             bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 final String packageName = line.substring(line.indexOf(':') + 1);
-                final PackageInfo packageInfo = pm.getPackageInfo(packageName, flags);
-                result.add(packageInfo);
+                PackageInfo packageInfo = pm.getPackageInfo(packageName, 0);
+                Intent mainIntent = pm.getLaunchIntentForPackage(packageInfo.applicationInfo.packageName);
+                if (mainIntent != null) {
+                    ResolveInfo resolveInfo = pm.resolveActivity(mainIntent, 0);
+                    if (resolveInfo != null) {
+                        if (!packageName.equalsIgnoreCase(context.getPackageName())) {
+                            AppsModel check = new AppsModel().getAppByPackage(resolveInfo.activityInfo.packageName);
+                            if (check == null) {
+                                AppsModel model = new AppsModel(pm, resolveInfo, iconCache, null);
+                                result.add(model);
+                            }
+                        }
+                    }
+                }
             }
             process.waitFor();
         } catch (Exception e) {
@@ -369,7 +379,9 @@ public class AppHelper {
                     e.printStackTrace();
                 }
         }
+        Collections.sort(result, new AppsModel().sortApps);
         return result;
     }
+
 
 }
