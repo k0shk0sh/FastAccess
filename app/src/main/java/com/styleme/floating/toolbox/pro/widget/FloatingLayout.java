@@ -97,19 +97,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
     }
 
     private void setupParams() {
-        int gapSize = WRAP_CONTENT;
-        if (AppHelper.isManualSize(context)) {
-            gapSize = AppHelper.toPx(context, AppHelper.getFaIconSize(context));
-        } else {
-            String size = AppHelper.getIconSize(context);
-            if (size.equalsIgnoreCase("small")) {
-                gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_small);
-            } else if (size.equalsIgnoreCase("medium")) {
-                gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_medium);
-            } else if (size.equalsIgnoreCase("large")) {
-                gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_large);
-            }
-        }
+        int gapSize = AppHelper.getFinalSize(context);
         mParams.width = gapSize;
         mParams.height = gapSize;
         if (AppHelper.isSavePositionEnabled(context)) {
@@ -151,6 +139,11 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            if (popupWindow != null) {
+                if (adapter != null) {
+                    popupWindow.setContentWidth(measureContentWidth(adapter));
+                }
+            }
         }
     }
 
@@ -420,8 +413,9 @@ public class FloatingLayout implements OnFloatingTouchListener {
         View itemView = null;
         int itemType = 0;
         final ListAdapter adapter = listAdapter;
-        final int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        final int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int gapSize = AppHelper.getFinalSize(context); // get the width so the icons adjust themselves base on adjustviewbounds.
+        final int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(gapSize, View.MeasureSpec.AT_MOST);
+        final int heightMeasureSpec = View.MeasureSpec.UNSPECIFIED;
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
             final int positionType = adapter.getItemViewType(i);
@@ -429,21 +423,16 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 itemType = positionType;
                 itemView = null;
             }
-
             if (mMeasureParent == null) {
                 mMeasureParent = new FrameLayout(context);
             }
-
             itemView = adapter.getView(i, itemView, mMeasureParent);
             itemView.measure(widthMeasureSpec, heightMeasureSpec);
-
             final int itemWidth = itemView.getMeasuredWidth();
-
             if (itemWidth > maxWidth) {
                 maxWidth = itemWidth;
             }
         }
-
         return maxWidth;
     }
 

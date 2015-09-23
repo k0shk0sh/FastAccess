@@ -383,5 +383,20 @@ public class AppHelper {
         return result;
     }
 
-
+    public static int getFinalSize(Context context) {
+        int gapSize = -2; // wrap_content
+        if (isManualSize(context)) {
+            gapSize = toPx(context, getFaIconSize(context));
+        } else {
+            String size = getIconSize(context);
+            if (size.equalsIgnoreCase("small")) {
+                gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_small);
+            } else if (size.equalsIgnoreCase("medium")) {
+                gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_medium);
+            } else if (size.equalsIgnoreCase("large")) {
+                gapSize = context.getResources().getDimensionPixelSize(R.dimen.fa_size_large);
+            }
+        }
+        return gapSize;
+    }
 }
