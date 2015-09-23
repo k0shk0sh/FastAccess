@@ -15,9 +15,12 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -411,6 +414,39 @@ public class FloatingLayout implements OnFloatingTouchListener {
         return scale * Math.exp(-0.055 * step) * Math.cos(0.08 * step);
     }
 
+    private int measureContentWidth(ListAdapter listAdapter) {
+        ViewGroup mMeasureParent = null;
+        int maxWidth = 0;
+        View itemView = null;
+        int itemType = 0;
+        final ListAdapter adapter = listAdapter;
+        final int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int count = adapter.getCount();
+        for (int i = 0; i < count; i++) {
+            final int positionType = adapter.getItemViewType(i);
+            if (positionType != itemType) {
+                itemType = positionType;
+                itemView = null;
+            }
+
+            if (mMeasureParent == null) {
+                mMeasureParent = new FrameLayout(context);
+            }
+
+            itemView = adapter.getView(i, itemView, mMeasureParent);
+            itemView.measure(widthMeasureSpec, heightMeasureSpec);
+
+            final int itemWidth = itemView.getMeasuredWidth();
+
+            if (itemWidth > maxWidth) {
+                maxWidth = itemWidth;
+            }
+        }
+
+        return maxWidth;
+    }
+
     private Loader.OnLoadCompleteListener<List<AppsModel>> onLoadCompleteListener = new Loader.OnLoadCompleteListener<List<AppsModel>>() {
         @Override
         public void onLoadComplete(Loader<List<AppsModel>> loader, List<AppsModel> data) {
@@ -419,7 +455,10 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 Notifier.cancelNotification(context);//in case if the service is stopped previously and its in the notification bar
                 return;
             }
-            if (adapter != null) {adapter.insert(data);}
+            if (adapter != null) {
+                adapter.insert(data);
+                popupWindow.setContentWidth(measureContentWidth(adapter));
+            }
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
             eventBuilder
                     .setCategory(this.getClass().getSimpleName())

@@ -369,6 +369,7 @@ public class AppHelper {
                 }
             }
             process.waitFor();
+            Collections.sort(result, new AppsModel().sortApps);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -379,7 +380,6 @@ public class AppHelper {
                     e.printStackTrace();
                 }
         }
-        Collections.sort(result, new AppsModel().sortApps);
         return result;
     }
 
