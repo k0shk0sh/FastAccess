@@ -38,12 +38,13 @@ public class CustomCheckBox extends AppCompatCheckBox {
     }
 
     private void updateTintColor() {
-        //TODO: see here
-        int[][] r1 = new int[2][];
-        r1[0] = new int[]{-16842912};
-        r1[1] = new int[]{16842912};
-        ColorStateList colorStateList = new ColorStateList(r1, new int[]{resolveColor(getContext(), R.attr.colorControlNormal, 0)
-                , AppHelper.getAccentColor(getContext())});
+        ColorStateList colorStateList = new ColorStateList(new int[][]{
+                new int[]{-android.R.attr.state_checked},
+                new int[]{android.R.attr.state_checked}
+        }, new int[]{
+                AppHelper.getPrimaryColor(getContext()),
+                AppHelper.getAccentColor(getContext())
+        });
         if (Build.VERSION.SDK_INT >= 21) {
             setButtonTintList(colorStateList);
             return;
@@ -53,11 +54,13 @@ public class CustomCheckBox extends AppCompatCheckBox {
         setButtonDrawable(wrap);
     }
 
-    private int resolveColor(Context context, int i, int i2) {
-        TypedArray obtainStyledAttributes = context.getTheme().obtainStyledAttributes(new int[]{i});
-        int color = obtainStyledAttributes.getColor(0, i2);
-        obtainStyledAttributes.recycle();
-        return color;
+    private int resolveColor(Context context, int i) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{i});
+        try {
+            return a.getColor(0, i);
+        } finally {
+            a.recycle();
+        }
     }
 
 }

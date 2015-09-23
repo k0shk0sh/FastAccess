@@ -122,6 +122,7 @@
             android:persistent="true"
             android:summary="Auto order selected Apps by their usage.\nThis will override your current order of the selected Apps."
             android:title="Auto Order"
+            android:visibility="gone"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
         <CheckBoxPreference
             android:defaultValue="false"
