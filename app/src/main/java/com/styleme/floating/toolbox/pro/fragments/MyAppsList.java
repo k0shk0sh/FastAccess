@@ -33,6 +33,8 @@ import com.styleme.floating.toolbox.pro.global.model.EventType;
 import com.styleme.floating.toolbox.pro.global.model.EventsModel;
 import com.styleme.floating.toolbox.pro.global.receiver.ApplicationsReceiver;
 import com.styleme.floating.toolbox.pro.global.receiver.MyAppsReceiver;
+import com.styleme.floating.toolbox.pro.widget.EmptyRecyclerView;
+import com.styleme.floating.toolbox.pro.widget.FontTextView;
 import com.styleme.floating.toolbox.pro.widget.impl.MyAppsOnItemClickListener;
 import com.styleme.floating.toolbox.pro.widget.impl.SimpleItemTouchHelperCallback;
 
@@ -51,9 +53,11 @@ public class MyAppsList extends Fragment implements MyAppsOnItemClickListener, L
         SearchView.OnQueryTextListener {
 
     @Bind(R.id.recycler)
-    RecyclerView recycler;
+    EmptyRecyclerView recycler;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @Bind(R.id.emptyText)
+    FontTextView emptyText;
     private MyAppsAdapter adapter;
     private ItemTouchHelper mItemTouchHelper;
 
@@ -76,6 +80,7 @@ public class MyAppsList extends Fragment implements MyAppsOnItemClickListener, L
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recycler.setEmptyView(emptyText);
         recycler.setItemAnimator(new DefaultItemAnimator());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(manager);
@@ -109,13 +114,8 @@ public class MyAppsList extends Fragment implements MyAppsOnItemClickListener, L
             Snackbar.make(recycler, "App Removed", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (adapter.getItemCount() < 2) {
-                        adapter.getModelList().add(position, model);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        adapter.getModelList().add(position, model);
-                        adapter.notifyItemInserted(position);
-                    }
+                    adapter.getModelList().add(position, model);
+                    adapter.notifyItemInserted(position);
                     canDelete = false;
                 }
             }).setCallback(new Snackbar.Callback() {

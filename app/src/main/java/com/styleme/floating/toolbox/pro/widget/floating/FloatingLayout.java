@@ -1,4 +1,4 @@
-package com.styleme.floating.toolbox.pro.widget;
+package com.styleme.floating.toolbox.pro.widget.floating;
 
 import android.content.Context;
 import android.content.Intent;
@@ -269,7 +269,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 initialTouchX = event.getRawX();
                 initialTouchY = event.getRawY();
                 animateShowing();
-                break;
+                return true;
             case MotionEvent.ACTION_UP:
                 if (AppHelper.isEdged(context)) {
                     moveToEdge();
@@ -279,7 +279,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                     }
                 }
                 animateHidden();
-                break;
+                return true;
             case MotionEvent.ACTION_MOVE:
                 paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
                 paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
@@ -299,7 +299,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                     e.printStackTrace();
                 }
                 animateShowing();
-                break;
+                return true;
         }
         return false;
     }

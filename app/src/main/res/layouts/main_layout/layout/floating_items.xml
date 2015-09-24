@@ -7,8 +7,7 @@
     android:layout_centerInParent="true"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/appIcon"

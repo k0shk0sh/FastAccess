@@ -37,6 +37,8 @@ import com.styleme.floating.toolbox.pro.global.model.EventType;
 import com.styleme.floating.toolbox.pro.global.model.EventsModel;
 import com.styleme.floating.toolbox.pro.global.receiver.MyAppsReceiver;
 import com.styleme.floating.toolbox.pro.global.service.FloatingService;
+import com.styleme.floating.toolbox.pro.widget.EmptyRecyclerView;
+import com.styleme.floating.toolbox.pro.widget.FontTextView;
 import com.styleme.floating.toolbox.pro.widget.impl.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -56,9 +58,11 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
         SearchView.OnQueryTextListener, ActionMode.Callback {
 
     @Bind(R.id.recycler)
-    RecyclerView recycler;
+    EmptyRecyclerView recycler;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @Bind(R.id.emptyText)
+    FontTextView emptyText;
     private AppsAdapter adapter;
     private HashMap<Integer, AppsModel> selectedApps = new LinkedHashMap<>();
     private ActionMode actionMode;
@@ -83,6 +87,7 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         GridLayoutManager manager = new GridLayoutManager(getContext(), getResources().getInteger(R.integer.num_row));
+        recycler.setEmptyView(emptyText);
         recycler.setItemAnimator(new DefaultItemAnimator());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(manager);

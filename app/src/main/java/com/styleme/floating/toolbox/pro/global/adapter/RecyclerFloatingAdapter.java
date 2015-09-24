@@ -18,8 +18,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 /**
  * Created by Kosh on 8/16/2015. copyrights are reserved
  */
@@ -47,30 +45,14 @@ public class RecyclerFloatingAdapter extends RecyclerView.Adapter<RecyclerView.V
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) h.appIcon.getLayoutParams();
             String gap = AppHelper.getGapSize(h.iconHolder.getContext());
             if (gap.equalsIgnoreCase("small")) {
-                int gapSize = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_small);
-                params.setMargins(0, 0, 0, gapSize);
-
+                params.rightMargin = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_small);
             } else if (gap.equalsIgnoreCase("medium")) {
-                int gapSize = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_medium);
-                params.setMargins(0, 0, 0, gapSize);
+                params.rightMargin = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_medium);
             } else if (gap.equalsIgnoreCase("large")) {
-                int gapSize = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_large);
-                params.setMargins(0, 0, 0, gapSize);
+                params.rightMargin = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_large);
             } else {
-                int gapSize = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_medium);
-                params.setMargins(0, 0, 0, gapSize);
+                params.rightMargin = h.iconHolder.getResources().getDimensionPixelSize(R.dimen.gap_medium);
             }
-            String size = AppHelper.getIconSize(h.itemView.getContext());
-            int gapSize = WRAP_CONTENT;
-            if (size.equalsIgnoreCase("small")) {
-                gapSize = h.itemView.getContext().getResources().getDimensionPixelSize(R.dimen.fa_size_small);
-            } else if (size.equalsIgnoreCase("medium")) {
-                gapSize = h.itemView.getContext().getResources().getDimensionPixelSize(R.dimen.fa_size_medium);
-            } else if (size.equalsIgnoreCase("large")) {
-                gapSize = h.itemView.getContext().getResources().getDimensionPixelSize(R.dimen.fa_size_large);
-            }
-            params.height = gapSize;
-            params.width = gapSize;
             h.appIcon.setImageDrawable(new FastBitmapDrawable(app.getBitmap()));
             h.appIcon.setContentDescription(app.getAppName());
             h.iconHolder.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +96,11 @@ public class RecyclerFloatingAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public List<AppsModel> getModelList() {
         return modelList;
+    }
+
+    public void clear() {
+        modelList.clear();
+        notifyDataSetChanged();
     }
 
 

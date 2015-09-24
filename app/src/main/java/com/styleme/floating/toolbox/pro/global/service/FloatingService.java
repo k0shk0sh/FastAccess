@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.styleme.floating.toolbox.pro.global.helper.Notifier;
-import com.styleme.floating.toolbox.pro.widget.FloatingLayout;
+import com.styleme.floating.toolbox.pro.widget.floating.FloatingHorizontalLayout;
 
 /**
  * Created by Kosh on 9/4/2015. copyrights are reserved
@@ -14,7 +14,7 @@ import com.styleme.floating.toolbox.pro.widget.FloatingLayout;
 public class FloatingService extends Service {
 
 
-    private FloatingLayout floatingLayout;
+    private FloatingHorizontalLayout floatingLayout;
 
     @Nullable
     @Override
@@ -31,7 +31,7 @@ public class FloatingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (floatingLayout == null) {
-            floatingLayout = new FloatingLayout(this);
+            floatingLayout = new FloatingHorizontalLayout(this);
         }
         return START_STICKY;
     }

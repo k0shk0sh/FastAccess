@@ -12,5 +12,4 @@
     android:text="@string/empty_list"
     android:textSize="18sp"
     android:textStyle="bold"
-    app:colorful="true">
-</com.styleme.floating.toolbox.pro.widget.FontTextView>
+    app:colorful="true"/>

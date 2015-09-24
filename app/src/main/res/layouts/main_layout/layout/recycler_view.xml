@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.styleme.floating.toolbox.pro.widget.EmptyRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,10 +13,27 @@
         android:scrollbars="vertical"/>
 
 
+    <com.styleme.floating.toolbox.pro.widget.FontTextView
+        android:id="@+id/emptyText"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:drawableTop="@drawable/ic_help"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/empty_list"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:colorful="true"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center"
         android:visibility="gone"/>
 </FrameLayout>

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
-import com.styleme.floating.toolbox.pro.widget.EmptyHolder;
 import com.styleme.floating.toolbox.pro.widget.FastBitmapDrawable;
 import com.styleme.floating.toolbox.pro.widget.impl.ItemTouchHelperAdapter;
 import com.styleme.floating.toolbox.pro.widget.impl.ItemTouchHelperViewHolder;
@@ -40,53 +39,38 @@ public class MyAppsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
-        if (viewType == EmptyHolder.EMPTY_TYPE) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.empty_view, parent, false);
-            return new EmptyHolder(v);
-        }
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_apps_list_items, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_apps_list_items, parent, false);
         return new AppsHolder(v);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (getItemViewType(position) != EmptyHolder.EMPTY_TYPE) {
-            final AppsHolder h = (AppsHolder) holder;
-            AppsModel app = modelList.get(position);
-            if (app != null) {
-                h.appName.setText(app.getAppName());
-                h.countEntry.setText(String.format("%d", app.getCountEntry()));
-                h.appIcon.setImageDrawable(new FastBitmapDrawable(app.getBitmap()));
-                h.appIcon.setContentDescription(app.getAppName());
-                h.iconHolder.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onClick.onItemClickListener(v, position);
-                    }
-                });
-                h.iconHolder.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        onClick.onItemLongClickListener(h, v, position);
-                        return true;
-                    }
-                });
-            }
+        final AppsHolder h = (AppsHolder) holder;
+        AppsModel app = modelList.get(position);
+        if (app != null) {
+            h.appName.setText(app.getAppName());
+            h.countEntry.setText(String.format("%d", app.getCountEntry()));
+            h.appIcon.setImageDrawable(new FastBitmapDrawable(app.getBitmap()));
+            h.appIcon.setContentDescription(app.getAppName());
+            h.iconHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClick.onItemClickListener(v, position);
+                }
+            });
+            h.iconHolder.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onClick.onItemLongClickListener(h, v, position);
+                    return true;
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return modelList == null || modelList.size() == 0 ? 1 : modelList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (modelList == null || modelList.size() == 0) {
-            return EmptyHolder.EMPTY_TYPE;
-        }
-        return super.getItemViewType(position);
+        return modelList.size();
     }
 
     public void insert(List<AppsModel> apps) {
@@ -97,11 +81,12 @@ public class MyAppsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void insert(AppsModel model) {
         modelList.add(model);
-        if (getItemCount() < 2) { // we always going to have the first view as an empty after each restart of app.
-            notifyItemInserted(modelList.size());
-        } else {
-            notifyItemInserted(modelList.size() - 1);
-        }
+        notifyItemInserted(modelList.size() - 1);
+//        if (getItemCount() < 2) { // we always going to have the first view as an empty after each restart of app.
+//            notifyItemInserted(modelList.size());
+//        } else {
+//            notifyItemInserted(modelList.size() - 1);
+//        }
     }
 
     public void clearAll() {
