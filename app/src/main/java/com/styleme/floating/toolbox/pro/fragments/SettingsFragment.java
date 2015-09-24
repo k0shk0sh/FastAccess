@@ -25,6 +25,7 @@ import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
 import com.styleme.floating.toolbox.pro.global.helper.IconPackHelper;
 import com.styleme.floating.toolbox.pro.global.model.EventType;
 import com.styleme.floating.toolbox.pro.global.model.EventsModel;
+import com.styleme.floating.toolbox.pro.global.service.FloatingService;
 import com.styleme.floating.toolbox.pro.global.tasks.BackupTask;
 import com.styleme.floating.toolbox.pro.global.tasks.RestoreTask;
 import com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference;
@@ -67,6 +68,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         customImage.setOnPreferenceClickListener(this);
         customIcon = getPreferenceManager().findPreference("customIcon");
         customIcon.setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("fa_horizontal").setOnPreferenceClickListener(this);
         getPreferenceScreen().findPreference("fa_background_alpha").setOnPreferenceClickListener(this);
         primary.onColorSelect(this);
         accent.onColorSelect(this);
@@ -117,6 +119,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             BackgroundAlphaFragment backgroundAlphaFragment = new BackgroundAlphaFragment();
             backgroundAlphaFragment.setCancelable(false);
             backgroundAlphaFragment.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "ALPHA");
+            return true;
+        } else if (preference.getKey().equalsIgnoreCase("fa_horizontal")) {
+            getActivity().stopService(new Intent(getActivity(), FloatingService.class));
+            getActivity().startService(new Intent(getActivity(), FloatingService.class));
             return true;
         }
         return false;

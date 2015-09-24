@@ -141,6 +141,14 @@
         <!--android:widgetLayout="@layout/preference_dynamiccheckbox"/>-->
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="fa_horizontal"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="Change FA style to display apps in horizontal mode."
+            android:title="Horizontal Mode (BETA)"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="manualSize"
             android:layout="@layout/custom_settings"
             android:persistent="true"

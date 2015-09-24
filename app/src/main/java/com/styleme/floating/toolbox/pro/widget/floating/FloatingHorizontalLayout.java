@@ -115,6 +115,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         setupBackground();
+        hideRecycler();
         recyclerView.setAdapter(adapter);
         setupFloatingImage(false);
         windowManager.addView(view, mParams);
@@ -126,7 +127,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             }
         });
         onMyAppsLoader = new MyPopupAppsLoader(context, this);
-        onMyAppsLoader.registerListener(2, onLoadCompleteListener);
+        onMyAppsLoader.registerListener(3, onLoadCompleteListener);
         onMyAppsLoader.startLoading();
     }
 
@@ -143,7 +144,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         drawable.setAlpha(AppHelper.getBackgroundAlpha(context));
         if (recyclerView != null) {
             recyclerView.setBackground(drawable);
-            if (!view.isShown()) view.setVisibility(View.VISIBLE);
+            showRecycler();
         }
     }
 
@@ -168,7 +169,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
     }
 
     public void onDestroy() {
-        if (windowManager != null && floatingImage != null) {
+        if (windowManager != null && view != null) {
             windowManager.removeViewImmediate(view);
         }
         if (onMyAppsLoader != null) {
@@ -237,7 +238,6 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                 .setLabel("onDoubleClick");
         tracker.send(eventBuilder.build());
     }
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

@@ -411,4 +411,8 @@ public class AppHelper {
     public static void setBackgroundAlpha(Context context, int alpha) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("fa_background_alpha", alpha).apply();
     }
+
+    public static boolean isHorizontal(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("fa_horizontal", false);
+    }
 }
