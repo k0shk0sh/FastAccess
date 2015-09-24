@@ -50,7 +50,7 @@ import static android.view.WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
 /**
  * Created by Kosh on 9/4/2015. copyrights are reserved
  */
-public class FloatingHorizontalLayout implements OnFloatingTouchListener {
+public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItemClickListener {
 
     private LayoutParams mParams;
     private WindowManager windowManager;
@@ -74,17 +74,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener {
         if (!AppController.getController().eventBus().isRegistered(this)) {
             AppController.getController().eventBus().register(this);
         }
-        adapter = new RecyclerFloatingAdapter(new OnItemClickListener() {
-            @Override
-            public void onItemClickListener(View view, int position) {
-
-            }
-
-            @Override
-            public void onItemLongClickListener(RecyclerView.ViewHolder viewHolder, View view, int position) {
-
-            }
-        }, new ArrayList<AppsModel>());
+        adapter = new RecyclerFloatingAdapter(this, new ArrayList<AppsModel>());
         gestureDetector = new GestureDetector(context, new GestureListener(this));
         initWindows();
         tracker.setScreenName("FloatingHorizontalLayout");
@@ -359,6 +349,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener {
                     .setLabel(e.getMessage() == null ? "Open App Crash" : e.getMessage());
             tracker.send(eventBuilder.build());
         }
+        hideRecycler();
     }
 
     @Override
@@ -442,5 +433,15 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener {
         } else if (eventsModel != null && eventsModel.getEventType() == EventType.FA_BACKGROUND) {
             setupBackground();
         }
+    }
+
+    @Override
+    public void onItemClickListener(View view, int position) {
+        onAppClick(adapter.getModelList().get(position));
+    }
+
+    @Override
+    public void onItemLongClickListener(RecyclerView.ViewHolder viewHolder, View view, int position) {
+
     }
 }
