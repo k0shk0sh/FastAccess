@@ -42,7 +42,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 import static android.view.WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
@@ -52,7 +52,7 @@ import static android.view.WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
  */
 public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItemClickListener {
 
-    private LayoutParams mParams;
+    private LayoutParams mParams, rParams;
     private WindowManager windowManager;
     private Context context;
     private LayoutParams paramsF;
@@ -67,7 +67,6 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
     private MyPopupAppsLoader onMyAppsLoader;
     private Tracker tracker = AppController.getController().tracker();
     private View view;
-    private RecyclerView recyclerView;
 
     public FloatingHorizontalLayout(Context context) {
         this.context = context;
@@ -90,35 +89,46 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         windowManager.getDefaultDisplay().getSize(szWindow);
         mParams = new LayoutParams(TYPE_PRIORITY_PHONE /* to appear on top of keyboard */, FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCH_MODAL,
                 PixelFormat.TRANSLUCENT);
+        rParams = new LayoutParams(TYPE_PRIORITY_PHONE /* to appear on top of keyboard */, FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCH_MODAL,
+                PixelFormat.TRANSLUCENT);
         setupParams();
         mParams.gravity = Gravity.LEFT | Gravity.TOP;
+        rParams.gravity = Gravity.LEFT | Gravity.TOP;
         initView();
     }
 
     private void setupParams() {
-        int gapSize = AppHelper.getFinalSize(context);
-        mParams.width = WRAP_CONTENT;
-        mParams.height = gapSize * 2;
+        int iconSize = AppHelper.getFinalSize(context);
+        int pX = AppHelper.getPositionX(context);
+        int pY = AppHelper.getPositionY(context);
+        rParams.width = MATCH_PARENT;
+        rParams.height = iconSize;
+        mParams.width = iconSize;
+        mParams.height = iconSize;
         if (AppHelper.isSavePositionEnabled(context)) {
-            mParams.x = AppHelper.getPositionX(context);
-            mParams.y = AppHelper.getPositionY(context);
+            mParams.x = pX;
+            mParams.y = pY;
+            rParams.y = pY + iconSize;
+            rParams.x = pX;
         } else {
             mParams.x = 0;
             mParams.y = 100;
+            rParams.x = 0;
+            rParams.y = 100 + iconSize;
         }
     }
 
     private void initView() {
         view = LayoutInflater.from(context).inflate(R.layout.floating_layout_list, null);
-        floatingImage = (ImageView) view.findViewById(R.id.floatingImage);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         setupBackground();
         hideRecycler();
         recyclerView.setAdapter(adapter);
+        windowManager.addView(view, rParams);
+        if (floatingImage == null) floatingImage = new ImageView(context);
         setupFloatingImage(false);
-        windowManager.addView(view, mParams);
         floatingImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -126,24 +136,35 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                 return FloatingHorizontalLayout.this.onTouch(v, event);
             }
         });
+        windowManager.addView(floatingImage, mParams);
         onMyAppsLoader = new MyPopupAppsLoader(context, this);
         onMyAppsLoader.registerListener(3, onLoadCompleteListener);
         onMyAppsLoader.startLoading();
     }
 
     private void hideRecycler() {
-        recyclerView.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
     }
 
     private void showRecycler() {
-        recyclerView.setVisibility(View.VISIBLE);
+        int iconSize = AppHelper.getFinalSize(context);
+        if (paramsF != null) {
+            rParams.x = paramsF.x;
+            if (paramsF.y + iconSize / 2 > szWindow.y / 2) {
+                rParams.y = paramsF.y - iconSize;
+            } else if (paramsF.y + iconSize / 2 <= szWindow.y / 2) {
+                rParams.y = paramsF.y + iconSize;
+            }
+            windowManager.updateViewLayout(view, rParams);
+        }
+        view.setVisibility(View.VISIBLE);
     }
 
     private void setupBackground() {
         Drawable drawable = AppHelper.getColorDrawable(AppHelper.getFABackground(context));
         drawable.setAlpha(AppHelper.getBackgroundAlpha(context));
-        if (recyclerView != null) {
-            recyclerView.setBackground(drawable);
+        if (view != null) {
+            view.setBackground(drawable);
             showRecycler();
         }
     }
@@ -154,14 +175,12 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         } else {
             floatingImage.setImageResource(R.mipmap.ic_launcher);
         }
-        int gapSize = AppHelper.getFinalSize(context);
-        floatingImage.getLayoutParams().width = gapSize;
-        floatingImage.requestLayout();
         if (adapter != null) adapter.notifyDataSetChanged();
         if (update) {
             if (windowManager != null)
                 try {
-                    windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, mParams);
+                    windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, mParams);
+                    windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, rParams);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -169,7 +188,8 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
     }
 
     public void onDestroy() {
-        if (windowManager != null && view != null) {
+        if (windowManager != null && floatingImage != null) {
+            windowManager.removeViewImmediate(floatingImage);
             windowManager.removeViewImmediate(view);
         }
         if (onMyAppsLoader != null) {
@@ -193,7 +213,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         animateShowing();
         try {
             HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-            if (recyclerView.isShown()) {
+            if (view.isShown()) {
                 hideRecycler();
                 eventBuilder.setCategory("FloatingHorizontalLayout")
                         .setAction("hide")
@@ -231,7 +251,6 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             context.startActivity(startMain);
         }
         HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
         eventBuilder
                 .setCategory("FloatingHorizontalLayout")
                 .setAction("onDoubleClick")
@@ -249,7 +268,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                 initialTouchX = event.getRawX();
                 initialTouchY = event.getRawY();
                 animateShowing();
-                return true;
+                break;
             case MotionEvent.ACTION_UP:
                 if (AppHelper.isEdged(context)) {
                     moveToEdge();
@@ -259,17 +278,25 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                     }
                 }
                 animateHidden();
-                return true;
+                break;
             case MotionEvent.ACTION_MOVE:
-                paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
-                paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
-                try {
-                    windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, paramsF);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (paramsF.y >= 0 && paramsF.y < (szWindow.y - AppHelper.getFinalSize(context))) {
+                    paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
+                    paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
+                    try {
+                        windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, paramsF);
+                        rParams.x = paramsF.x;
+                        rParams.y = paramsF.y + AppHelper.getFinalSize(context);
+                        windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, rParams);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    animateShowing();
                 }
-                animateShowing();
-                return true;
+                if (paramsF.y < 0) {
+                    paramsF.y = 0;
+                }
+                break;
         }
         return false;
     }
@@ -284,14 +311,14 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                         long step = (500 - t) / 5;
                         paramsF.x = (int) (double) bounceValue(step, x) - floatingImage.getWidth();
                         try {
-                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, paramsF);
+                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, paramsF);
                         } catch (Exception ignored) {}
                     }
 
                     public void onFinish() {
                         paramsF.x = 0;
                         try {
-                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, paramsF);
+                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, paramsF);
                         } catch (Exception ignored) {}
                         if (AppHelper.isSavePositionEnabled(context)) {
                             AppHelper.savePosition(context, paramsF.y, paramsF.x);
@@ -306,14 +333,14 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                         long step = (500 - t) / 5;
                         paramsF.x = szWindow.x + (int) (double) bounceValue(step, x);
                         try {
-                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, paramsF);
+                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, paramsF);
                         } catch (Exception ignored) {}
                     }
 
                     public void onFinish() {
                         paramsF.x = szWindow.x - floatingImage.getWidth();
                         try {
-                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, paramsF);
+                            windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, paramsF);
                         } catch (Exception ignored) {}
                         if (AppHelper.isSavePositionEnabled(context)) {
                             AppHelper.savePosition(context, paramsF.y, paramsF.x);

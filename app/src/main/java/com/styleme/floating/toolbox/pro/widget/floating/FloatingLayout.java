@@ -269,7 +269,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 initialTouchX = event.getRawX();
                 initialTouchY = event.getRawY();
                 animateShowing();
-                return true;
+                break;
             case MotionEvent.ACTION_UP:
                 if (AppHelper.isEdged(context)) {
                     moveToEdge();
@@ -279,7 +279,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                     }
                 }
                 animateHidden();
-                return true;
+                break;
             case MotionEvent.ACTION_MOVE:
                 paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
                 paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
@@ -299,7 +299,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
                     e.printStackTrace();
                 }
                 animateShowing();
-                return true;
+                break;
         }
         return false;
     }
