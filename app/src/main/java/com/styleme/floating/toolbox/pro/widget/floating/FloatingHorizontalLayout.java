@@ -22,12 +22,11 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.styleme.floating.toolbox.pro.AppController;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.global.adapter.RecyclerFloatingAdapter;
 import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
+import com.styleme.floating.toolbox.pro.global.helper.EventTrackerHelper;
 import com.styleme.floating.toolbox.pro.global.helper.Notifier;
 import com.styleme.floating.toolbox.pro.global.loader.MyPopupAppsLoader;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
@@ -65,7 +64,6 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
     private Point szWindow = new Point();
     private ImageView floatingImage;
     private MyPopupAppsLoader onMyAppsLoader;
-    private Tracker tracker = AppController.getController().tracker();
     private View view;
 
     public FloatingHorizontalLayout(Context context) {
@@ -76,12 +74,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         adapter = new RecyclerFloatingAdapter(this, new ArrayList<AppsModel>());
         gestureDetector = new GestureDetector(context, new GestureListener(this));
         initWindows();
-        tracker.setScreenName("FloatingHorizontalLayout");
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-        eventBuilder.setCategory("FloatingHorizontalLayout")
-                .setAction("Init")
-                .setLabel("FloatingLayout");
-        tracker.send(eventBuilder.build());
+        EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "FloatingHorizontalLayout", "Init");
     }
 
     private void initWindows() {
@@ -200,46 +193,27 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         if (AppController.getController().eventBus().isRegistered(this)) {
             AppController.getController().eventBus().unregister(this);
         }
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-        eventBuilder
-                .setCategory("FloatingHorizontalLayout")
-                .setAction("onDestroy")
-                .setLabel("onDestroy");
-        tracker.send(eventBuilder.build());
+        EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onDestroy", "onDestroy");
     }
 
     @Override
     public void onClick() {
-        animateShowing();
-        try {
-            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
+        if (view != null) {
+            animateShowing();
             if (view.isShown()) {
                 hideRecycler();
-                eventBuilder.setCategory("FloatingHorizontalLayout")
-                        .setAction("hide")
-                        .setLabel("onClick");
+                EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "OnClick", "Hide");
             } else {
                 showRecycler();
-                eventBuilder.setCategory("FloatingHorizontalLayout")
-                        .setAction("show")
-                        .setLabel("onClick");
-
+                EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onClick", "Show");
             }
-            tracker.send(eventBuilder.build());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void onLongClick() {
         Notifier.createNotification(context, adapter.getItemCount());
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-        eventBuilder
-                .setCategory("FloatingHorizontalLayout")
-                .setAction("onLongClick")
-                .setLabel("onLongClick");
-        tracker.send(eventBuilder.build());
+        EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onLongClick", "onLongClick");
     }
 
     @Override
@@ -250,12 +224,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(startMain);
         }
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-        eventBuilder
-                .setCategory("FloatingHorizontalLayout")
-                .setAction("onDoubleClick")
-                .setLabel("onDoubleClick");
-        tracker.send(eventBuilder.build());
+        EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onDoubleClick", "onDoubleClick");
     }
 
     @Override
@@ -280,21 +249,23 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
                 animateHidden();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (paramsF.y >= 0 && paramsF.y < (szWindow.y - AppHelper.getFinalSize(context))) {
+                if (paramsF.y < 0) {
+                    paramsF.y = 0;
+                }
+                if (paramsF.y >= 0 || paramsF.y <= (szWindow.y - AppHelper.getFinalSize(context))) {
                     paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
                     paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
                     try {
                         windowManager.updateViewLayout(FloatingHorizontalLayout.this.floatingImage, paramsF);
-                        rParams.x = paramsF.x;
-                        rParams.y = paramsF.y + AppHelper.getFinalSize(context);
-                        windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, rParams);
+                        if (view.isShown()) {
+                            showRecycler();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     animateShowing();
-                }
-                if (paramsF.y < 0) {
-                    paramsF.y = 0;
+                } else if (paramsF.y > (szWindow.y - AppHelper.getFinalSize(context))) {
+                    paramsF.y = (szWindow.y - AppHelper.getFinalSize(context));
                 }
                 break;
         }
@@ -361,20 +332,12 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             context.startActivity(intent);
             appsModel.updateEntry(appsModel.getPackageName());
-            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-            eventBuilder
-                    .setCategory("FloatingHorizontalLayout")
-                    .setAction("Open App")
-                    .setLabel(appsModel.getAppName() == null ? appsModel.getPackageName() : appsModel.getAppName());
-            tracker.send(eventBuilder.build());
+            EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onAppClick", "onAppClick", appsModel.getAppName() == null ? appsModel
+                    .getPackageName() : appsModel.getAppName());
+
         } catch (Exception e) {
             e.printStackTrace();
-            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-            eventBuilder
-                    .setCategory("FloatingHorizontalLayout")
-                    .setAction("Open App Exception")
-                    .setLabel(e.getMessage() == null ? "Open App Crash" : e.getMessage());
-            tracker.send(eventBuilder.build());
+            EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onAppClick", "Crash!!!", e.getMessage());
         }
         hideRecycler();
     }
@@ -382,12 +345,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
     @Override
     public void onReset() {
         adapter.clear();
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-        eventBuilder
-                .setCategory("FloatingHorizontalLayout")
-                .setAction("onReset")
-                .setLabel("Adapter Reset");
-        tracker.send(eventBuilder.build());
+        EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onReset", "onReset");
     }
 
     private void animateHidden() {
@@ -414,12 +372,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             if (adapter != null) {
                 adapter.insert(data);
             }
-            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-            eventBuilder
-                    .setCategory("FloatingHorizontalLayout")
-                    .setAction("onLoadCompleteListener")
-                    .setLabel("new Data: " + data.size());
-            tracker.send(eventBuilder.build());
+            EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onLoadCompleteListener", "onLoadCompleteListener", "new Data: " + data.size());
         }
     };
 
@@ -428,22 +381,12 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             setupParams();
             setupFloatingImage(true);
             animateHidden();
-            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-            eventBuilder
-                    .setCategory("FloatingHorizontalLayout")
-                    .setAction("onEvent")
-                    .setLabel("EventType.SETTINGS_CHANGE");
-            tracker.send(eventBuilder.build());
+            EventTrackerHelper.sendEvent("onEvent", "onLoadCompleteListener", "EventType.SETTINGS_CHANGE");
         } else if (eventsModel != null && eventsModel.getEventType() == EventType.PREVIEW) {
             mParams.height = AppHelper.toPx(context, eventsModel.getPreviewSize());
             mParams.width = AppHelper.toPx(context, eventsModel.getPreviewSize());
             try {
-                HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
-
-                eventBuilder
-                        .setCategory("FloatingHorizontalLayout")
-                        .setAction("onEvent")
-                        .setLabel("EventType.PREVIEW");
+                EventTrackerHelper.sendEvent("onEvent", "onLoadCompleteListener", "EventType.PREVIEW");
                 if (windowManager != null) {
                     windowManager.updateViewLayout(FloatingHorizontalLayout.this.view, mParams);
                     new Handler().postDelayed(new Runnable() {
@@ -468,7 +411,5 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
     }
 
     @Override
-    public void onItemLongClickListener(RecyclerView.ViewHolder viewHolder, View view, int position) {
-
-    }
+    public void onItemLongClickListener(RecyclerView.ViewHolder viewHolder, View view, int position) {}
 }
