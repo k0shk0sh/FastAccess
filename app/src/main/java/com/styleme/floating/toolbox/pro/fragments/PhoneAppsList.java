@@ -1,5 +1,6 @@
 package com.styleme.floating.toolbox.pro.fragments;
 
+import android.animation.Animator;
 import android.app.LoaderManager;
 import android.app.SearchManager;
 import android.content.Context;
@@ -16,21 +17,23 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.styleme.floating.toolbox.pro.AppController;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.activities.Home;
 import com.styleme.floating.toolbox.pro.global.adapter.AppsAdapter;
-import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
 import com.styleme.floating.toolbox.pro.global.loader.AppsLoader;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
 import com.styleme.floating.toolbox.pro.global.model.EventType;
@@ -40,6 +43,7 @@ import com.styleme.floating.toolbox.pro.global.service.FloatingService;
 import com.styleme.floating.toolbox.pro.widget.EmptyRecyclerView;
 import com.styleme.floating.toolbox.pro.widget.FontTextView;
 import com.styleme.floating.toolbox.pro.widget.impl.OnItemClickListener;
+import com.styleme.floating.toolbox.pro.widget.impl.OnScrollListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,8 +58,7 @@ import butterknife.ButterKnife;
  * Created by Kosh on 9/3/2015. copyrights are reserved
  */
 public class PhoneAppsList extends Fragment implements OnItemClickListener,
-        LoaderManager.LoaderCallbacks<List<AppsModel>>,
-        SearchView.OnQueryTextListener, ActionMode.Callback {
+        LoaderManager.LoaderCallbacks<List<AppsModel>>, SearchView.OnQueryTextListener {
 
     @Bind(R.id.recycler)
     EmptyRecyclerView recycler;
@@ -63,9 +66,12 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
     ProgressBar progressBar;
     @Bind(R.id.emptyText)
     FontTextView emptyText;
+    ImageView back;
+    ImageView addApps;
+    FrameLayout actionmode;
+    TextView appCount;
     private AppsAdapter adapter;
-    private HashMap<Integer, AppsModel> selectedApps = new LinkedHashMap<>();
-    private ActionMode actionMode;
+    public HashMap<Integer, AppsModel> selectedApps = new LinkedHashMap<>();
 
 
     @Override
@@ -86,13 +92,46 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        actionmode = (FrameLayout) getActivity().findViewById(R.id.actionmode);
+        back = (ImageView) getActivity().findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearSelection();
+            }
+        });
+        addApps = (ImageView) getActivity().findViewById(R.id.addApps);
+        addApps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (Map.Entry<Integer, AppsModel> apps : selectedApps.entrySet()) {
+                    apps.getValue().setAppPosition(new AppsModel().lastPosition() + apps.getKey() + 1);
+                    apps.getValue().save();
+                    adapter.remove(apps.getValue());
+                }
+                Intent intent = new Intent(MyAppsReceiver.DATA_ADDED);
+                AppController.getController().sendBroadcast(intent);
+                startFloating();
+                postCount();
+                clearSelection();
+            }
+        });
+        appCount = (TextView) getActivity().findViewById(R.id.appCount);
         GridLayoutManager manager = new GridLayoutManager(getContext(), getResources().getInteger(R.integer.num_row));
         recycler.setEmptyView(emptyText);
         recycler.setItemAnimator(new DefaultItemAnimator());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(manager);
         recycler.setAdapter(adapter);
+        recycler.addOnScrollListener(onScrollListener);
         getActivity().getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void clearSelection() {
+        selectedApps.clear();
+        adapter.clearSelection();
+        appCount.setText("");
+        onScrollListener.onHide();
     }
 
     @Override
@@ -110,17 +149,15 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
             adapter.setItemChecked(position, false);
         }
         if (selectedApps.size() != 0) {
-            if (actionMode == null) {
-                actionMode = getActivity().findViewById(R.id.toolbar).startActionMode(this);
-            }
             if (selectedApps.size() > 1) {
-                actionMode.setTitle("Add ( " + selectedApps.size() + " Apps )");
+                appCount.setText("Add ( " + selectedApps.size() + " Apps )");
             } else {
-                actionMode.setTitle("Add ( " + selectedApps.size() + " App )");
+                appCount.setText("Add ( " + selectedApps.size() + " App )");
             }
+            onScrollListener.onShow();
         } else {
-            actionMode.finish();
-            actionMode = null;
+            appCount.setText("");
+            onScrollListener.onHide();
         }
     }
 
@@ -181,47 +218,6 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
         return false;
     }
 
-    @Override
-    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mode.getMenuInflater().inflate(R.menu.menu_action, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // i f***ing  hate android sometimes.
-            getActivity().getWindow().setStatusBarColor(AppHelper.getPrimaryDarkColor(AppHelper.getPrimaryColor(getActivity())));
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        if (item.getItemId() == R.id.addApp) {
-            for (Map.Entry<Integer, AppsModel> apps : selectedApps.entrySet()) {
-                apps.getValue().setAppPosition(new AppsModel().lastPosition() + apps.getKey() + 1);
-                apps.getValue().save();
-                adapter.remove(apps.getValue());
-            }
-            Intent intent = new Intent(MyAppsReceiver.DATA_ADDED);
-            AppController.getController().sendBroadcast(intent);
-            mode.finish();
-            startFloating();
-            postCount();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onDestroyActionMode(ActionMode mode) {
-        actionMode = null;
-        selectedApps.clear();
-        adapter.clearSelection();
-
-    }
-
     private void postCount() {
         EventsModel eventsModel = new EventsModel();
         eventsModel.setEventType(EventType.APPS_COUNT);
@@ -252,5 +248,57 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
         }
     }
 
+    public OnScrollListener onScrollListener = new OnScrollListener() {
+        @Override
+        public void onHide() {
+            actionmode.animate().translationY(actionmode.getHeight()).setInterpolator(new AccelerateInterpolator())
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {}
 
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            actionmode.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+        }
+
+        @Override
+        public void onShow() {
+            if (selectedApps != null && selectedApps.size() > 0) {
+                actionmode.animate().translationY(0).setInterpolator(new AccelerateInterpolator())
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                actionmode.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+            }
+        }
+    };
 }

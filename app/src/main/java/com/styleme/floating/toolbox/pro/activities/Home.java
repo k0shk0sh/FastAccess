@@ -16,12 +16,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.styleme.floating.toolbox.pro.AppController;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.activities.base.BaseActivity;
 import com.styleme.floating.toolbox.pro.fragments.MyAppsList;
+import com.styleme.floating.toolbox.pro.fragments.PhoneAppsList;
 import com.styleme.floating.toolbox.pro.global.adapter.PagerAdapter;
 import com.styleme.floating.toolbox.pro.global.helper.AppHelper;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
@@ -48,6 +52,12 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+    @Bind(R.id.back)
+    ImageView back;
+    @Bind(R.id.addApps)
+    ImageView addApps;
+    @Bind(R.id.actionmode)
+    FrameLayout actionmode;
 
     @Override
     protected int layout() {
@@ -80,6 +90,7 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
         tabs.setBackgroundColor(AppHelper.getPrimaryColor(this));
         tabs.setSelectedTabIndicatorColor(AppHelper.getAccentColor(this));
         viewpager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        actionmode.setBackgroundColor(AppHelper.getAccentColor(this));
         tabs.setupWithViewPager(viewpager);
         setupTabs();
         if (new AppsModel().countAll() != 0) {
@@ -88,6 +99,21 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
     }
 
     private void setupTabs() {
+        viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if (position == 1) {
+                    if (actionmode.isShown())
+                        actionmode.setVisibility(View.GONE);
+                } else if (position == 0) {
+                    PhoneAppsList appFragment = (PhoneAppsList) viewpager.getAdapter().instantiateItem(viewpager, position);
+                    if (appFragment != null && appFragment.selectedApps != null && appFragment.selectedApps.size() > 0) {
+                        appFragment.onScrollListener.onShow();
+                    }
+                }
+            }
+        });
         if (tabs.getTabAt(0) != null) {
             tabs.getTabAt(0).setIcon(R.drawable.ic_apps_selector);
         }
