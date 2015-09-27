@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.query.Delete;
@@ -145,9 +146,16 @@ public class AppsModel extends Model {
 
     public void add(List<AppsModel> modelList) {
         if (modelList != null && modelList.size() != 0) {
-            for (AppsModel model : modelList) {
-                model.save();
+            ActiveAndroid.beginTransaction();
+            try {
+                for (AppsModel model : modelList) {
+                    model.save();
+                }
+                ActiveAndroid.setTransactionSuccessful();
+            } finally {
+                ActiveAndroid.endTransaction();
             }
+
         }
     }
 

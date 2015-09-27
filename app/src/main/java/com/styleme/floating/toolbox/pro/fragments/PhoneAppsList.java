@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
 import com.styleme.floating.toolbox.pro.AppController;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.activities.Home;
@@ -104,10 +105,16 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
         addApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (Map.Entry<Integer, AppsModel> apps : selectedApps.entrySet()) {
-                    apps.getValue().setAppPosition(new AppsModel().lastPosition() + apps.getKey() + 1);
-                    apps.getValue().save();
-                    adapter.remove(apps.getValue());
+                ActiveAndroid.beginTransaction();
+                try {
+                    for (Map.Entry<Integer, AppsModel> apps : selectedApps.entrySet()) {
+                        apps.getValue().setAppPosition(new AppsModel().lastPosition() + apps.getKey() + 1);
+                        apps.getValue().save();
+                        adapter.remove(apps.getValue());
+                    }
+                    ActiveAndroid.setTransactionSuccessful();
+                } finally {
+                    ActiveAndroid.endTransaction();
                 }
                 Intent intent = new Intent(MyAppsReceiver.DATA_ADDED);
                 AppController.getController().sendBroadcast(intent);
