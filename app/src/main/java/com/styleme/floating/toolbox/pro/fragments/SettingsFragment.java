@@ -45,7 +45,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private static String[] EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +67,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         customImage.setOnPreferenceClickListener(this);
         customIcon = getPreferenceManager().findPreference("customIcon");
         customIcon.setOnPreferenceClickListener(this);
+        getPreferenceManager().findPreference("fa_always_showing").setOnPreferenceClickListener(this);
         getPreferenceScreen().findPreference("fa_horizontal").setOnPreferenceClickListener(this);
         getPreferenceScreen().findPreference("fa_background_alpha").setOnPreferenceClickListener(this);
+//        getPreferenceManager().findPreference("auto_order").setOnPreferenceClickListener(this);
         primary.onColorSelect(this);
         accent.onColorSelect(this);
         ColorPreference fa_background = (ColorPreference) getPreferenceManager().findPreference("fa_background");
@@ -121,11 +122,24 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             backgroundAlphaFragment.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "ALPHA");
             return true;
         } else if (preference.getKey().equalsIgnoreCase("fa_horizontal")) {
-            getActivity().stopService(new Intent(getActivity(), FloatingService.class));
-            getActivity().startService(new Intent(getActivity(), FloatingService.class));
+            restartService();
+            return true;
+        } else if (preference.getKey().equalsIgnoreCase("fa_always_showing")) {
+            restartService();
             return true;
         }
+//        else if (preference.getKey().equalsIgnoreCase("auto_order")) {
+//            Intent intent = new Intent(MyAppsReceiver.REARRANGED);
+//            AppController.getController().sendBroadcast(intent);
+//            postToService();
+//            return true;
+//        }
         return false;
+    }
+
+    private void restartService() {
+        getActivity().stopService(new Intent(getActivity(), FloatingService.class));
+        getActivity().startService(new Intent(getActivity(), FloatingService.class));
     }
 
     private void doRestore() {

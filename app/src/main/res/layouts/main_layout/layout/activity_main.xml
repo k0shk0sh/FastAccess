@@ -17,7 +17,7 @@
             android:id="@+id/actionmode"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:layout_gravity="bottom"
+            android:layout_gravity="top"
             android:background="?colorAccent"
             android:gravity="center"
             android:orientation="vertical"

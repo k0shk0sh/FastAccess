@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:minHeight="?android:listPreferredItemHeight"
-    android:paddingRight="?android:scrollbarSize">
+    android:paddingRight="?android:scrollbarSize"
+    android:paddingEnd="?android:scrollbarSize">
 
     <RelativeLayout
         android:layout_width="0.0dip"
@@ -16,7 +17,7 @@
         android:layout_marginTop="12.0dip"
         android:layout_weight="1.0">
 
-        <TextView
+        <com.styleme.floating.toolbox.pro.widget.FontTextView
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

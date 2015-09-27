@@ -135,6 +135,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
             if (popupWindow != null) {
                 if (adapter != null) {
                     popupWindow.setContentWidth(measureContentWidth(adapter));
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
@@ -154,7 +155,11 @@ public class FloatingLayout implements OnFloatingTouchListener {
                     animateHidden();
                 }
             });
-            popupWindow.setModal(true);
+            if (AppHelper.isAlwaysShowing(context)) {
+                popupWindow.setForceIgnoreOutsideTouch(true);
+            } else {
+                popupWindow.setModal(true);
+            }
             popupWindow.setAdapter(adapter);
             popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
             popupWindow.setAnchorView(floatingImage);
@@ -330,15 +335,16 @@ public class FloatingLayout implements OnFloatingTouchListener {
             appsModel.updateEntry(appsModel.getPackageName());
             EventTrackerHelper.sendEvent("FloatingLayout", "onAppClick()", "onAppClick()", appsModel.getAppName() == null ? appsModel
                     .getPackageName() : appsModel.getAppName());
-
         } catch (Exception e) {
             e.printStackTrace();
             EventTrackerHelper.sendEvent("FloatingLayout", "onAppClick()", "onAppClick()", "Crash " + e.getMessage());
         }
-        if (popupWindow.isShowing()) {
-            popupWindow.dismiss();
-        } else {
-            popupWindow.show();
+        if (popupWindow != null) {
+            if (!AppHelper.isAlwaysShowing(context)) {
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+            }
         }
     }
 

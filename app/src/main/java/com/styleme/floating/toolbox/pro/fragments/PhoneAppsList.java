@@ -251,7 +251,7 @@ public class PhoneAppsList extends Fragment implements OnItemClickListener,
     public OnScrollListener onScrollListener = new OnScrollListener() {
         @Override
         public void onHide() {
-            actionmode.animate().translationY(actionmode.getHeight()).setInterpolator(new AccelerateInterpolator())
+            actionmode.animate().translationY(-actionmode.getHeight()).setInterpolator(new AccelerateInterpolator())
                     .setListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animation) {}

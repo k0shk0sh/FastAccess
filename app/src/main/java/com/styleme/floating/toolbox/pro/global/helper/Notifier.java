@@ -30,6 +30,7 @@ public class Notifier {
             icon = R.drawable.ic_notification;
         }
         return new NotificationCompat.Builder(context)
+                .setPriority(Notification.PRIORITY_LOW)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(context.getString(R.string.manage))
                 .setSmallIcon(icon)
@@ -52,6 +53,7 @@ public class Notifier {
             icon = R.drawable.ic_notification;
         }
         notificationBuilder
+                .setPriority(Notification.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setWhen(finalTime)
                 .setSmallIcon(icon)

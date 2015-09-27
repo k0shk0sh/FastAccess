@@ -339,7 +339,9 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             e.printStackTrace();
             EventTrackerHelper.sendEvent("FloatingHorizontalLayout", "onAppClick", "Crash!!!", e.getMessage());
         }
-        hideRecycler();
+        if (!AppHelper.isAlwaysShowing(context)) {
+            hideRecycler();
+        }
     }
 
     @Override

@@ -21,6 +21,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
 
+import com.styleme.floating.toolbox.pro.BuildConfig;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.global.model.AppsModel;
 
@@ -414,5 +415,17 @@ public class AppHelper {
 
     public static boolean isHorizontal(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("fa_horizontal", false);
+    }
+
+    public static boolean isAlwaysShowing(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("fa_always_showing", false);
+    }
+
+    public static void setHasSeenInAppNew(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("version_code", BuildConfig.VERSION_CODE).apply();
+    }
+
+    public static boolean hasSeenInAppNew(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("version_code", 0) == BuildConfig.VERSION_CODE;
     }
 }

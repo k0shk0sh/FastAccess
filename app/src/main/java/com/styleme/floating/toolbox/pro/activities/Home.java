@@ -1,5 +1,6 @@
 package com.styleme.floating.toolbox.pro.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.styleme.floating.toolbox.pro.AppController;
+import com.styleme.floating.toolbox.pro.BuildConfig;
 import com.styleme.floating.toolbox.pro.R;
 import com.styleme.floating.toolbox.pro.activities.base.BaseActivity;
 import com.styleme.floating.toolbox.pro.fragments.MyAppsList;
@@ -80,6 +83,7 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
         if (!AppHelper.hasSeenWhatsNew(this)) {
             startActivity(new Intent(this, IntroActivity.class));
         }
+        showWhatsNew();
         AppController.getController().eventBus().register(this);
         drawerLayout.setStatusBarBackgroundColor(AppHelper.getPrimaryDarkColor(AppHelper.getPrimaryColor(this)));
         navView.setItemIconTintList(ColorStateList.valueOf(AppHelper.getAccentColor(this)));
@@ -90,7 +94,7 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
         tabs.setBackgroundColor(AppHelper.getPrimaryColor(this));
         tabs.setSelectedTabIndicatorColor(AppHelper.getAccentColor(this));
         viewpager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-        actionmode.setBackgroundColor(AppHelper.getAccentColor(this));
+        actionmode.setBackgroundColor(AppHelper.getPrimaryColor(this));
         tabs.setupWithViewPager(viewpager);
         setupTabs();
         if (new AppsModel().countAll() != 0) {
@@ -103,11 +107,12 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                PhoneAppsList appFragment = (PhoneAppsList) viewpager.getAdapter().instantiateItem(viewpager, 0);
                 if (position == 1) {
                     if (actionmode.isShown())
-                        actionmode.setVisibility(View.GONE);
+                        if (appFragment != null) appFragment.onScrollListener.onHide();
+                        else actionmode.setVisibility(View.GONE);
                 } else if (position == 0) {
-                    PhoneAppsList appFragment = (PhoneAppsList) viewpager.getAdapter().instantiateItem(viewpager, position);
                     if (appFragment != null && appFragment.selectedApps != null && appFragment.selectedApps.size() > 0) {
                         appFragment.onScrollListener.onShow();
                     }
@@ -222,6 +227,29 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
         return true;
     }
 
+    private void showWhatsNew() {
+        if (!AppHelper.hasSeenInAppNew(this)) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.in_app_news_title) + " " + BuildConfig.VERSION_NAME)
+                    .setMessage(R.string.in_app_news)
+                    .setPositiveButton(getString(R.string.heart_fa), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AppHelper.setHasSeenInAppNew(Home.this);
+                            openMarket();
+                        }
+                    })
+                    .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AppHelper.setHasSeenInAppNew(Home.this);
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+    }
+
     private void openMarket() {
         Intent i;
         try {
@@ -257,6 +285,22 @@ public class Home extends BaseActivity implements NavigationView.OnNavigationIte
             } else {
                 startService(new Intent(this, FloatingService.class));
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        int inSelection = 0;
+        if (viewpager.getCurrentItem() == 0) { //if we are only at the PhoneAppsList Fragment.
+            PhoneAppsList list = (PhoneAppsList) viewpager.getAdapter().instantiateItem(viewpager, 0);
+            if (list != null && list.selectedApps != null) {
+                inSelection = list.selectedApps.size();
+            }
+        }
+        if (actionmode.isShown() || inSelection > 0) {
+            back.performClick();
+        } else {
+            super.onBackPressed();
         }
     }
 }

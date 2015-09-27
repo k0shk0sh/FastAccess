@@ -41,7 +41,6 @@
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 app:colorful="true"/>
 
             <com.styleme.floating.toolbox.pro.widget.FontTextView
@@ -53,6 +52,7 @@
                 android:paddingLeft="8dip"
                 android:paddingRight="8dip"
                 android:textColor="@color/white"
+                android:textStyle="bold"
                 app:colorful="true"/>
         </LinearLayout>
 

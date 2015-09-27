@@ -5,7 +5,7 @@
     android:layout_height="48dp"
     android:gravity="center_vertical">
 
-    <TextView
+    <com.styleme.floating.toolbox.pro.widget.FontTextView
         android:id="@+id/menurow_title"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"

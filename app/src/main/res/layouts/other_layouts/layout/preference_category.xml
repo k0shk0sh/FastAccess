@@ -9,7 +9,7 @@
     android:paddingRight="16.0dip"
     android:paddingTop="16.0dip">
 
-    <TextView
+    <com.styleme.floating.toolbox.pro.widget.FontTextView
         android:id="@android:id/title"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"

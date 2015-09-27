@@ -61,7 +61,7 @@ public class IconCache {
     private final Bitmap mDefaultIcon;
     private final Context mContext;
     private final PackageManager mPackageManager;
-    private final HashMap<ComponentName, CacheEntry> mCache = new HashMap<ComponentName, CacheEntry>(INITIAL_ICON_CACHE_CAPACITY);
+    private final HashMap<ComponentName, CacheEntry> mCache = new HashMap<>(INITIAL_ICON_CACHE_CAPACITY);
     private int mIconDpi;
     private static int sIconWidth = -1;
     private static int sIconHeight = -1;
@@ -83,13 +83,10 @@ public class IconCache {
     static int sColorIndex = 0;
 
     public IconCache(Context context) {
-        ActivityManager activityManager =
-                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         mContext = context;
         mPackageManager = context.getPackageManager();
         mIconDpi = activityManager.getLauncherLargeIconDensity();
-
         // need to set mIconDpi before getting default icon
         mDefaultIcon = makeDefaultIcon();
         mIconPackHelper = new IconPackHelper(context);
@@ -143,8 +140,7 @@ public class IconCache {
     public Drawable getFullResIcon(ActivityInfo info) {
         Resources resources;
         try {
-            resources = mPackageManager.getResourcesForApplication(
-                    info.applicationInfo);
+            resources = mPackageManager.getResourcesForApplication(info.applicationInfo);
         } catch (PackageManager.NameNotFoundException e) {
             resources = null;
         }
@@ -224,7 +220,6 @@ public class IconCache {
             if (resolveInfo == null || component == null) {
                 return null;
             }
-
             CacheEntry entry = cacheLocked(component, resolveInfo, labelCache);
             return entry.icon;
         }
@@ -258,8 +253,7 @@ public class IconCache {
             }
 
             Drawable icon = getFullResIcon(info);
-            if (mIconPackHelper.isIconPackLoaded() && (mIconPackHelper
-                    .getResourceIdForActivityIcon(info.activityInfo) == 0)) {
+            if (mIconPackHelper.isIconPackLoaded() && (mIconPackHelper.getResourceIdForActivityIcon(info.activityInfo) == 0)) {
                 entry.icon = createIconBitmap(icon, mContext, mIconPackHelper.getIconBack(), mIconPackHelper.getIconMask(), mIconPackHelper
                         .getIconUpon(), mIconPackHelper.getIconScale());
             } else {
@@ -346,32 +340,16 @@ public class IconCache {
             // no intrinsic size --> use default size
             int textureWidth = sIconTextureWidth;
             int textureHeight = sIconTextureHeight;
-
-            final Bitmap bitmap = Bitmap.createBitmap(textureWidth, textureHeight,
-                    Bitmap.Config.ARGB_8888);
+            final Bitmap bitmap = Bitmap.createBitmap(textureWidth, textureHeight, Bitmap.Config.ARGB_8888);
             final Canvas canvas = sCanvas;
             canvas.setBitmap(bitmap);
-
             final int left = (textureWidth - width) / 2;
             final int top = (textureHeight - height) / 2;
-
-            @SuppressWarnings("all") // suppress dead code warning
-            final boolean debug = false;
-            if (debug) {
-                // draw a big box for the icon for debugging
-                canvas.drawColor(sColors[sColorIndex]);
-                if (++sColorIndex >= sColors.length) sColorIndex = 0;
-                Paint debugPaint = new Paint();
-                debugPaint.setColor(0xffcccc00);
-                canvas.drawRect(left, top, left + width, top + height, debugPaint);
-            }
-
             sOldBounds.set(icon.getBounds());
             icon.setBounds(left, top, left + width, top + height);
             icon.draw(canvas);
             icon.setBounds(sOldBounds);
             canvas.setBitmap(null);
-
             return bitmap;
         }
     }
@@ -383,7 +361,6 @@ public class IconCache {
             }
             int width = sIconWidth;
             int height = sIconHeight;
-
             if (icon instanceof PaintDrawable) {
                 PaintDrawable painter = (PaintDrawable) icon;
                 painter.setIntrinsicWidth(width);
@@ -416,21 +393,8 @@ public class IconCache {
                     Bitmap.Config.ARGB_8888);
             final Canvas canvas = sCanvas;
             canvas.setBitmap(bitmap);
-
             final int left = (textureWidth - width) / 2;
             final int top = (textureHeight - height) / 2;
-
-            @SuppressWarnings("all") // suppress dead code warning
-            final boolean debug = false;
-            if (debug) {
-                // draw a big box for the icon for debugging
-                canvas.drawColor(sColors[sColorIndex]);
-                if (++sColorIndex >= sColors.length) sColorIndex = 0;
-                Paint debugPaint = new Paint();
-                debugPaint.setColor(0xffcccc00);
-                canvas.drawRect(left, top, left + width, top + height, debugPaint);
-            }
-
             sOldBounds.set(icon.getBounds());
             icon.setBounds(left, top, left + width, top + height);
             canvas.save();
@@ -439,14 +403,12 @@ public class IconCache {
             canvas.restore();
             if (iconMask != null) {
                 iconMask.setBounds(icon.getBounds());
-                ((BitmapDrawable) iconMask).getPaint().setXfermode(
-                        new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+                ((BitmapDrawable) iconMask).getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
                 iconMask.draw(canvas);
             }
             if (iconBack != null) {
                 canvas.setBitmap(null);
-                Bitmap finalBitmap = Bitmap.createBitmap(textureWidth, textureHeight,
-                        Bitmap.Config.ARGB_8888);
+                Bitmap finalBitmap = Bitmap.createBitmap(textureWidth, textureHeight, Bitmap.Config.ARGB_8888);
                 canvas.setBitmap(finalBitmap);
                 iconBack.setBounds(icon.getBounds());
                 iconBack.draw(canvas);
@@ -467,13 +429,11 @@ public class IconCache {
         final Resources resources = context.getResources();
         final DisplayMetrics metrics = resources.getDisplayMetrics();
         final float density = metrics.density;
-
         sIconWidth = sIconHeight = (int) resources.getDimension(android.R.dimen.app_icon_size);
         sIconTextureWidth = sIconTextureHeight = sIconWidth;
         sBlurPaint.setMaskFilter(new BlurMaskFilter(5 * density, BlurMaskFilter.Blur.NORMAL));
         sGlowColorPressedPaint.setColor(0xffffc300);
         sGlowColorFocusedPaint.setColor(0xffff8e00);
-
         ColorMatrix cm = new ColorMatrix();
         cm.setSaturation(0.2f);
         sDisabledPaint.setColorFilter(new ColorMatrixColorFilter(cm));

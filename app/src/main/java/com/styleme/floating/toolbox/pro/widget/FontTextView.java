@@ -50,7 +50,13 @@ public class FontTextView extends AppCompatTextView {
             }
             a.recycle();
         }
-        Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/app_font.ttf");
-        setTypeface(myTypeface);
+        if (getTypeface().isBold()) {
+            Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/app_font_bold.ttf");
+            setTypeface(myTypeface);
+
+        } else {
+            Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/app_font.ttf");
+            setTypeface(myTypeface);
+        }
     }
 }

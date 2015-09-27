@@ -2,10 +2,11 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="UI Customization">
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="App Theme">
         <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
             android:defaultValue="@color/primary"
             android:key="primary_color"
+            android:layout="@layout/custom_settings"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:summary="@string/toolbar_color_summery"
@@ -16,6 +17,7 @@
         <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
             android:defaultValue="@color/accent"
             android:key="accent_color"
+            android:layout="@layout/custom_settings"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:summary="@string/accent_summery"
@@ -32,7 +34,66 @@
             android:title="@string/dark_theme_title"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
     </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
-    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="@string/general_settings">
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="FA Modes">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="fa_horizontal"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="@string/fa_mode_summery"
+            android:title="@string/fa_mode_title"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <!--<CheckBoxPreference-->
+            <!--android:defaultValue="false"-->
+            <!--android:key="auto_order"-->
+            <!--android:layout="@layout/custom_settings"-->
+            <!--android:persistent="true"-->
+            <!--android:summary="@string/auto_order_summery"-->
+            <!--android:title="@string/auto_order_title"-->
+            <!--android:widgetLayout="@layout/preference_dynamiccheckbox"/>-->
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="autoTrans"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="@string/auto_trans_summery"
+            android:title="@string/auto_trans"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="fa_always_showing"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="@string/always_open__summery"
+            android:title="Always Showing"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="status_bar_hidden"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="@string/status_bar_summery"
+            android:title="@string/status_bar_title"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+    </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="FA Theme">
+        <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
+            android:defaultValue="@color/transparent"
+            android:key="fa_background"
+            android:layout="@layout/custom_settings"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="@string/background_summery"
+            android:title="@string/background_title"
+            app:choices="@array/fa_background"
+            app:itemLayout="@layout/dash_grid_item_color"
+            app:numColumns="5"/>
+        <Preference
+            android:key="fa_background_alpha"
+            android:layout="@layout/custom_settings"
+            android:persistent="false"
+            android:summary="@string/background_transparency_summery"
+            android:title="@string/background_transparency_title"/>
         <Preference
             android:defaultValue=""
             android:key="icon_pack"
@@ -47,22 +108,6 @@
             android:persistent="false"
             android:summary="@string/custom_icon_summery"
             android:title="@string/custom_icon"/>
-        <ListPreference
-            android:defaultValue="medium"
-            android:dialogTitle="@string/choose_icon_size"
-            android:entries="@array/icon_size"
-            android:entryValues="@array/icon_size"
-            android:key="size"
-            android:summary="@string/size_summery"
-            android:title="@string/icon_size"/>
-        <ListPreference
-            android:defaultValue="small"
-            android:dialogTitle="@string/choose_icon_size"
-            android:entries="@array/icon_gap"
-            android:entryValues="@array/icon_gap"
-            android:key="gap"
-            android:summary="@string/gap_summery"
-            android:title="@string/gap_title"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="customImage"
@@ -71,6 +116,36 @@
             android:summary="@string/custom_image_summery"
             android:title="@string/custom_image"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+    </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="Icons Size">
+        <ListPreference
+            android:defaultValue="medium"
+            android:dialogTitle="@string/choose_icon_size"
+            android:entries="@array/icon_size"
+            android:entryValues="@array/icon_size"
+            android:key="size"
+            android:layout="@layout/custom_settings"
+            android:summary="@string/size_summery"
+            android:title="@string/icon_size"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="manualSize"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="@string/adjust_size_summery"
+            android:title="@string/fa_icon_size_title"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <ListPreference
+            android:defaultValue="small"
+            android:dialogTitle="Choose Gap Size:"
+            android:entries="@array/icon_gap"
+            android:entryValues="@array/icon_gap"
+            android:key="gap"
+            android:layout="@layout/custom_settings"
+            android:summary="@string/gap_summery"
+            android:title="@string/gap_title"/>
+    </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="FA Position">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="savePosition"
@@ -78,31 +153,6 @@
             android:persistent="true"
             android:summary="@string/auto_save"
             android:title="@string/auto_save_title"
-            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="autoStart"
-            android:layout="@layout/custom_settings"
-            android:persistent="true"
-            android:summary="@string/auto_start_summery"
-            android:title="@string/auto_start"
-            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="autoTrans"
-            android:layout="@layout/custom_settings"
-            android:persistent="true"
-            android:summary="@string/auto_trans_summery"
-            android:title="@string/auto_trans"
-            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="status_bar_hidden"
-            android:layout="@layout/custom_settings"
-            android:persistent="true"
-            android:summary="@string/status_bar_summery"
-            android:title="@string/status_bar_title"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
         <CheckBoxPreference
             android:defaultValue="false"
@@ -114,46 +164,13 @@
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
     </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
     <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="Other Settings">
-        <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
-            android:defaultValue="@color/transparent"
-            android:key="fa_background"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:summary="Background color of floating apps list"
-            android:title="Floating Apps Background"
-            app:choices="@array/fa_background"
-            app:itemLayout="@layout/dash_grid_item_color"
-            app:numColumns="5"/>
-        <Preference
-            android:key="fa_background_alpha"
-            android:layout="@layout/custom_settings"
-            android:persistent="false"
-            android:summary="Adjust background color transparency"
-            android:title="Background Transparency"/>
-        <!--<CheckBoxPreference-->
-        <!--android:defaultValue="false"-->
-        <!--android:key="auto_order"-->
-        <!--android:layout="@layout/custom_settings"-->
-        <!--android:persistent="true"-->
-        <!--android:summary="Auto order selected Apps by their usage.\nThis will override your current order of the selected Apps."-->
-        <!--android:title="Auto Order"-->
-        <!--android:visibility="gone"-->
-        <!--android:widgetLayout="@layout/preference_dynamiccheckbox"/>-->
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="fa_horizontal"
+            android:defaultValue="true"
+            android:key="autoStart"
             android:layout="@layout/custom_settings"
             android:persistent="true"
-            android:summary="Change FA style to display apps in horizontal mode."
-            android:title="Horizontal Mode (BETA)"
-            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="manualSize"
-            android:layout="@layout/custom_settings"
-            android:persistent="true"
-            android:summary="@string/adjust_size_summery"
-            android:title="@string/fa_icon_size_title"
+            android:summary="@string/auto_start_summery"
+            android:title="@string/auto_start"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
         <Preference
             android:key="backup"
