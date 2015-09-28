@@ -44,21 +44,13 @@
             android:title="@string/fa_mode_title"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
         <!--<CheckBoxPreference-->
-            <!--android:defaultValue="false"-->
-            <!--android:key="auto_order"-->
-            <!--android:layout="@layout/custom_settings"-->
-            <!--android:persistent="true"-->
-            <!--android:summary="@string/auto_order_summery"-->
-            <!--android:title="@string/auto_order_title"-->
-            <!--android:widgetLayout="@layout/preference_dynamiccheckbox"/>-->
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="autoTrans"
-            android:layout="@layout/custom_settings"
-            android:persistent="true"
-            android:summary="@string/auto_trans_summery"
-            android:title="@string/auto_trans"
-            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <!--android:defaultValue="false"-->
+        <!--android:key="auto_order"-->
+        <!--android:layout="@layout/custom_settings"-->
+        <!--android:persistent="true"-->
+        <!--android:summary="@string/auto_order_summery"-->
+        <!--android:title="@string/auto_order_title"-->
+        <!--android:widgetLayout="@layout/preference_dynamiccheckbox"/>-->
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="fa_always_showing"
@@ -75,6 +67,23 @@
             android:summary="@string/status_bar_summery"
             android:title="@string/status_bar_title"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="autoTrans"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="@string/auto_trans_summery"
+            android:title="@string/auto_trans"
+            android:widgetLayout="@layout/preference_dynamiccheckbox"/>
+        <Preference
+            android:defaultValue="true"
+            android:dependency="autoTrans"
+            android:key="icon_alpha"
+            android:layout="@layout/custom_settings"
+            android:persistent="true"
+            android:summary="Change the transparency value of FA icon."
+            android:title="Change FA Icon Transparency"/>
+
     </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
     <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="FA Theme">
         <com.styleme.floating.toolbox.pro.widget.colorpicker.dashclockpicker.ColorPreference
@@ -117,7 +126,7 @@
             android:title="@string/custom_image"
             android:widgetLayout="@layout/preference_dynamiccheckbox"/>
     </com.styleme.floating.toolbox.pro.widget.CustomPrefCategory>
-    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="Icons Size">
+    <com.styleme.floating.toolbox.pro.widget.CustomPrefCategory android:title="FA Icons Size">
         <ListPreference
             android:defaultValue="medium"
             android:dialogTitle="@string/choose_icon_size"

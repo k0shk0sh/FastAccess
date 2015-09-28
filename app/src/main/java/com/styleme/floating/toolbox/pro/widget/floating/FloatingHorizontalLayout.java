@@ -133,6 +133,7 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
         onMyAppsLoader = new MyPopupAppsLoader(context, this);
         onMyAppsLoader.registerListener(3, onLoadCompleteListener);
         onMyAppsLoader.startLoading();
+        animateHidden();
     }
 
     private void hideRecycler() {
@@ -352,11 +353,11 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
 
     private void animateHidden() {
         if (AppHelper.isAutoTransparent(context))
-            floatingImage.setAlpha(0.3F);
+            floatingImage.setImageAlpha(AppHelper.getIconTransparency(context));
     }
 
     private void animateShowing() {
-        floatingImage.setAlpha(1.0F);
+        floatingImage.setImageAlpha(255);
     }
 
     private double bounceValue(long step, long scale) {
@@ -404,6 +405,8 @@ public class FloatingHorizontalLayout implements OnFloatingTouchListener, OnItem
             }
         } else if (eventsModel != null && eventsModel.getEventType() == EventType.FA_BACKGROUND) {
             setupBackground();
+        } else if (eventsModel != null && eventsModel.getEventType() == EventType.ICON_ALPHA) {
+            animateHidden();
         }
     }
 

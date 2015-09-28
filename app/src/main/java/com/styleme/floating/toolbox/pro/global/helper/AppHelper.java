@@ -428,4 +428,13 @@ public class AppHelper {
     public static boolean hasSeenInAppNew(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt("version_code", 0) == BuildConfig.VERSION_CODE;
     }
+
+    public static int getIconTransparency(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("icon_alpha", 100);
+    }
+
+    public static void setIconTransparency(Context context, int alpha) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("icon_alpha", alpha).apply();
+    }
+
 }

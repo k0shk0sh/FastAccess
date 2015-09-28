@@ -117,6 +117,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
         onMyAppsLoader = new MyPopupAppsLoader(context, this);
         onMyAppsLoader.registerListener(2, onLoadCompleteListener);
         onMyAppsLoader.startLoading();
+        animateHidden();
     }
 
     private void setupFloatingImage(boolean update) {
@@ -356,11 +357,11 @@ public class FloatingLayout implements OnFloatingTouchListener {
 
     private void animateHidden() {
         if (AppHelper.isAutoTransparent(context))
-            floatingImage.setAlpha(0.3F);
+            floatingImage.setImageAlpha(AppHelper.getIconTransparency(context));
     }
 
     private void animateShowing() {
-        floatingImage.setAlpha(1.0F);
+        floatingImage.setImageAlpha(255);
     }
 
     private double bounceValue(long step, long scale) {
@@ -445,6 +446,8 @@ public class FloatingLayout implements OnFloatingTouchListener {
                     popupWindow.show();
                 }
             }
+        } else if (eventsModel != null && eventsModel.getEventType() == EventType.ICON_ALPHA) {
+            animateHidden();
         }
     }
 }

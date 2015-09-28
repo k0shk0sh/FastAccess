@@ -50,36 +50,40 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.general_settings);
         findPreference("version").setSummary(BuildConfig.VERSION_NAME);
-        getPreferenceManager().findPreference("dark_theme").setOnPreferenceClickListener(this);
-        ColorPreference primary = (ColorPreference) getPreferenceManager().findPreference("primary_color");
-        ColorPreference accent = (ColorPreference) getPreferenceManager().findPreference("accent_color");
-        getPreferenceScreen().findPreference("icon_pack").setOnPreferenceClickListener(this);
-        getPreferenceScreen().findPreference("backup").setOnPreferenceClickListener(this);
-        getPreferenceScreen().findPreference("restore").setOnPreferenceClickListener(this);
+        ColorPreference primary = (ColorPreference) getPreferenceScreen().findPreference("primary_color");
+        ColorPreference accent = (ColorPreference) getPreferenceScreen().findPreference("accent_color");
         if (AppHelper.getBackupFile().exists()) {
             getPreferenceScreen().findPreference("restore").setEnabled(true);
         } else {
             getPreferenceScreen().findPreference("restore").setSummary(getString(R.string.restore_summery) + " " + getString(R.string
                     .no_backup_found));
         }
-        getPreferenceScreen().findPreference("manualSize").setOnPreferenceClickListener(this);
-        customImage = (CheckBoxPreference) getPreferenceManager().findPreference("customImage");
-        customImage.setOnPreferenceClickListener(this);
-        customIcon = getPreferenceManager().findPreference("customIcon");
-        customIcon.setOnPreferenceClickListener(this);
-        getPreferenceManager().findPreference("fa_always_showing").setOnPreferenceClickListener(this);
-        getPreferenceScreen().findPreference("fa_horizontal").setOnPreferenceClickListener(this);
-        getPreferenceScreen().findPreference("fa_background_alpha").setOnPreferenceClickListener(this);
-//        getPreferenceManager().findPreference("auto_order").setOnPreferenceClickListener(this);
+        customImage = (CheckBoxPreference) getPreferenceScreen().findPreference("customImage");
+        customIcon = getPreferenceScreen().findPreference("customIcon");
+        initListener();
         primary.onColorSelect(this);
         accent.onColorSelect(this);
-        ColorPreference fa_background = (ColorPreference) getPreferenceManager().findPreference("fa_background");
+        ColorPreference fa_background = (ColorPreference) getPreferenceScreen().findPreference("fa_background");
         fa_background.onColorSelect(new ColorSelector() {
             @Override
             public void onColorSelected(int color) {
                 AppController.getController().eventBus().post(new EventsModel(EventType.FA_BACKGROUND));
             }
         });
+    }
+
+    private void initListener() {
+        customImage.setOnPreferenceClickListener(this);
+        customIcon.setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("icon_alpha").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("fa_always_showing").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("fa_horizontal").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("fa_background_alpha").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("manualSize").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("icon_pack").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("backup").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("restore").setOnPreferenceClickListener(this);
+        getPreferenceScreen().findPreference("dark_theme").setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -126,6 +130,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             return true;
         } else if (preference.getKey().equalsIgnoreCase("fa_always_showing")) {
             restartService();
+            return true;
+        } else if (preference.getKey().equalsIgnoreCase("icon_alpha")) {
+            IconAlphaFragment iconAlphaFragment = new IconAlphaFragment();
+            iconAlphaFragment.setCancelable(false);
+            iconAlphaFragment.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), "ICON_ALPHA");
             return true;
         }
 //        else if (preference.getKey().equalsIgnoreCase("auto_order")) {
@@ -267,13 +276,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     @Override
     public void onResume() {
         super.onResume();
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
     }
 
     @Override
     public void onPause() {
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
     }
 
