@@ -1,3 +1,6 @@
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-allowaccessmodification
+-repackageclasses ''
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**
 -keepattributes SourceFile,LineNumberTable,*Annotation*
@@ -33,8 +36,14 @@
     public void onEvent*(**);
     void onEvent*(**);
 }
--dontwarn android.support.design.**
+-keep class com.styleme.floating.toolbox.pro.** { *; }
 -keep class android.support.design.** { *; }
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
 -keep class android.support.v7.widget.** { *; }
+-keep class android.support.v4.app.** { *; }
+-keep interface android.support.v4.app.** { *; }
+-keep class android.support.v7.app.** { *; }
+-keep interface android.support.v7.app.** { *; }
+-keep class android.support.v13.app.** { *; }
+-keep interface android.support.v13.app.** { *; }

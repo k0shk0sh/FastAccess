@@ -58,7 +58,7 @@ public class BackupTask extends AsyncTask<BackupModel, Boolean, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(BackupModel... params) pro{
+    protected Boolean doInBackground(BackupModel... params){
         try {
             BackupModel backupModel = new BackupModel();
             backupModel.setSelectedApps(new AppsModel().getAll());
