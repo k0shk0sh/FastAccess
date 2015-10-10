@@ -263,6 +263,11 @@ public class FloatingMenu implements OnFloatingTouchListener {
     }
 
     @Override
+    public void onOrientationChanged(int orientation) {
+
+    }
+
+    @Override
     public void onReset() {
         popup.onMenuReset();
     }

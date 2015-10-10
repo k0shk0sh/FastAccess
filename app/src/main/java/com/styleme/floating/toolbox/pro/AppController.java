@@ -44,7 +44,6 @@ public class AppController extends Application {
         }
         CustomActivityOnCrash.install(this);
         CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
-
         Fabric.with(this, new Crashlytics.Builder().core(core).build());
         Stetho.initialize(Stetho.newInitializerBuilder(this)
                 .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

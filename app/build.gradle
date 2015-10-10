@@ -17,12 +17,13 @@ android {
         applicationId "com.styleme.floating.toolbox.pro"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 78
-        versionName '7.8'
+        versionCode 79
+        versionName '7.9'
     }
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {

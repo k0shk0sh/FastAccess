@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 
@@ -35,6 +34,7 @@ import com.styleme.floating.toolbox.pro.global.model.AppsModel;
 import com.styleme.floating.toolbox.pro.global.model.EventType;
 import com.styleme.floating.toolbox.pro.global.model.EventsModel;
 import com.styleme.floating.toolbox.pro.global.service.FloatingService;
+import com.styleme.floating.toolbox.pro.widget.FloatingImage;
 import com.styleme.floating.toolbox.pro.widget.impl.GestureListener;
 import com.styleme.floating.toolbox.pro.widget.impl.OnFloatingTouchListener;
 
@@ -64,7 +64,7 @@ public class FloatingLayout implements OnFloatingTouchListener {
     private FloatingAdapter adapter;
     private GestureDetector gestureDetector;
     private Point szWindow = new Point();
-    private ImageView floatingImage;
+    private FloatingImage floatingImage;
     private MyPopupAppsLoader onMyAppsLoader;
     private boolean isShowed = true;
 
@@ -77,110 +77,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
         gestureDetector = new GestureDetector(context, new GestureListener(this));
         initWindows();
         EventTrackerHelper.sendEvent("FloatingLayout", "Init()", "Init()");
-    }
-
-    private void initWindows() {
-        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        windowManager.getDefaultDisplay().getSize(szWindow);
-        mParams = new LayoutParams(TYPE_PRIORITY_PHONE /* to appear on top of keyboard */, FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCH_MODAL,
-                PixelFormat.TRANSLUCENT);
-        setupParams();
-        mParams.gravity = Gravity.LEFT | Gravity.TOP;
-        initView();
-    }
-
-    private void setupParams() {
-        int gapSize = AppHelper.getFinalSize(context);
-        mParams.width = gapSize;
-        mParams.height = gapSize;
-        if (AppHelper.isSavePositionEnabled(context)) {
-            mParams.x = AppHelper.getPositionX(context);
-            mParams.y = AppHelper.getPositionY(context);
-        } else {
-            mParams.x = 0;
-            mParams.y = 100;
-        }
-    }
-
-    private void initView() {
-        if (floatingImage == null) floatingImage = new ImageView(context);
-        setupFloatingImage(false);
-        floatingImage.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-                return FloatingLayout.this.onTouch(v, event);
-            }
-        });
-        windowManager.addView(floatingImage, mParams);
-        popUp();
-        onMyAppsLoader = new MyPopupAppsLoader(context, this);
-        onMyAppsLoader.registerListener(2, onLoadCompleteListener);
-        onMyAppsLoader.startLoading();
-        animateHidden();
-    }
-
-    private void setupFloatingImage(boolean update) {
-        if (AppHelper.getImage(context) != null && new File(AppHelper.getImage(context)).exists()) {
-            floatingImage.setImageBitmap(BitmapFactory.decodeFile(AppHelper.getImage(context)));
-        } else {
-            floatingImage.setImageResource(R.mipmap.ic_launcher);
-        }
-        if (update) {
-            if (windowManager != null)
-                try {
-                    windowManager.updateViewLayout(floatingImage, mParams);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            if (popupWindow != null) {
-                if (adapter != null) {
-                    popupWindow.setContentWidth(measureContentWidth(adapter));
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        }
-    }
-
-    private void popUp() {
-        if (popupWindow == null) {
-            popupWindow = new ListPopupWindow(context, null, R.attr.listPopupWindowStyle);
-            popupWindow.setWidth(WRAP_CONTENT);
-            popupWindow.setHeight(WRAP_CONTENT);
-            Drawable drawable = AppHelper.getColorDrawable(AppHelper.getFABackground(context));
-            drawable.setAlpha(AppHelper.getBackgroundAlpha(context));
-            popupWindow.setBackgroundDrawable(drawable);
-            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    animateHidden();
-                }
-            });
-            if (AppHelper.isAlwaysShowing(context)) {
-                popupWindow.setForceIgnoreOutsideTouch(true);
-            } else {
-                popupWindow.setModal(true);
-            }
-            popupWindow.setAdapter(adapter);
-            popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-            popupWindow.setAnchorView(floatingImage);
-        }
-    }
-
-    public void onDestroy() {
-        if (windowManager != null && floatingImage != null) {
-            windowManager.removeViewImmediate(floatingImage);
-        }
-        if (onMyAppsLoader != null) {
-            onMyAppsLoader.unregisterListener(onLoadCompleteListener);
-            onMyAppsLoader.cancelLoad();
-            onMyAppsLoader.stopLoading();
-        }
-        if (AppController.getController().eventBus().isRegistered(this)) {
-            AppController.getController().eventBus().unregister(this);
-        }
-        EventTrackerHelper.sendEvent("FloatingLayout", "onDestroy()", "onDestroy()");
-
     }
 
     @Override
@@ -215,17 +111,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
             isShowed = false;
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private void configure() {
-        if (isShowed) {
-            if (popupWindow.getListView() != null) {
-                popupWindow.getListView().setVerticalScrollBarEnabled(false);
-                popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
-                popupWindow.getListView().setDividerHeight(0);
-                popupWindow.getListView().setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
-            }
         }
     }
 
@@ -272,6 +157,164 @@ public class FloatingLayout implements OnFloatingTouchListener {
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onAppClick(AppsModel appsModel) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            Intent intent = manager.getLaunchIntentForPackage(appsModel.getPackageName());
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(intent);
+            appsModel.updateEntry(appsModel.getPackageName());
+        } catch (Exception e) {// app uninstalled/not found
+            e.printStackTrace();
+        }
+        if (popupWindow != null) {
+            if (!AppHelper.isAlwaysShowing(context)) {
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onOrientationChanged(int orientation) {
+        if (AppHelper.isEdged(context)) {
+            windowManager.getDefaultDisplay().getSize(szWindow); // update szWindow to reflect to orientation changes
+            moveToEdge();// update windowManager params
+        }
+    }
+
+    @Override
+    public void onReset() {
+        adapter.clear();
+        EventTrackerHelper.sendEvent("FloatingLayout", "onReset()", "onReset()");
+    }
+
+    private void initWindows() {
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getSize(szWindow);
+        mParams = new LayoutParams(TYPE_PRIORITY_PHONE /* to appear on top of keyboard */, FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCH_MODAL,
+                PixelFormat.TRANSLUCENT);
+        setupParams();
+        mParams.gravity = Gravity.LEFT | Gravity.TOP;
+        initView();
+    }
+
+    private void setupParams() {
+        int gapSize = AppHelper.getFinalSize(context);
+        mParams.width = gapSize;
+        mParams.height = gapSize;
+        if (AppHelper.isSavePositionEnabled(context)) {
+            mParams.x = AppHelper.getPositionX(context);
+            mParams.y = AppHelper.getPositionY(context);
+        } else {
+            mParams.x = 0;
+            mParams.y = 100;
+        }
+    }
+
+    private void initView() {
+        if (floatingImage == null) floatingImage = new FloatingImage(context, this);
+        setupFloatingImage(false);
+        floatingImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return FloatingLayout.this.onTouch(v, event);
+            }
+        });
+        windowManager.addView(floatingImage, mParams);
+        popUp();
+        onMyAppsLoader = new MyPopupAppsLoader(context, this);
+        onMyAppsLoader.registerListener(2, onLoadCompleteListener);
+        onMyAppsLoader.startLoading();
+        animateHidden();
+    }
+
+    private void setupFloatingImage(boolean update) {
+        if (AppHelper.getImage(context) != null && new File(AppHelper.getImage(context)).exists()) {
+            floatingImage.setImageBitmap(BitmapFactory.decodeFile(AppHelper.getImage(context)));
+        } else {
+            floatingImage.setImageResource(R.mipmap.ic_launcher);
+        }
+        if (update) {
+            if (windowManager != null)
+                try {
+                    windowManager.updateViewLayout(floatingImage, mParams);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            if (popupWindow != null) {
+                if (adapter != null) {
+                    popupWindow.setContentWidth(measureContentWidth(adapter));
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+    private void configure() {
+        if (isShowed) {
+            if (popupWindow.getListView() != null) {
+                popupWindow.getListView().setVerticalScrollBarEnabled(false);
+                popupWindow.getListView().setBackgroundColor(context.getResources().getColor(R.color.transparent));
+                popupWindow.getListView().setDividerHeight(0);
+                popupWindow.getListView().setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
+            }
+        }
+    }
+
+    private void popUp() {
+        if (popupWindow == null) {
+            popupWindow = new ListPopupWindow(context, null, R.attr.listPopupWindowStyle);
+            popupWindow.setWidth(WRAP_CONTENT);
+            popupWindow.setHeight(WRAP_CONTENT);
+            Drawable drawable = AppHelper.getColorDrawable(AppHelper.getFABackground(context));
+            drawable.setAlpha(AppHelper.getBackgroundAlpha(context));
+            popupWindow.setBackgroundDrawable(drawable);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    animateHidden();
+                }
+            });
+            if (AppHelper.isAlwaysShowing(context)) {
+                popupWindow.setForceIgnoreOutsideTouch(true);
+            } else {
+                popupWindow.setModal(true);
+            }
+            popupWindow.setAdapter(adapter);
+            popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+            popupWindow.setAnchorView(floatingImage);
+        }
+    }
+
+    public void onDestroy() {
+        if (windowManager != null && floatingImage != null) {
+            windowManager.removeViewImmediate(floatingImage);
+        }
+        if (onMyAppsLoader != null) {
+            onMyAppsLoader.unregisterListener(onLoadCompleteListener);
+            onMyAppsLoader.cancelLoad();
+            onMyAppsLoader.stopLoading();
+        }
+        if (AppController.getController().eventBus().isRegistered(this)) {
+            AppController.getController().eventBus().unregister(this);
+        }
+        EventTrackerHelper.sendEvent("FloatingLayout", "onDestroy()", "onDestroy()");
+
+    }
+
+    private void animateHidden() {
+        if (AppHelper.isAutoTransparent(context))
+            floatingImage.setImageAlpha(AppHelper.getIconTransparency(context));
+    }
+
+    private void animateShowing() {
+        floatingImage.setImageAlpha(255);
     }
 
     private void moveToEdge() {
@@ -324,44 +367,6 @@ public class FloatingLayout implements OnFloatingTouchListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onAppClick(AppsModel appsModel) {
-        try {
-            PackageManager manager = context.getPackageManager();
-            Intent intent = manager.getLaunchIntentForPackage(appsModel.getPackageName());
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-            context.startActivity(intent);
-            appsModel.updateEntry(appsModel.getPackageName());
-            EventTrackerHelper.sendEvent("FloatingLayout", "onAppClick()", "onAppClick()", appsModel.getAppName() == null ? appsModel
-                    .getPackageName() : appsModel.getAppName());
-        } catch (Exception e) {
-            e.printStackTrace();
-            EventTrackerHelper.sendEvent("FloatingLayout", "onAppClick()", "onAppClick()", "Crash " + e.getMessage());
-        }
-        if (popupWindow != null) {
-            if (!AppHelper.isAlwaysShowing(context)) {
-                if (popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onReset() {
-        adapter.clear();
-        EventTrackerHelper.sendEvent("FloatingLayout", "onReset()", "onReset()");
-    }
-
-    private void animateHidden() {
-        if (AppHelper.isAutoTransparent(context))
-            floatingImage.setImageAlpha(AppHelper.getIconTransparency(context));
-    }
-
-    private void animateShowing() {
-        floatingImage.setImageAlpha(255);
     }
 
     private double bounceValue(long step, long scale) {

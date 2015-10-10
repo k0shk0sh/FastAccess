@@ -101,7 +101,7 @@
     <string name="auto_order_summery">Auto order selected Apps by their usage\nThis will override your current order of the selected Apps.</string>
     <string name="auto_order_title">Auto Order</string>
     <string name="in_app_news">
-        &#8211;Now you can adjust the icon transparency manually through settings.\n&#8211;Other Improvements.\n&#8211;Please take a moment to rate
+        &#8211;Fixed bug where FA acts weird in orientation change.\n&#8211;Other Improvements.\n&#8211;Please take a moment to rate
         FA,this will help me a lot to keep improving the application. &#9829;
     </string>
     <string name="heart_fa">&#9829; FA</string>

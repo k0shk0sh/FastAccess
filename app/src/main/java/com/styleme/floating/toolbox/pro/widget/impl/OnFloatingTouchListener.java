@@ -20,5 +20,7 @@ public interface OnFloatingTouchListener {
 
     void onAppClick(AppsModel appsModel);
 
+    void onOrientationChanged(int orientation);
+
     void onReset();
 }
