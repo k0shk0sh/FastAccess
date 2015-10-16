@@ -1,5 +1,6 @@
 package com.styleme.floating.toolbox.pro.global.helper;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -7,12 +8,14 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -436,5 +439,4 @@ public class AppHelper {
     public static void setIconTransparency(Context context, int alpha) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("icon_alpha", alpha).apply();
     }
-
 }

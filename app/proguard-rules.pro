@@ -38,6 +38,7 @@
 }
 -keep class com.styleme.floating.toolbox.pro.** { *; }
 -keep class android.support.design.** { *; }
+-keep class android.support.design.widget.**{*;}
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
 -keep class android.support.v7.widget.** { *; }
@@ -47,3 +48,4 @@
 -keep interface android.support.v7.app.** { *; }
 -keep class android.support.v13.app.** { *; }
 -keep interface android.support.v13.app.** { *; }
+-keep class android.support.v7.widget.LinearLayoutManager { *; }

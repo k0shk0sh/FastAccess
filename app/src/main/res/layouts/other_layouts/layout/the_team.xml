@@ -90,6 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:lineSpacingExtra="5dp"
                         android:text="Application &amp; UI Developer"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/secondary_text"
@@ -132,6 +133,7 @@
                         android:layout_margin="16dp"
                         android:clickable="true"
                         android:src="@drawable/ic_github"
+                        app:elevation="2dp"
                         app:fabSize="normal"
                         app:rippleColor="@color/primary_dark"/>
 
@@ -174,6 +176,7 @@
                         android:layout_margin="16dp"
                         android:clickable="true"
                         android:src="@drawable/ic_g_plus"
+                        app:elevation="2dp"
                         app:fabSize="normal"
                         app:rippleColor="@color/primary_dark"/>
 
@@ -215,6 +218,7 @@
                         android:layout_margin="16dp"
                         android:clickable="true"
                         android:src="@drawable/ic_mail"
+                        app:elevation="2dp"
                         app:fabSize="normal"
                         app:rippleColor="@color/primary_dark"/>
 
