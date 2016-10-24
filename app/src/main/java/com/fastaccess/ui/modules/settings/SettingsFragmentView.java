@@ -30,7 +30,7 @@ import com.fastaccess.helper.InputHelper;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
-import com.fastaccess.provider.icon.IconPackHelper;
+import com.fastaccess.helper.IconPackHelper;
 import com.fastaccess.ui.modules.settings.dialogs.CustomIconChooserDialog;
 import com.fastaccess.ui.modules.settings.dialogs.IconSizeTransparencyDialog;
 import com.google.common.io.Files;

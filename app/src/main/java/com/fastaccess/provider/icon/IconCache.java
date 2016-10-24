@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.fastaccess.data.dao.AppsModel;
+import com.fastaccess.helper.IconPackHelper;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 

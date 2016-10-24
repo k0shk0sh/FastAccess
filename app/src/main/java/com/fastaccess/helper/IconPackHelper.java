@@ -1,4 +1,4 @@
-package com.fastaccess.provider.icon;
+package com.fastaccess.helper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,9 +20,8 @@ import android.widget.Toast;
 import com.fastaccess.App;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.ThemePackEventModel;
-import com.fastaccess.helper.PrefConstant;
-import com.fastaccess.helper.PrefHelper;
-import com.fastaccess.provider.icon.model.IconPackInfo;
+import com.fastaccess.ui.adapter.IconPackAdapter;
+import com.fastaccess.data.dao.IconPackInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xmlpull.v1.XmlPullParser;
@@ -424,7 +423,7 @@ public class IconPackHelper {
         builder.show();
     }
 
-    boolean isIconPackLoaded() {
+    public boolean isIconPackLoaded() {
         return mLoadedIconPackResource != null &&
                 mLoadedIconPackName != null &&
                 mIconPackResources != null;

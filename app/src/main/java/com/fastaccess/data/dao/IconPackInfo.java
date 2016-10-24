@@ -1,4 +1,4 @@
-package com.fastaccess.provider.icon.model;
+package com.fastaccess.data.dao;
 
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
