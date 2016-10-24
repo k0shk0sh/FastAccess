@@ -38,7 +38,7 @@ public class ActivityHelper {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(ViewHelper.getPrimaryColor(context));
         CustomTabsIntent tabsIntent = builder.build();
-        tabsIntent.launchUrl(context, Uri.parse("https://github.com/k0shk0sh/NewKam"));//TODO change url
+        tabsIntent.launchUrl(context, Uri.parse("https://github.com/k0shk0sh/FastAccess"));
     }
 
     public static void startLibs(@NonNull Activity activity) {

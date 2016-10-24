@@ -16,7 +16,7 @@ public class SettingsView extends BaseActivity {
         return R.layout.settings_layout;
     }
 
-    @NonNull @Override protected BasePresenter getPresenter() {
+    @SuppressWarnings("ConstantConditions") @NonNull @Override protected BasePresenter getPresenter() {
         return null;
     }//op-out
 

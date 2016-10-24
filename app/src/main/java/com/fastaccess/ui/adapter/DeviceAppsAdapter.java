@@ -88,7 +88,7 @@ public class DeviceAppsAdapter extends BaseRecyclerAdapter<AppsModel, DeviceApps
                 return oReturn;
             }
 
-            @Override protected void publishResults(CharSequence constraint, FilterResults results) {
+            @SuppressWarnings("unchecked") @Override protected void publishResults(CharSequence constraint, FilterResults results) {
                 insertItems((List<AppsModel>) results.values);
             }
         };

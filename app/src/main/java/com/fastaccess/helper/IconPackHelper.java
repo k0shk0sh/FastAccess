@@ -269,7 +269,7 @@ public class IconPackHelper {
 
         XmlPullParser parser = null;
         InputStream inputStream = null;
-        Map<String, String> iconPackResources = new HashMap<String, String>();
+        Map<String, String> iconPackResources = new HashMap<>();
 
         try {
             inputStream = res.getAssets().open("appfilter.xml");

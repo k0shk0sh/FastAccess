@@ -38,11 +38,6 @@
             android:theme="@style/SettingsTheme"/>
 
         <activity
-            android:name=".ui.modules.settings.dialogs.CropImageActivityDialog"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Transparent_Activity"/>
-
-        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat"/>

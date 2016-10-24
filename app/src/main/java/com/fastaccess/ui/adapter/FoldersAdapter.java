@@ -51,7 +51,7 @@ public class FoldersAdapter extends BaseRecyclerAdapter<FolderModel, FoldersView
                 return oReturn;
             }
 
-            @Override protected void publishResults(CharSequence constraint, FilterResults results) {
+            @SuppressWarnings("unchecked") @Override protected void publishResults(CharSequence constraint, FilterResults results) {
                 insertItems((List<FolderModel>) results.values);
             }
         };

@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: "com.neenbedankt.android-apt"
 
 android {
+    signingConfigs {
+        signing {
+            keyAlias 'styleme'
+            keyPassword 'koshkosh1'
+            storeFile file('StyleMe')
+            storePassword 'koshkosh1'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "24.0.2"
     defaultConfig {
@@ -10,10 +18,12 @@ android {
         targetSdkVersion 25
         versionCode 100
         versionName "10.0.0"
+        signingConfig signingConfigs.signing
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,11 +40,9 @@ android {
         }
     }
     lintOptions {
-        quiet true
-        abortOnError true
+        abortOnError false
         htmlReport true
         xmlReport true
-        fatal 'NewApi'
         disable 'InvalidPackage'
     }
 }
@@ -57,7 +65,7 @@ dependencies {
     compile "com.android.support:palette-v7:${supportVerion}"
     compile "com.android.support:preference-v14:${supportVerion}"
     compile "com.android.support:customtabs:${supportVerion}"
-    compile('com.github.ozodrukh:CircularReveal:2.0.1@aar') { transitive = true; }
+    compile('com.github.ozodrukh:CircularReveal:2.0.1@aar') { transitive = true }
     compile('com.mikepenz:aboutlibraries:5.8.1@aar') { transitive = true }
     compile project(':color-picker')
     compile "com.google.firebase:firebase-messaging:${firebase}"
@@ -72,7 +80,6 @@ dependencies {
     compile 'frankiesardo:icepick:3.1.0'
     compile 'com.mikhaellopez:circularfillableloaders:1.2.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    compile 'com.github.pluscubed:recycler-fast-scroll:0.3.2@aar'
     compile 'com.github.satyan:sugar:1.4'
     compile 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:1.0.7'
     compile 'com.github.vihtarb:tooltip:0.1.8'

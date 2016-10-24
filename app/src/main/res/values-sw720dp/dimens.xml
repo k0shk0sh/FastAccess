@@ -4,7 +4,6 @@
     <integer name="num_columns">5</integer>
     <dimen name="fab_margin">24dp</dimen>
     <integer name="small_spans">1</integer>
-    <dimen name="nav_drawer_width">320dp</dimen>
     <dimen name="fa_size_small">56dp</dimen>
     <dimen name="fa_size_medium">72dp</dimen>
     <dimen name="fa_size_large">96dp</dimen>

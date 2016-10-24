@@ -79,7 +79,7 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
         moveToEdge();
     }
 
-    @Override public void onLoaderLoaded(@Nullable List<M> data) {
+    @SuppressWarnings("unchecked") @Override public void onLoaderLoaded(@Nullable List<M> data) {
         if (data == null || data.isEmpty()) {
             getAdapter().clear();
             context.stopService(new Intent(context, FloatingService.class));
@@ -123,7 +123,7 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
         onTouchedOutside();
     }
 
-    @Override public void onDestroy() {
+    @SuppressWarnings("unchecked") @Override public void onDestroy() {
         if (windowManager != null) {
             windowManager.removeView(floatingView);
             windowManager.removeView(layoutHolder.tabBar);

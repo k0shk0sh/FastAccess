@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -41,7 +43,7 @@ public class ForegroundImageView extends AppCompatImageView {
      * @param drawableResId
      *         The drawable resource to be drawn on top of the children.
      */
-    public void setForegroundResource(int drawableResId) {
+    public void setForegroundResource(@DrawableRes int drawableResId) {
         if (isInEditMode()) return;
         setForeground(ContextCompat.getDrawable(getContext(), drawableResId));
     }
@@ -73,7 +75,7 @@ public class ForegroundImageView extends AppCompatImageView {
         invalidate();
     }
 
-    @Override protected boolean verifyDrawable(Drawable who) {
+    @Override protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || who == foreground;
     }
 

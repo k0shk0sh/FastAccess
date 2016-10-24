@@ -7,14 +7,11 @@
     <dimen name="spacing_large">32dp</dimen>
     <dimen name="spacing_xlarge">48dp</dimen>
     <dimen name="spacing_huge">64dp</dimen>
-    <dimen name="fab_size">56dp</dimen>
     <dimen name="keyline_1">72dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="card_padding">60dp</dimen>
     <integer name="num_columns">4</integer>
     <integer name="small_spans">1</integer>
     <dimen name="app_icon_size">64dp</dimen>
-    <dimen name="nav_drawer_width">280dp</dimen>
     <dimen name="fa_size_small">48dp</dimen>
     <dimen name="fa_size_medium">56dp</dimen>
     <dimen name="fa_size_large">72dp</dimen>
