@@ -8,8 +8,8 @@ android {
         applicationId "com.styleme.floating.toolbox.pro"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "10.0.0"
     }
     buildTypes {
         release {
@@ -57,18 +57,15 @@ dependencies {
     compile "com.android.support:palette-v7:${supportVerion}"
     compile "com.android.support:preference-v14:${supportVerion}"
     compile "com.android.support:customtabs:${supportVerion}"
-    compile('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
-        transitive = true;
-    }
-    compile('com.mikepenz:aboutlibraries:5.8.1@aar') {
-        transitive = true
-    }
+    compile('com.github.ozodrukh:CircularReveal:2.0.1@aar') { transitive = true; }
+    compile('com.mikepenz:aboutlibraries:5.8.1@aar') { transitive = true }
     compile project(':color-picker')
     compile "com.google.firebase:firebase-messaging:${firebase}"
     compile "com.google.firebase:firebase-analytics:${firebase}"
     compile "com.google.firebase:firebase-database:${firebase}"
     compile "com.google.firebase:firebase-auth:${firebase}"
     compile "com.google.android.gms:play-services-auth:${firebase}"
+    compile "com.google.firebase:firebase-crash:${firebase}"
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'org.greenrobot:eventbus:3.0.0'

@@ -11,6 +11,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class Analytics {
 
+    //TODO try to improve this we really need analytics.
     public static void logEvent() {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, getFileName());

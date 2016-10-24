@@ -12,8 +12,8 @@ public class PushNotification extends FirebaseMessagingService {
     @Override public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         if (remoteMessage.getNotification() != null) {
-            NotificationHelper.notifyShort(this, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), R.drawable
-                    .ic_fa);
+            NotificationHelper.notifyShort(this, remoteMessage.getNotification().getTitle(),
+                    remoteMessage.getNotification().getBody(), R.drawable.ic_fa);
         }
     }
 }
