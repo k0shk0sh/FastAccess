@@ -7,8 +7,6 @@ import android.util.Log;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.fastaccess.helper.GsonHelper.gson;
-
 /**
  * Created by Kosh on 04/12/15 11:52 PM. copyrights @ Innov8tif
  */
@@ -52,22 +50,6 @@ public class Logger {
         } else {
             e(TAG, null);
         }
-    }
-
-    public static void longE(@NonNull Object text) {
-        String veryLongString = text.toString();
-        int maxLogSize = 4000;
-        for (int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
-            int start = i * maxLogSize;
-            int end = (i + 1) * maxLogSize;
-            end = end > veryLongString.length() ? veryLongString.length() : end;
-            e(getCurrentClassName() + " || " + getCurrentMethodName(), veryLongString.substring(start, end));
-        }
-
-    }
-
-    public static void eJson(Object object) {
-        e(getCurrentClassName() + " || " + getCurrentMethodName(), gson().toJson(object));
     }
 
     private static String getCurrentMethodName() {

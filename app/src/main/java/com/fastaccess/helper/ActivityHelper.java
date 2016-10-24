@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
@@ -15,15 +14,11 @@ import com.fastaccess.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
-import java.io.File;
-
 /**
  * Created by Kosh on 12/12/15 10:51 PM
  */
 public class ActivityHelper {
 
-    public static final int REQUEST_CODE = 100;
-    public static final int CAMERA_REQUEST_CODE = 101;
     public static final int SELECT_PHOTO_REQUEST = 102;
 
     @Nullable public static Activity getActivity(@Nullable Context cont) {
@@ -33,39 +28,10 @@ public class ActivityHelper {
         return null;
     }
 
-    public static int getScreenOrientation(Context activity) {
-        return activity.getResources().getConfiguration().orientation;
-    }
-
-    public static void startActivity(@NonNull Context context, Class className) {
-        Intent intent = new Intent(context, className);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
-    }
-
-    public static void startActivityWithFinish(@NonNull Activity context, Class className) {
-        Intent intent = new Intent(context, className);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
-    }
-
-    public static void startGalleryIntent(@NonNull Activity activity) {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        activity.startActivityForResult(intent, SELECT_PHOTO_REQUEST);
-    }
-
     public static void startGalleryIntent(@NonNull Fragment fragment) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         fragment.startActivityForResult(intent, SELECT_PHOTO_REQUEST);
-    }
-    public static void startCameraIntent(@NonNull Activity activity, @NonNull File file) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-            activity.startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-        }
     }
 
     public static void startCustomTab(@NonNull Activity context) {

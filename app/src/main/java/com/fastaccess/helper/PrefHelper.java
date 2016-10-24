@@ -6,12 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static com.fastaccess.helper.GsonHelper.gson;
 
 /**
  * Created by kosh20111 on 18 Oct 2016, 9:29 PM
@@ -55,25 +51,9 @@ public class PrefHelper {
         } else if (value instanceof Float) {
             edit.putFloat(key, (float) value);
         } else {
-            edit.putString(key, gson().toJson(value));
+            edit.putString(key, value.toString());
         }
         edit.apply();
-    }
-
-    @Nullable public static <T> T getJsonObject(@NonNull String key, @NonNull Class<T> type) {
-        String value = getString(key);
-        if (!InputHelper.isEmpty(value)) {
-            return gson().fromJson(value, type);
-        }
-        return null;
-    }
-
-    @Nullable public static <T> List<T> getJsonArray(@NonNull String key, final @NonNull Class<T[]> type) {
-        String value = getString(key);
-        if (!InputHelper.isEmpty(value)) {
-            return Arrays.asList(gson().fromJson(value, type));
-        }
-        return null;
     }
 
     @Nullable public static String getString(@NonNull String key) {
