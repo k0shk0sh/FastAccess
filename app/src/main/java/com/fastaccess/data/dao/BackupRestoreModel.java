@@ -3,7 +3,6 @@ package com.fastaccess.data.dao;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -79,11 +78,7 @@ public class BackupRestoreModel {
         if (model.getSettings() != null) {
             for (String key : model.getSettings().keySet()) {
                 if (key != null && !key.equalsIgnoreCase("null")) {
-                    if (key.equalsIgnoreCase(PrefConstant.FA_BACKGROUND)) {
-                        PrefHelper.set(key, Integer.valueOf(model.getSettings().get(key).toString()));
-                    } else {
-                        PrefHelper.set(key, model.getSettings().get(key));
-                    }
+                    PrefHelper.set(key, model.getSettings().get(key));
                 }
             }
         }
