@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="layout_margin">46dp</dimen>
+    <integer name="num_columns">5</integer>
+    <dimen name="card_padding">140dp</dimen>
+</resources>
+

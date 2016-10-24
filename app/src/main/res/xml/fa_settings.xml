@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/general_settings">
+
+        <ListPreference
+            android:defaultValue="Apps"
+            android:dialogTitle="@string/floating_mode_title"
+            android:entries="@array/fa_modes"
+            android:entryValues="@array/fa_modes"
+            android:key="floating_mode"
+            android:summary="@string/floating_mode_summary"
+            android:title="@string/floating_mode_title"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="fa_is_horizontal"
+            android:summary="@string/fa_orientation_summary"
+            android:title="@string/fa_orientation_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="fa_auto_start"
+            android:summary="@string/auto_start_summary"
+            android:title="@string/auto_start_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="fa_auto_save_position"
+            android:summary="@string/auto_save_position_summary"
+            android:title="@string/auto_save_position_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="fa_edges_sticky"
+            android:summary="@string/sticky_summary"
+            android:title="@string/sticky_title"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="fa_always_showing"
+            android:summary="@string/fa_visibility_summary"
+            android:title="@string/fa_visibility_title"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="status_bar_hidden"
+            android:summary="@string/status_bar_summary"
+            android:title="@string/status_bar_title"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/fa_customization">
+
+        <Preference
+            android:defaultValue=""
+            android:key="icon_pack"
+            android:summary="@string/theme_pack_summary"
+            android:title="@string/theme_pack_title"/>
+
+        <org.xdty.preference.AppCompatColorPreference
+            android:defaultValue="@color/primary"
+            android:key="fa_background"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="@string/background_summery"
+            android:title="@string/background_title"
+            app:colorDialogColors="@array/colors_primary"
+            app:colorDialogColumns="5"
+            app:colorDialogMaterial="true"/>
+
+        <Preference
+            android:key="fa_background_alpha"
+            android:summary="@string/background_transparency_summary"
+            android:title="@string/background_transparency_title"/>
+
+        <ListPreference
+            android:defaultValue="Medium"
+            android:dialogTitle="@string/choose_icon_gap"
+            android:entries="@array/icon_size"
+            android:entryValues="@array/icon_size"
+            android:key="icon_padding"
+            android:summary="@string/icons_gaps_summary"
+            android:title="@string/icons_gaps_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/fa_icon_customization">
+        <Preference
+            android:defaultValue="true"
+            android:key="custom_icon"
+            android:summary="@string/custom_icon_summary"
+            android:title="@string/custom_icon_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="auto_trans"
+            android:summary="@string/semi_transparent_summary"
+            android:title="@string/semi_transparent_title"/>
+
+        <Preference
+            android:defaultValue="true"
+            android:dependency="auto_trans"
+            android:key="icon_alpha"
+            android:summary="@string/auto_trans_summary"
+            android:title="@string/auto_trans_title"/>
+
+        <ListPreference
+            android:defaultValue="Medium"
+            android:dialogTitle="@string/choose_icon_size"
+            android:entries="@array/icon_size"
+            android:entryValues="@array/icon_size"
+            android:key="icon_size"
+            android:summary="@string/icon_size_summary"
+            android:title="@string/icon_size_title"/>
+
+        <Preference
+            android:defaultValue="0"
+            android:key="manual_size"
+            android:summary="@string/manual_size_summary"
+            android:title="@string/manual_size_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/about">
+
+        <Preference
+            android:key="version"
+            android:textColor="@color/white"
+            android:title="@string/app_version"/>
+
+        <Preference
+            android:key="sourceCode"
+            android:textColor="@color/white"
+            android:title="@string/open_source"/>
+
+        <Preference
+            android:key="libraries"
+            android:textColor="@color/white"
+            android:title="@string/libs"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

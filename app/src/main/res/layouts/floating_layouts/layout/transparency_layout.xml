@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/spacing_xs_large">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:theme="@style/ToolbarStyle"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="?colorPrimary"
+                app:title="@string/change_transparency">
+
+                <com.fastaccess.ui.widgets.ForegroundImageView
+                    android:id="@+id/done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:padding="@dimen/spacing_xs_large"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_done"/>
+            </android.support.v7.widget.Toolbar>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/toolbar_shadow"/>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <com.fastaccess.ui.widgets.FontTextView
+        android:id="@+id/valueText"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/spacing_xs_large"
+        android:drawableEnd="@drawable/ic_fa"
+        android:drawablePadding="@dimen/spacing_xs_large"
+        android:gravity="center"
+        tools:text="Value 200%"/>
+
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_xs_large"
+        android:layout_marginStart="@dimen/spacing_xs_large"
+        app:dsb_max="255"
+        app:dsb_min="20"
+        app:dsb_progressColor="@color/accent"
+        app:dsb_rippleColor="@color/accent"
+        app:dsb_trackColor="@color/primary"/>
+
+</LinearLayout>

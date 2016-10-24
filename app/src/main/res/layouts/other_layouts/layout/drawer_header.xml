@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/header_background"
+    android:gravity="bottom"
+    android:minHeight="150dp"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_xs_large">
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:id="@+id/image_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/spacing_xs_large"
+        android:adjustViewBounds="true"
+        android:minHeight="@dimen/keyline_1"
+        android:src="@drawable/ic_fa"/>
+
+
+    <com.fastaccess.ui.widgets.FontTextView
+        android:id="@+id/username"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/white"/>
+
+    <com.fastaccess.ui.widgets.FontTextView
+        android:id="@+id/email"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:text="@string/your_fav_apps_are_always_a_click_ahead"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

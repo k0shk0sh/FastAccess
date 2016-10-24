@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ColorPreference">
+        <attr name="colorDialogTitle" format="string|reference" />
+        <attr name="colorDialogColors" format="reference" />
+        <attr name="colorDialogColumns" format="integer" />
+        <attr name="colorDialogMaterial" format="boolean" />
+    </declare-styleable>
+</resources>

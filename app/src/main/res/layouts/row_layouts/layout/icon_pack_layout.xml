@@ -1,0 +1,41 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="?android:listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingEnd="?android:listPreferredItemPaddingEnd"
+    android:paddingStart="?android:listPreferredItemPaddingStart"
+    android:paddingTop="@dimen/spacing_normal"
+    android:paddingBottom="@dimen/spacing_normal">
+
+    <com.fastaccess.ui.widgets.ForegroundImageView
+        android:id="@+id/icon"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@null"/>
+
+    <com.fastaccess.ui.widgets.FontTextView
+        android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/spacing_xs_large"
+        android:layout_marginStart="@dimen/spacing_xs_large"
+        android:layout_weight="1"
+        android:maxLines="1"
+        tools:text="Theme Pack"/>
+
+    <com.fastaccess.ui.widgets.FontRadioButton
+        android:id="@+id/radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:focusable="false"/>
+</LinearLayout>

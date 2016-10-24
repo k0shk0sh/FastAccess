@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_xs_large">
+
+    <ImageView
+        android:id="@+id/appIcon"
+        android:layout_width="@dimen/app_icon_size"
+        android:layout_height="@dimen/app_icon_size"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/folders"
+        tools:src="@drawable/ic_sad_face"/>
+
+    <com.fastaccess.ui.widgets.FontCheckbox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <com.fastaccess.ui.widgets.FontTextView
+        android:id="@+id/appName"
+        style="@style/TextAppearance.AppCompat.Title.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/spacing_xs_large"
+        android:layout_marginStart="@dimen/spacing_xs_large"
+        android:layout_toEndOf="@+id/appIcon"
+        android:layout_toStartOf="@+id/checkbox"
+        android:ellipsize="marquee"
+        android:maxLines="1"
+        tools:text="Chop peanuts quickly, then mix with gold tequila and serve equally in saucepan."/>
+
+</RelativeLayout>

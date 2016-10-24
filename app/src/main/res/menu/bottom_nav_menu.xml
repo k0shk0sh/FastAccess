@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="wrap_content"
+      app:bbn_itemAnimationDuration="200"
+      app:bbn_itemColorActive="@color/accent"
+      app:bbn_itemColorInactive="@color/light_gray"
+      app:bbn_rippleColor="@color/transparent">
+    <item
+        android:id="@+id/myApps"
+        android:color="?colorPrimary"
+        android:icon="@drawable/ic_apps_drawer"
+        android:title="@string/device_apps"/>
+
+    <item
+        android:id="@+id/folders"
+        android:color="?colorPrimary"
+        android:icon="@drawable/ic_folder"
+        android:title="@string/folders"/>
+    <item
+        android:id="@+id/selectedApps"
+        android:color="?colorPrimary"
+        android:icon="@drawable/ic_selected_apps"
+        android:title="@string/my_apps"/>
+</menu>

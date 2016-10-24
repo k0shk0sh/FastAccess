@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mikhaellopez.circularfillableloaders.CircularFillableLoaders
+    android:id="@+id/progressBar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:layout_gravity="top|center"
+    android:layout_marginTop="?actionBarSize"
+    android:src="@drawable/ic_fa"
+    android:visibility="gone"
+    app:cfl_border="true"
+    app:cfl_border_width="12dp"
+    app:cfl_progress="80"
+    app:cfl_wave_amplitude="0.06"
+    app:cfl_wave_color="?colorPrimary"
+    tools:visibility="visible"/>

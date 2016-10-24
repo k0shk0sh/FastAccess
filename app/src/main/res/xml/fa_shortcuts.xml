@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+           xmlns:tools="http://schemas.android.com/tools">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_folder"
+        android:shortcutDisabledMessage="@string/mode_not_available"
+        android:shortcutId="shortcut1"
+        android:shortcutLongLabel="@string/folder_mode"
+        android:shortcutShortLabel="@string/folder_mode"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="FOLDER_MODE"
+            android:targetClass="com.fastaccess.ui.modules.main.MainView"
+            android:targetPackage="com.styleme.floating.toolbox.pro"/>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_selected_apps"
+        android:shortcutDisabledMessage="@string/mode_not_available"
+        android:shortcutId="shortcut2"
+        android:shortcutLongLabel="@string/app_mode"
+        android:shortcutShortLabel="@string/app_mode"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="APPS_MODE"
+            android:targetClass="com.fastaccess.ui.modules.main.MainView"
+            android:targetPackage="com.styleme.floating.toolbox.pro"/>
+    </shortcut>
+</shortcuts>

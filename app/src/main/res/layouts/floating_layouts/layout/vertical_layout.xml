@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codetail.widget.RevealLinearLayout
+    android:id="@+id/tabBar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/toggleTapBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/back"
+        android:layout_gravity="center"
+        android:padding="@dimen/spacing_xs_large"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_back_selector"/>
+
+    <com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        app:layoutManager="@string/linear_layout_manager"
+        tools:listitem="@layout/floating_apps_row_item"/>
+
+</io.codetail.widget.RevealLinearLayout>

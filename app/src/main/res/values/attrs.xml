@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ForegroundImageView">
+        <attr name="android:foreground"/>
+    </declare-styleable>
+
+    <declare-styleable name="ViewPagerView">
+        <attr name="isEnabled" format="boolean"/>
+    </declare-styleable>
+</resources>
