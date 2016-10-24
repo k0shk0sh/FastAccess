@@ -1,1 +1,0 @@
-ALTER TABLE AppsModel ADD COLUMN countEntry INTEGER;
