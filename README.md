@@ -14,8 +14,11 @@ Features
 
 Fast Access 
 =======
-![FA](https://raw.github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/master/art/1024x500.png)
-![FA](https://raw.github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/master/art/web_hi_res_512.png)
+
+<p align="center">
+<img src="https://raw.github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/master/art/web_hi_res_512.png" width="215" height="215"/>
+<img src="https://raw.github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/master/art/1024x500.png"/>
+</p>
 
 
 # Contribution
