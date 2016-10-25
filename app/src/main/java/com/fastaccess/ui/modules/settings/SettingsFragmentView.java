@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.fastaccess.App;
 import com.fastaccess.BuildConfig;
 import com.fastaccess.R;
-import com.fastaccess.data.dao.FloatingEventModel;
+import com.fastaccess.data.dao.events.FloatingEventModel;
 import com.fastaccess.helper.ActivityHelper;
 import com.fastaccess.helper.AppHelper;
 import com.fastaccess.helper.FileHelper;

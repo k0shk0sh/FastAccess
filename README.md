@@ -1,25 +1,32 @@
-<h1 style="color:#3F51B5;">Fast Access (Floating Toolbox)</h1>
-<p align="center">
-  <img src="https://github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="FA" />
-</p>
-<p align="center">
-  <img src="https://github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/blob/master/art/1024x500.png" alt="FA" />
-</p>
+# Fast Access (Floating Toolbox)
+A tiny launcher or as Samsung likes to call it Floating Toolbox.
 
-<p><b>Fast Access was previously paid app, but i have decided to make it FREE and open source</b></p>
+Features 
+======
+* Floating Apps & Floating Folders, are always going to be a click away from any screen.
+* Backup & Restore FA settings & data across devices.
+* Plenty of within App customization. (FA supports icon packs just like Nova Launcher & others).
+* Fully Material designed App with unique look & feel.
+* MVP structured App, (No unit tests, <small>PR are welcome</small>).
+* Loads more....
 
-<h1>LICENSE</h1>
-<p>
-<b>Copyright 2015 @ Kosh</b>
-<p>This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <a href="https://github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/blob/master/LICENSE">LICENSE</a>.</p>
-</p>
+
+
+Fast Access 
+=======
+![FA](https://raw.github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/master/art/1024x500.png)
+![FA](https://raw.github.com/k0shk0sh/Fast-Access-Floating-Toolbox-/master/art/web_hi_res_512.png)
+
+
+# Contribution
+
+- PR are always welcomed, if you like the app and you think there is a feature that is missing, please submit PR or an Idea 
+and i'll gladly review it.
+- Bugs, Bugs & Bugs. Please submit an issue ticket if you find a bug.
+
+# Copyright Notice
+
+Copyright (C) 2015 Kosh.
+Licensed under the [GNU Version 3](https://www.gnu.org/licenses/gpl-3.0.en.html)
+license (see the LICENSE file).
 

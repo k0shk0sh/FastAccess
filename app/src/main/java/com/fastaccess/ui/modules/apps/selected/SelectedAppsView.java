@@ -13,9 +13,9 @@ import android.view.View;
 
 import com.fastaccess.R;
 import com.fastaccess.data.dao.AppsModel;
-import com.fastaccess.data.dao.FloatingEventModel;
-import com.fastaccess.data.dao.SelectedAppsEventModel;
-import com.fastaccess.data.dao.ThemePackEventModel;
+import com.fastaccess.data.dao.events.FloatingEventModel;
+import com.fastaccess.data.dao.events.SelectedAppsEventModel;
+import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.helper.InputHelper;
 import com.fastaccess.ui.adapter.DeviceAppsAdapter;
 import com.fastaccess.ui.base.BaseFragment;

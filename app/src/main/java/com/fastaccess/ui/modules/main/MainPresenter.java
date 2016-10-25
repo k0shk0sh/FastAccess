@@ -1,6 +1,5 @@
 package com.fastaccess.ui.modules.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.view.MenuItem;
 import com.fastaccess.R;
 import com.fastaccess.helper.Bundler;
 import com.fastaccess.helper.Logger;
-import com.fastaccess.helper.PermissionsHelper;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 import com.fastaccess.helper.TypeFaceHelper;
@@ -133,12 +131,6 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
             throw new RuntimeException("Oops, Folders Fragment is not currently visible.");
         }
         ((FoldersView) foldersView).onCreateNewFolder();
-    }
-
-    @Override public void onActivityForResult(int requestCode, int resultCode) {
-        if (requestCode == PermissionsHelper.OVERLAY_PERMISSION_REQ_CODE) {
-            if (isAttached() && resultCode == Activity.RESULT_OK) getView().onStartService();
-        }
     }
 
     @Override public void onHandleShortcuts(@NonNull MainView mainView, @Nullable Intent intent) {

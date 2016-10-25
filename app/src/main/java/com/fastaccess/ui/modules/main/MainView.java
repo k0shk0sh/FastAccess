@@ -1,5 +1,6 @@
 package com.fastaccess.ui.modules.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -204,7 +205,9 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getPresenter().onActivityForResult(requestCode, resultCode);
+        if (requestCode == PermissionsHelper.OVERLAY_PERMISSION_REQ_CODE) {
+            if (resultCode == Activity.RESULT_OK) onStartService();//start service since the user wanted to in the first time.
+        }
     }
 
     @Override protected void onNewIntent(Intent intent) {

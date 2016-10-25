@@ -1,5 +1,6 @@
 package com.fastaccess.ui.modules.apps.folders;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,8 +9,9 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 
 import com.fastaccess.R;
-import com.fastaccess.data.dao.FolderEventModel;
 import com.fastaccess.data.dao.FolderModel;
+import com.fastaccess.data.dao.events.FolderEventModel;
+import com.fastaccess.data.dao.events.FragmentFolderEventModel;
 import com.fastaccess.helper.InputHelper;
 import com.fastaccess.ui.adapter.FoldersAdapter;
 import com.fastaccess.ui.base.BaseFragment;
@@ -20,6 +22,8 @@ import com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView;
 import com.mikhaellopez.circularfillableloaders.CircularFillableLoaders;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,16 @@ public class FoldersView extends BaseFragment<FoldersMvp.View, FoldersPresenter>
 
     public static FoldersView newInstance() {
         return new FoldersView();
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override protected int fragmentLayout() {
@@ -111,5 +125,9 @@ public class FoldersView extends BaseFragment<FoldersMvp.View, FoldersPresenter>
     @Override public void onNotifyChanges() {
         if (loader != null) loader.onContentChanged();
         EventBus.getDefault().post(new FolderEventModel());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onEvent(@NonNull FragmentFolderEventModel model) {
+        if (loader != null) loader.forceLoad();
     }
 }

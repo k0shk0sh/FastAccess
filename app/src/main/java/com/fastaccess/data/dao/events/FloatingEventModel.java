@@ -1,4 +1,4 @@
-package com.fastaccess.data.dao;
+package com.fastaccess.data.dao.events;
 
 /**
  * Created by Kosh on 15 Oct 2016, 8:57 PM

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.fastaccess.App;
 import com.fastaccess.R;
-import com.fastaccess.data.dao.ThemePackEventModel;
+import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.ui.adapter.IconPackAdapter;
 import com.fastaccess.data.dao.IconPackInfo;
 

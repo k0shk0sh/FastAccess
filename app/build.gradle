@@ -55,7 +55,7 @@ repositories {
 dependencies {
     ext {
         supportVerion = "25.0.0"
-        firebase = "9.8.00"
+        firebase = "9.8.0"
     }
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "com.android.support:appcompat-v7:${supportVerion}"

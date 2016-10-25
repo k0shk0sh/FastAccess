@@ -78,8 +78,6 @@ public interface MainMvp {
 
         void onCreateNewFolder(@NonNull FragmentManager supportFragmentManager);
 
-        void onActivityForResult(int requestCode, int resultCode);
-
         void onHandleShortcuts(@NonNull MainView mainView, @Nullable Intent intent);
 
         void onBackupRestore(int backupType, @NonNull MainView mainView);

@@ -17,7 +17,7 @@ import android.view.WindowManager;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.AppsModel;
 import com.fastaccess.data.dao.FolderModel;
-import com.fastaccess.data.dao.ThemePackEventModel;
+import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.helper.ViewHelper;
 import com.fastaccess.provider.loader.SelectedAppsLoader;
 import com.fastaccess.ui.adapter.FloatingAppsAdapter;

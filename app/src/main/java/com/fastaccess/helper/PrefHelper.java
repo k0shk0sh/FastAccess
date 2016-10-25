@@ -28,11 +28,11 @@ public class PrefHelper {
         if (InputHelper.isEmpty(key)) {
             throw new NullPointerException("Key must not be null! (key = " + key + "), (value = " + value + ")");
         }
-        Logger.e(key, value);
         SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(App.getInstance()).edit();
         if (value instanceof String) {
             edit.putString(key, (String) value);
         } else if (value instanceof Integer || value instanceof Long || value instanceof Float) {
+            // for the sake of this app, we only need these values to be int
             edit.putInt(key, Integer.parseInt(value.toString()));
         } else if (value instanceof Boolean) {
             edit.putBoolean(key, (boolean) value);

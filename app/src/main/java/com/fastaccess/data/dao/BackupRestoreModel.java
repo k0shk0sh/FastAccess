@@ -3,6 +3,11 @@ package com.fastaccess.data.dao;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.fastaccess.data.dao.events.FloatingEventModel;
+import com.fastaccess.data.dao.events.FolderEventModel;
+import com.fastaccess.data.dao.events.FragmentFolderEventModel;
+import com.fastaccess.data.dao.events.SelectedAppsEventModel;
+import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.helper.PrefHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,11 +74,13 @@ public class BackupRestoreModel {
     public static void restore(@NonNull BackupRestoreModel model) {
         if (model.getFolders() != null) {
             FolderModel.saveInTx(model.getFolders());
-            EventBus.getDefault().post(new FolderEventModel());
+            EventBus.getDefault().post(new FolderEventModel()); // update Floating Folders if any.
+            EventBus.getDefault().post(new FragmentFolderEventModel()); // update MyFolders fragment separately
         }
         if (model.getAppsModels() != null) {
             AppsModel.saveInTx(model.getAppsModels());
-            EventBus.getDefault().post(new FloatingEventModel());
+            EventBus.getDefault().post(new FloatingEventModel());// update selected apps if any
+            EventBus.getDefault().post(new SelectedAppsEventModel());
         }
         if (model.getSettings() != null) {
             for (String key : model.getSettings().keySet()) {
@@ -81,6 +88,7 @@ public class BackupRestoreModel {
                     PrefHelper.set(key, model.getSettings().get(key));
                 }
             }
+            EventBus.getDefault().post(new ThemePackEventModel());//update icon theme
         }
     }
 

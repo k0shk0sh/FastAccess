@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.preference.PreferenceManager;
 
 import com.fastaccess.helper.FileHelper;
-import com.fastaccess.helper.PrefHelper;
 import com.fastaccess.helper.TypeFaceHelper;
 import com.fastaccess.provider.icon.IconCache;
 import com.fastaccess.ui.modules.main.MainView;
@@ -30,7 +29,6 @@ public class App extends Application {
         instance = this;
         SugarContext.init(this.getApplicationContext());
         FileHelper.initFolderName(getString(R.string.app_name));
-        PrefHelper.init(this.getApplicationContext());
         TypeFaceHelper.generateTypeface(this.getApplicationContext());
         PreferenceManager.setDefaultValues(this, R.xml.fa_settings, false);
         if (!BuildConfig.DEBUG) {

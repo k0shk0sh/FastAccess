@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
 import android.view.View;
 
-import com.fastaccess.data.dao.FolderEventModel;
+import com.fastaccess.data.dao.events.FolderEventModel;
 import com.fastaccess.data.dao.FolderModel;
 import com.fastaccess.provider.loader.FoldersLoader;
 import com.fastaccess.ui.adapter.FloatingFoldersAdapter;

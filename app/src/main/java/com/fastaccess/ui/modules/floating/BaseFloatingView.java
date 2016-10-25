@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.WindowManager;
 
 import com.fastaccess.R;
-import com.fastaccess.data.dao.FloatingEventModel;
-import com.fastaccess.data.dao.ThemePackEventModel;
+import com.fastaccess.data.dao.events.FloatingEventModel;
+import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.helper.NotificationHelper;
 import com.fastaccess.helper.PermissionsHelper;
 import com.fastaccess.helper.PrefConstant;
