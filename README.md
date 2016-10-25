@@ -27,6 +27,20 @@ Fast Access
 and i'll gladly review it.
 - Bugs, Bugs & Bugs. Please submit an issue ticket if you find a bug.
 
+# How to build
+
+1- Fork the project.
+
+2- Open it from Android Studio (2.2.2 or above recommended).
+
+3- Change Package Name.
+
+4- Create Firebase & download **google-service.json** file and copy it to app folder.
+
+5- build & run.
+
+6- enjoy.
+
 # Copyright Notice
 
 Copyright (C) 2015 Kosh. 
