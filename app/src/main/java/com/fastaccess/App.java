@@ -7,12 +7,9 @@ import android.support.v7.preference.PreferenceManager;
 import com.fastaccess.helper.FileHelper;
 import com.fastaccess.helper.TypeFaceHelper;
 import com.fastaccess.provider.icon.IconCache;
-import com.fastaccess.ui.modules.main.MainView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orm.SugarContext;
-
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 
 /**
  * Created by Kosh on 24 May 2016, 7:51 PM
@@ -31,11 +28,6 @@ public class App extends Application {
         FileHelper.initFolderName(getString(R.string.app_name));
         TypeFaceHelper.generateTypeface(this.getApplicationContext());
         PreferenceManager.setDefaultValues(this, R.xml.fa_settings, false);
-        if (!BuildConfig.DEBUG) {
-            CustomActivityOnCrash.setRestartActivityClass(MainView.class);
-            CustomActivityOnCrash.setShowErrorDetails(BuildConfig.DEBUG);
-            CustomActivityOnCrash.install(this);
-        }
         FirebaseDatabase.getInstance().setPersistenceEnabled(false);
     }
 
