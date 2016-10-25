@@ -4,7 +4,7 @@ A tiny launcher or as Samsung likes to call it Floating Toolbox.
 Features 
 ======
 * Floating Apps & Floating Folders, are always going to be a click away from any screen.
-* Backup & Restore FA settings & data across devices.
+* Backup & Restore FA settings & data across devices (**Firebase**).
 * Plenty of within App customization. (FA supports icon packs just like Nova Launcher & others).
 * Fully Material designed App with unique look & feel.
 * MVP structured App, (No unit tests, <small>PR are welcome</small>).
