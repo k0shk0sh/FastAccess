@@ -95,6 +95,7 @@ function getParamValue(param) {
 var params = getParamValue("sharedUri");
 if (params != null) {
   console.log(params);
+  window.location = 'intent://view?sharedUri='+sharedUri+'#Intent;package=com.styleme.floating.toolbox.pro;scheme=http;launchFlags=268435456;end;';
 }
 </script>
 
