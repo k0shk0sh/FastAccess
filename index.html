@@ -82,21 +82,4 @@
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>
-<script type="text/javascript">
-function getParamValue(param) {
-    var urlParamString = location.search.split(param + "=");
-    if (urlParamString.length <= 1) return "";
-    else {
-        var tmp = urlParamString[1].split("&");
-        return tmp[0];
-    }
-}
-
-var params = getParamValue("sharedUri");
-if (params != null) {
-  console.log(params);
-  window.location = 'intent://view?sharedUri='+sharedUri+'#Intent;package=com.styleme.floating.toolbox.pro;scheme=http;launchFlags=268435456;end;';
-}
-</script>
-
 </html>
