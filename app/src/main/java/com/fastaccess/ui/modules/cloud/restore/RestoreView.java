@@ -14,15 +14,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import icepick.State;
+
 /**
  * Created by Kosh on 23 Oct 2016, 9:05 PM
  */
 
 public class RestoreView extends BaseActivity<RestoreMvp.View, RestorePresenter> implements RestoreMvp.View {
+
+    public static final String USER_ID_INTENT = "user_id";
     private RestorePresenter presenter;
     private ProgressDialog progressDialog;
     private DatabaseReference database;
     private FirebaseUser user;
+    @State String userId;
 
     @Override protected int layout() {
         return 0;
@@ -77,12 +82,15 @@ public class RestoreView extends BaseActivity<RestoreMvp.View, RestorePresenter>
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPresenter().onRestore(getDatabase());
+        if (savedInstanceState == null && getIntent() != null && getIntent().getExtras() != null) {
+            userId = getIntent().getExtras().getString(USER_ID_INTENT);
+        }
+        getPresenter().onRestore(getDatabase(), userId);
     }
 
     @Override protected void onStop() {
         super.onStop();
-        try {
+        try {// user might cancel if we never registered the listener
             getDatabase().removeEventListener(getPresenter());
         } catch (Exception ignored) {}
     }

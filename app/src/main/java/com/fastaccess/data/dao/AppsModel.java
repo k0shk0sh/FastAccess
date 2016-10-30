@@ -159,7 +159,7 @@ public class AppsModel extends SugarRecord implements Parcelable {
         dest.writeString(this.activityInfoName);
         dest.writeInt(this.indexPosition);
         dest.writeInt(this.countEntry);
-        dest.writeLong(this.getId());
+        dest.writeValue(this.getId());
     }
 
     protected AppsModel(Parcel in) {

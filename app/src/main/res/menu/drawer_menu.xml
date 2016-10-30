@@ -28,6 +28,10 @@
                 android:id="@+id/restore"
                 android:icon="@drawable/ic_restore"
                 android:title="@string/restore"/>
+            <item
+                android:id="@+id/shareBackup"
+                android:icon="@drawable/ic_share"
+                android:title="@string/share_my_backup"/>
         </menu>
     </item>
 

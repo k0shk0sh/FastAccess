@@ -1,9 +1,11 @@
 package com.fastaccess.ui.modules.cloud.restore;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.fastaccess.R;
 import com.fastaccess.data.dao.BackupRestoreModel;
+import com.fastaccess.helper.InputHelper;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 import com.fastaccess.ui.modules.cloud.backup.BackupView;
@@ -18,6 +20,7 @@ import com.google.firebase.database.Query;
  */
 
 public class RestorePresenter extends BasePresenter<RestoreMvp.View> implements RestoreMvp.Presenter {
+    private String userId;
 
     protected RestorePresenter(@NonNull RestoreMvp.View view) {
         super(view);
@@ -27,16 +30,20 @@ public class RestorePresenter extends BasePresenter<RestoreMvp.View> implements 
         return new RestorePresenter(view);
     }
 
-    @Override public void onRestore(DatabaseReference databaseReference) {
+    @Override public void onRestore(@NonNull DatabaseReference databaseReference, @Nullable String userId) {
+        this.userId = userId;
         FirebaseUser user = getView().user();
-        if (user == null) {
+        if (InputHelper.isEmpty(userId)) {
+            if (user != null) userId = user.getUid();
+        }
+        if (InputHelper.isEmpty(userId)) {
             getView().onShowMessage(R.string.login_first_msg);
+            getView().finishOnError();
         } else {
             getView().onShowProgress();
-            Logger.e(user.getUid());
             Query query = databaseReference
                     .child(BackupView.BACKUP_DATABASE_NAME)
-                    .child(user.getUid())
+                    .child(userId)
                     .limitToFirst(1);
             query.keepSynced(true);
             query.addListenerForSingleValueEvent(this);
@@ -48,7 +55,10 @@ public class RestorePresenter extends BasePresenter<RestoreMvp.View> implements 
         if (dataSnapshot != null) {
             Logger.e(dataSnapshot);
             FirebaseUser user = getView().user();
-            if (user == null) {
+            if (InputHelper.isEmpty(userId)) {
+                if (user != null) userId = user.getUid();
+            }
+            if (userId == null) {
                 getView().onHideProgress();
                 getView().onShowMessage(R.string.login_first_msg);
                 getView().finishOnError();

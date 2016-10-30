@@ -8,3 +8,4 @@
 /app/google-services.json
 /.idea/
 /app/StyleMe
+/app/src/main/res/values/secrets.xml

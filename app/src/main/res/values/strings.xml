@@ -109,4 +109,13 @@
     <string name="ok">@android:string/ok</string>
     <string name="backup_warning">This will overwrite any existing backup you have made so far.\nAre you sure?</string>
     <string name="restore_warning">Restoring will overwrite all your settings and data within the app.\nAre you sure?</string>
+    <string name="edit_folder_hint">Click here to edit the folder.</string>
+    <string name="delete_folder_hint">Click here to delete the folder, once deleted can\'t be recovered unless if you made previous backup.</string>
+    <string name="add_folder_apps_hint">Click here to add apps to this folder.</string>
+    <string name="delete_folder_confirm_msg">This action can not be undo.\\nAre you sure?</string>
+    <string name="share_my_backup">Share My Backup</string>
+    <string name="no_user">Please login first.</string>
+    <string name="confirm_message">Are you sure?</string>
+    <string name="sharing_backup">Hello there!, I\'m sharing my back with you.</string>
+    <string name="restore_function_not_available">Restore functionality is not available</string>
 </resources>

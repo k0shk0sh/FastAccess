@@ -18,6 +18,7 @@ import com.fastaccess.ui.base.BaseFragment;
 import com.fastaccess.ui.modules.apps.folders.create.CreateFolderView;
 import com.fastaccess.ui.modules.apps.folders.select.SelectFolderAppsView;
 import com.fastaccess.ui.widgets.FontTextView;
+import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 import com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView;
 import com.mikhaellopez.circularfillableloaders.CircularFillableLoaders;
 
@@ -106,9 +107,8 @@ public class FoldersView extends BaseFragment<FoldersMvp.View, FoldersPresenter>
     }
 
     @Override public void onDeleteFolder(@NonNull FolderModel folder, int position) {
-        FolderModel.deleteFolder(folder);
-        adapter.removeItem(position);
-        onNotifyChanges();
+        MessageDialogView.newInstance(R.string.delete, R.string.delete_folder_confirm_msg, position)
+                .show(getChildFragmentManager(), "MessageDialogView");
     }
 
     @Override public void onFilter(@Nullable String text) {
@@ -126,6 +126,19 @@ public class FoldersView extends BaseFragment<FoldersMvp.View, FoldersPresenter>
         if (loader != null) loader.onContentChanged();
         EventBus.getDefault().post(new FolderEventModel());
     }
+
+    @Override public void onMessageDialogActionClicked(boolean isOk, int requestCode) {
+        if (isOk) {
+            FolderModel folderModel = adapter.getItem(requestCode);
+            if (folderModel != null) {
+                FolderModel.deleteFolder(folderModel);
+                adapter.removeItem(folderModel);
+                onNotifyChanges();
+            }
+        }
+    }
+
+    @Override public void onDialogDismissed() {}//opt-out
 
     @Subscribe(threadMode = ThreadMode.MAIN) public void onEvent(@NonNull FragmentFolderEventModel model) {
         if (loader != null) loader.forceLoad();

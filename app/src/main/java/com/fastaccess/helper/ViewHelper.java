@@ -1,6 +1,7 @@
 package com.fastaccess.helper;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
@@ -16,6 +17,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -32,6 +34,11 @@ import com.tooltip.OnDismissListener;
 import com.tooltip.Tooltip;
 
 import java.util.Arrays;
+
+import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 
 
 /**
@@ -151,6 +158,45 @@ public class ViewHelper {
         showTooltip(view, titleResId, tag, Gravity.BOTTOM);
     }
 
+    public static void showMaterialIntroView(@NonNull Context context, @NonNull View view, @StringRes int resId,
+                                             boolean showAnimation, @Nullable MaterialIntroListener listener) {
+        Activity activity = ActivityHelper.getActivity(context);
+        if (activity == null) {
+            activity = ActivityHelper.getActivity(view.getContext());
+            if (activity == null) {
+                showTooltip(view, resId, String.valueOf(resId));
+                return;
+            }
+        }
+        new MaterialIntroView.Builder(activity)
+                .enableDotAnimation(showAnimation)
+                .enableIcon(true)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.MINIMUM)
+                .setDelayMillis(1500)
+                .enableFadeAnimation(true)
+                .setInfoText(activity.getResources().getString(resId))
+                .performClick(true)
+                .setTarget(view)
+                .setListener(listener)
+                .setUsageId(view.getId() != 0 ? String.valueOf(view.getId()) : String.valueOf(resId))
+                .show();
+    }
+
+    public static void showMaterialIntroView(@NonNull Context context, @NonNull View view, @StringRes int resId,
+                                             @Nullable MaterialIntroListener listener) {
+        showMaterialIntroView(context, view, resId, false, listener);
+
+    }
+
+    public static void showMaterialIntroView(@NonNull Context context, @NonNull View view, @StringRes int resId, boolean showAnimation) {
+        showMaterialIntroView(context, view, resId, showAnimation, null);
+    }
+
+    public static void showMaterialIntroView(@NonNull Context context, @NonNull View view, @StringRes int resId) {
+        showMaterialIntroView(context, view, resId, null);
+    }
+
     public static Rect getLayoutPosition(@NonNull View view) {
         Rect myViewRect = new Rect();
         view.getGlobalVisibleRect(myViewRect);
@@ -166,4 +212,5 @@ public class ViewHelper {
         windowManager.getDefaultDisplay().getMetrics(metrics);
         return width <= metrics.widthPixels ? width : metrics.widthPixels;
     }
+
 }

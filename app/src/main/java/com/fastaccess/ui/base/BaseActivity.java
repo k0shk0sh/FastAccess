@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,7 +15,6 @@ import android.view.View;
 import com.fastaccess.BuildConfig;
 import com.fastaccess.R;
 import com.fastaccess.helper.AppHelper;
-import com.fastaccess.helper.ViewHelper;
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 
@@ -55,11 +55,6 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
             Icepick.restoreInstanceState(this, savedInstanceState);
         }
         setupToolbarAndStatusBar();
-//        if (PermissionHelper.declinedPermissions(this.getApplicationContext(), PermissionActivity.PERMISSIONS).length != 0) {
-//            startActivity(new Intent(this, PermissionActivity.class));
-//            finish();
-//            return;
-//        }
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,12 +110,10 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
         }
     }
 
-    @RequiresApi(value = 21) private void changeAppColor() {
+    @RequiresApi(value = 21) protected void changeAppColor() {
         if (AppHelper.isLollipopOrHigher()) {
             if (!isTransparent()) {
-                getWindow().setStatusBarColor(ViewHelper.getPrimaryDarkColor(this));
-            } else {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.primary_dark));
             }
         }
     }

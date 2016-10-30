@@ -7,6 +7,6 @@
         <item name="android:colorEdgeEffect">?colorPrimary</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/transparent</item>
-        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowContentTransitions">true</item>m>
     </style>
 </resources>

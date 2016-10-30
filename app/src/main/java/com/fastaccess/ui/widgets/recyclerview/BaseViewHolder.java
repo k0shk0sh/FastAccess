@@ -38,14 +38,16 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
     @SuppressWarnings("unchecked") @Override public void onClick(View v) {
         int position = getAdapterPosition();
         if (adapter != null && adapter.listener != null) {
-            adapter.listener.onItemClick(position, v, adapter.getItem(position));
+            if (position != -1 && position < adapter.getItemCount())
+                adapter.listener.onItemClick(position, v, adapter.getItem(position));
         }
     }
 
     @SuppressWarnings("unchecked") @Override public boolean onLongClick(View v) {
         int position = getAdapterPosition();
         if (adapter != null && adapter.listener != null) {
-            adapter.listener.onItemLongClick(position, v, adapter.getItem(position));
+            if (position != -1 && position < adapter.getItemCount())
+                adapter.listener.onItemLongClick(position, v, adapter.getItem(position));
         }
         return true;
     }

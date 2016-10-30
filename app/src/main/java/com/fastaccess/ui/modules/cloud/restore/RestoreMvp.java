@@ -32,6 +32,6 @@ public interface RestoreMvp {
 
     interface Presenter extends ValueEventListener {
 
-        void onRestore(DatabaseReference databaseReference);
+        void onRestore(@NonNull DatabaseReference databaseReference, @Nullable String userId);
     }
 }

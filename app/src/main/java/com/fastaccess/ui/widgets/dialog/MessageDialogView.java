@@ -35,10 +35,8 @@ public class MessageDialogView extends BaseBottomSheetDialog {
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        if (getParentFragment() != null) {
-            if (getParentFragment() instanceof MessageDialogViewActionCallback) {
-                callback = (MessageDialogViewActionCallback) getParentFragment();
-            }
+        if (getParentFragment() != null && getParentFragment() instanceof MessageDialogViewActionCallback) {
+            callback = (MessageDialogViewActionCallback) getParentFragment();
         } else if (context instanceof MessageDialogViewActionCallback) {
             callback = (MessageDialogViewActionCallback) context;
         }

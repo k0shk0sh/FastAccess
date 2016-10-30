@@ -6,6 +6,7 @@ import android.support.v4.app.LoaderManager;
 
 import com.fastaccess.data.dao.FolderModel;
 import com.fastaccess.ui.modules.apps.folders.create.CreateFolderMvp;
+import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public interface FoldersMvp {
 
-    interface View extends CreateFolderMvp.OnNotifyFoldersAdapter {
+    interface View extends CreateFolderMvp.OnNotifyFoldersAdapter, MessageDialogView.MessageDialogViewActionCallback{
         void onStartLoading();
 
         void onFoldersLoaded(@Nullable List<FolderModel> models);

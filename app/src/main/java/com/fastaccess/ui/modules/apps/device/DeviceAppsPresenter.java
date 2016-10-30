@@ -50,15 +50,16 @@ public class DeviceAppsPresenter extends BasePresenter<DeviceAppsMvp.View> imple
     }
 
     @Override public void onItemClick(int position, View v, AppsModel item) {
-        if (getView().hasSelection()) {
-            onItemLongClick(position, v, item);
-        } else {
-            getView().onOpenAppDetails(v, item);
-        }
+        getView().setSelection(item.getComponentName().toShortString(), position);
+//        if (getView().hasSelection()) {
+//            onItemLongClick(position, v, item);
+//        } else {
+//            getView().onOpenAppDetails(v, item);
+//        }
     }
 
     @Override public void onItemLongClick(int position, View v, AppsModel item) {
-        getView().setSelection(item.getComponentName().toShortString(), position);
+        onItemClick(position, v, item);
     }
 
     @Override public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -67,7 +68,7 @@ public class DeviceAppsPresenter extends BasePresenter<DeviceAppsMvp.View> imple
     }
 
     @Override public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        return false;
+        return true;
     }
 
     @Override public boolean onActionItemClicked(ActionMode mode, MenuItem item) {

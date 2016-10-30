@@ -28,6 +28,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data
+                    android:host="k0shk0sh.github.io/FastAccess"
+                    android:pathPattern=".*"
+                    android:scheme="http"/>
+                <data
+                    android:host="k0shk0sh.github.io/FastAccess"
+                    android:pathPattern=".*"
+                    android:scheme="https"/>
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/fa_shortcuts"/>

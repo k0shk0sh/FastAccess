@@ -2,6 +2,7 @@ package com.fastaccess.ui.modules.main;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -9,12 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
+import com.fastaccess.BuildConfig;
 import com.fastaccess.R;
 import com.fastaccess.helper.Bundler;
+import com.fastaccess.helper.InputHelper;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
@@ -24,6 +28,9 @@ import com.fastaccess.ui.modules.apps.device.DeviceAppsView;
 import com.fastaccess.ui.modules.apps.folders.FoldersView;
 import com.fastaccess.ui.modules.apps.selected.SelectedAppsView;
 import com.fastaccess.ui.modules.cloud.auth.LoginView;
+import com.google.android.gms.appinvite.AppInviteInvitationResult;
+import com.google.android.gms.appinvite.AppInviteReferral;
+import com.google.firebase.auth.FirebaseUser;
 
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
@@ -161,6 +168,27 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
         mainView.startActivity(intent);
     }
 
+    @Override public void onShareUserBackup(@NonNull MainView mainView, @NonNull FirebaseUser currentUser) {
+        String packageName = mainView.getApplicationContext().getPackageName();
+        Uri deepLinkBuilder = new Uri.Builder()
+                .scheme("http")
+                .authority(BuildConfig.FA_HOST)
+                .appendQueryParameter(BuildConfig.SHARED_URI, currentUser.getUid())
+                .build();
+        Uri.Builder builder = new Uri.Builder()
+                .scheme("https")
+                .authority(mainView.getResources().getString(R.string.link_ref) + ".app.goo.gl")
+                .path("/")
+                .appendQueryParameter("link", Uri.parse(deepLinkBuilder.toString()).toString())
+                .appendQueryParameter("apn", packageName);
+        ShareCompat.IntentBuilder.from(mainView)
+                .setType("message/rfc822")
+                .setSubject(mainView.getString(R.string.sharing_backup))
+                .setChooserTitle(mainView.getString(R.string.share_my_backup))
+                .setHtmlText("<a href='" + Uri.decode(builder.toString()) + "'>Click here to restore my backup.</a>")
+                .startChooser();
+    }
+
     @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         getView().onCloseDrawer();
         switch (item.getItemId()) {
@@ -188,6 +216,9 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
             case R.id.restore:
                 getView().onRestore();
                 break;
+            case R.id.shareBackup:
+                getView().onShareBackup();
+                break;
         }
         return false;
     }
@@ -201,4 +232,19 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
     }
 
     @Override public void onMenuItemReselect(@IdRes int id, int position) {}
+
+    @Override public void onResult(@NonNull AppInviteInvitationResult result) {
+        if (result.getStatus().isSuccess()) {
+            Intent intent = result.getInvitationIntent();
+            String deepLink = AppInviteReferral.getDeepLink(intent);
+            Uri data = intent.getData();
+            String userId = data.getQueryParameter(BuildConfig.SHARED_URI);
+            Logger.e(deepLink, data, userId);
+            if (!InputHelper.isEmpty(userId)) {
+                if (isAttached()) getView().onRestoreFromUserId(userId);
+            }
+        } else {
+            Logger.e("no deep link found.");
+        }
+    }
 }

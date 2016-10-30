@@ -13,6 +13,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 
 import com.fastaccess.ui.base.mvp.BaseMvp;
+import com.google.android.gms.appinvite.AppInviteInvitationResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -37,7 +41,7 @@ public interface MainMvp {
     })
     @Retention(RetentionPolicy.SOURCE) @interface NavigationType {}
 
-    interface View {
+    interface View extends GoogleApiClient.OnConnectionFailedListener {
         void onNavigationChanged(@NavigationType int navType);
 
         void onOpenDrawer();
@@ -59,9 +63,14 @@ public interface MainMvp {
         void onBackup();
 
         void onRestore();
+
+        void onShareBackup();
+
+        void onRestoreFromUserId(@NonNull String userId);
     }
 
-    interface Presenter extends BaseMvp.FAPresenter<View>, OnNavigationItemSelectedListener, OnMenuItemSelectionListener {
+    interface Presenter extends BaseMvp.FAPresenter<View>, OnNavigationItemSelectedListener,
+            OnMenuItemSelectionListener, ResultCallback<AppInviteInvitationResult> {
         void onActivityStarted(@Nullable Bundle savedInstance, @NonNull MainView mainView,
                                @NonNull BottomNavigation bottomNavigation,
                                @NonNull NavigationView navigationView);
@@ -81,5 +90,7 @@ public interface MainMvp {
         void onHandleShortcuts(@NonNull MainView mainView, @Nullable Intent intent);
 
         void onBackupRestore(int backupType, @NonNull MainView mainView);
+
+        void onShareUserBackup(@NonNull MainView mainView, @NonNull FirebaseUser currentUser);
     }
 }

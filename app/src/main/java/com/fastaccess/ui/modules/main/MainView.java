@@ -19,16 +19,24 @@ import android.widget.Toast;
 import com.fastaccess.R;
 import com.fastaccess.helper.AnimHelper;
 import com.fastaccess.helper.AppHelper;
+import com.fastaccess.helper.Bundler;
+import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.NotificationHelper;
 import com.fastaccess.helper.PermissionsHelper;
 import com.fastaccess.provider.service.FloatingService;
 import com.fastaccess.ui.base.BaseActivity;
 import com.fastaccess.ui.modules.apps.device.DeviceAppsView;
 import com.fastaccess.ui.modules.cloud.auth.LoginView;
+import com.fastaccess.ui.modules.cloud.restore.RestoreView;
 import com.fastaccess.ui.modules.settings.SettingsView;
 import com.fastaccess.ui.widgets.FontEditText;
 import com.fastaccess.ui.widgets.ForegroundImageView;
 import com.fastaccess.ui.widgets.dialog.MessageDialogView;
+import com.google.android.gms.appinvite.AppInvite;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +62,7 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
     @BindView(R.id.fab) FloatingActionButton fab;
     private MainPresenter presenter;
     private BadgeProvider badgeProvider;
+    private GoogleApiClient mGoogleApiClient;
 
 
     @OnClick(R.id.fab) void onClick() {
@@ -113,7 +122,9 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
                     .replace(R.id.container, DeviceAppsView.newInstance(), DeviceAppsView.TAG)
                     .commit();
             getPresenter().onHandleShortcuts(this, getIntent());
+            AppInvite.AppInviteApi.getInvitation(getGoogleApiClient(), this, false).setResultCallback(getPresenter());
         }
+        drawerLayout.setStatusBarBackground(R.color.primary_dark);
         setToolbarIcon(R.drawable.ic_menu);
         getPresenter().onActivityStarted(savedInstanceState, this, bottomNavigation, navigation);
         if (null != savedInstanceState) getBadgeProvider().restore(savedInstanceState);
@@ -187,6 +198,23 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
                 .show(getSupportFragmentManager(), "MessageDialogView");
     }
 
+    @Override public void onShareBackup() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            Toast.makeText(this, R.string.no_user, Toast.LENGTH_LONG).show();
+        } else {
+            MessageDialogView.newInstance(R.string.share_my_backup, R.string.confirm_message)
+                    .show(getSupportFragmentManager(), "MessageDialogView");
+        }
+    }
+
+    @Override public void onRestoreFromUserId(@NonNull String userId) {
+        Bundle bundle = Bundler.start().put(RestoreView.USER_ID_INTENT, userId).end();
+        Intent intent = new Intent(this, RestoreView.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onOpenDrawer();
@@ -213,6 +241,7 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         getPresenter().onHandleShortcuts(this, intent);
+        AppInvite.AppInviteApi.getInvitation(getGoogleApiClient(), this, false).setResultCallback(getPresenter());
     }
 
     @NonNull private BadgeProvider getBadgeProvider() {
@@ -224,7 +253,27 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
 
     @Override public void onMessageDialogActionClicked(boolean isOk, int requestCode) {
         if (isOk) {
-            getPresenter().onBackupRestore(requestCode == BACKUP_REQUEST_CODE ? LoginView.BACKUP_TYPE : LoginView.RESTORE_TYPE, this);
+            if (requestCode == BACKUP_REQUEST_CODE || requestCode == RESTORE_REQUEST_CODE) {
+                getPresenter().onBackupRestore(requestCode == BACKUP_REQUEST_CODE ? LoginView.BACKUP_TYPE : LoginView.RESTORE_TYPE, this);
+            } else {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null/* never will occur, but then we would like to make sure*/) getPresenter().onShareUserBackup(this, user);
+            }
         }
+    }
+
+    @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, R.string.restore_function_not_available, Toast.LENGTH_LONG).show();
+        Logger.e(connectionResult);
+    }
+
+    private GoogleApiClient getGoogleApiClient() {
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this, this)
+                    .addApi(AppInvite.API)
+                    .build();
+        }
+        return mGoogleApiClient;
     }
 }
