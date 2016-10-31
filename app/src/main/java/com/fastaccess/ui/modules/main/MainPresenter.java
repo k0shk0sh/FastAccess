@@ -70,7 +70,6 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
 
     @SuppressWarnings("ConstantConditions")
     @Override public void onModuleChanged(@NonNull FragmentManager fragmentManager, @MainMvp.NavigationType int type) {
-        Logger.e(type);
         Fragment currentVisible = getVisibleFragment(fragmentManager);
         DeviceAppsView deviceAppsView = (DeviceAppsView) getFragmentByTag(fragmentManager, DeviceAppsView.TAG);
         FoldersView foldersView = (FoldersView) getFragmentByTag(fragmentManager, FoldersView.TAG);
@@ -185,8 +184,8 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
                 .setType("message/rfc822")
                 .setSubject(mainView.getString(R.string.sharing_backup))
                 .setChooserTitle(mainView.getString(R.string.share_my_backup))
-                .setHtmlText("<a href='" + Uri.decode(builder.toString()) + "'>Click here to restore my backup.</a>")
-                .startChooser();
+                .setHtmlText("<a href='" + Uri.decode(builder.toString()) + "'>" + mainView.getString(R.string.click_here_html) +
+                        "</a></br><b>~" + mainView.getString(R.string.app_name) + "</b>").startChooser();
     }
 
     @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {

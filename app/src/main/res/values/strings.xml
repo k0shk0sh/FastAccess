@@ -116,6 +116,7 @@
     <string name="share_my_backup">Share My Backup</string>
     <string name="no_user">Please login first.</string>
     <string name="confirm_message">Are you sure?</string>
-    <string name="sharing_backup">Hello there!, I\'m sharing my back with you.</string>
+    <string name="sharing_backup">Hello there!, I\'m sharing my FA backup with you.</string>
     <string name="restore_function_not_available">Restore functionality is not available</string>
+    <string name="click_here_html">Click here to restore my FA backup.</string>
 </resources>
