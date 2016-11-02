@@ -74,8 +74,6 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
     private void updateParams(int orientation, boolean update) {
         Point szWindow = new Point();
         windowManager.getDefaultDisplay().getSize(szWindow);
-//        originalParams.width = MATCH_PARENT;
-//        originalParams.height = WRAP_CONTENT;
         originalParams.width = orientation == Configuration.ORIENTATION_PORTRAIT ? szWindow.x - 50 : (szWindow.x - 150);
         originalParams.height = orientation == Configuration.ORIENTATION_PORTRAIT ? (int) (szWindow.y / 1.8) : (szWindow.y - 200);
         if (update) windowManager.updateViewLayout(drawerHolder.appDrawer, originalParams);
@@ -90,6 +88,7 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
         drawerHolder.recycler.setAdapter(adapter);
         drawerHolder.emptyText.setText(R.string.no_apps);
         drawerHolder.recycler.setEmptyView(drawerHolder.emptyText);
+        drawerHolder.folderName.setText(folder.getFolderName());
         NinePatchDrawable drawable = (NinePatchDrawable) drawerHolder.appDrawer.getBackground();
         drawable.setColorFilter(new PorterDuffColorFilter(folder.getColor(),
                 PorterDuff.Mode.MULTIPLY));

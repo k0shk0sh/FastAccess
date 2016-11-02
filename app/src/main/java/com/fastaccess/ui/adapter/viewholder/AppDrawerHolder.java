@@ -18,6 +18,7 @@ public class AppDrawerHolder {
     @BindView(R.id.appDrawer) public FloatingLayout appDrawer;
     @BindView(R.id.recycler) public DynamicRecyclerView recycler;
     @BindView(R.id.empty_text) public FontTextView emptyText;
+    @BindView(R.id.folderName) public FontTextView folderName;
     private FloatingDrawerMvp.View viewCallback;
     private Unbinder unbinder;
 

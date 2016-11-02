@@ -7,13 +7,13 @@ import android.view.KeyEvent;
 
 import com.fastaccess.ui.modules.floating.folders.drawer.FloatingDrawerMvp;
 
-import io.codetail.widget.RevealFrameLayout;
+import io.codetail.widget.RevealLinearLayout;
 
 /**
  * Created by Kosh on 22 Oct 2016, 12:30 PM
  */
 
-public class FloatingLayout extends RevealFrameLayout {
+public class FloatingLayout extends RevealLinearLayout {
 
     private FloatingDrawerMvp.View viewCallback;
 
