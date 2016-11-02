@@ -33,7 +33,7 @@
     <string name="required_field">Required</string>
     <string name="apps">Apps</string>
     <string name="delete">Delete</string>
-    <string name="color_picker_hint_folder">Click here to change color</string>
+    <string name="color_picker_hint_folder">Click here to change the folder color</string>
     <string name="select_apps">Select Apps</string>
     <string name="add_all">Add All</string>
     <string name="remove_all">Remove All</string>
@@ -119,4 +119,5 @@
     <string name="sharing_backup">Hello there!, I\'m sharing my FA backup with you.</string>
     <string name="restore_function_not_available">Restore functionality is not available</string>
     <string name="click_here_html">Click here to restore my FA backup.</string>
+    <string name="drag_and_drop_hint"><![CDATA[Drag & Drop to sort the selected apps.]]></string>
 </resources>

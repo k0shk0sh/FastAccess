@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: "com.neenbedankt.android-apt"
-
 android {
     signingConfigs {
         signing {
-            keyAlias 'styleme'
-            keyPassword 'koshkosh1'
+            keyAlias ANDROID_KEY_ALIAS
+            keyPassword ANDROID_STORE_PASSWORD
             storeFile file('StyleMe')
-            storePassword 'koshkosh1'
+            storePassword ANDROID_STORE_PASSWORD
         }
     }
     compileSdkVersion 25
@@ -89,7 +88,6 @@ dependencies {
     compile 'org.adw.library:discrete-seekbar:1.0.1'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.3.1'
     compile 'pub.devrel:easypermissions:0.2.1'
-    compile 'com.github.iammert:MaterialIntroView:1.5.2'
     apt 'frankiesardo:icepick-processor:3.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

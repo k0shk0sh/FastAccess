@@ -60,6 +60,7 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
     @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.bottomNavigation) BottomNavigation bottomNavigation;
     @BindView(R.id.fab) FloatingActionButton fab;
+
     private MainPresenter presenter;
     private BadgeProvider badgeProvider;
     private GoogleApiClient mGoogleApiClient;

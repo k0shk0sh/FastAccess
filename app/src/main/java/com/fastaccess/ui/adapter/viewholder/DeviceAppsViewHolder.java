@@ -24,8 +24,8 @@ import butterknife.BindView;
 public class DeviceAppsViewHolder extends BaseViewHolder<AppsModel> implements ItemTouchHelperViewHolder {
     @BindView(R.id.appIcon) ImageView appIcon;
     @BindView(R.id.cardView) CardView cardView;
-    @ColorInt private int selectedColor;
-    @ColorInt private int normalColor;
+    @ColorInt private final int selectedColor;
+    @ColorInt private final int normalColor;
     private boolean selected;
 
     public DeviceAppsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {

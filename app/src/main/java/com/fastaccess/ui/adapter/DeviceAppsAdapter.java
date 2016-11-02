@@ -42,6 +42,31 @@ public class DeviceAppsAdapter extends BaseRecyclerAdapter<AppsModel, DeviceApps
         }
     }
 
+    @Override public Filter getFilter() {
+        return new Filter() {
+            @Override protected FilterResults performFiltering(CharSequence charSequence) {
+                final FilterResults oReturn = new FilterResults();
+                final List<AppsModel> results = new ArrayList<>();
+                if (!InputHelper.isEmpty(charSequence)) {
+                    if (!getData().isEmpty()) {
+                        for (AppsModel appInfo : getData()) {
+                            if (appInfo.getAppName().toLowerCase().contains(charSequence.toString())) {
+                                results.add(appInfo);
+                            }
+                        }
+                    }
+                    oReturn.values = results;
+                    oReturn.count = results.size();
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked") @Override protected void publishResults(CharSequence constraint, FilterResults results) {
+                insertItems((List<AppsModel>) results.values);
+            }
+        };
+    }
+
     public void select(String packageName, int position, boolean select) {
         if (select) selection.put(packageName, getItem(position));
         else selection.remove(packageName);
@@ -67,31 +92,6 @@ public class DeviceAppsAdapter extends BaseRecyclerAdapter<AppsModel, DeviceApps
 
     public List<AppsModel> getSelections() {
         return new ArrayList<>(selection.values());
-    }
-
-    @Override public Filter getFilter() {
-        return new Filter() {
-            @Override protected FilterResults performFiltering(CharSequence charSequence) {
-                final FilterResults oReturn = new FilterResults();
-                final List<AppsModel> results = new ArrayList<>();
-                if (!InputHelper.isEmpty(charSequence)) {
-                    if (!getData().isEmpty()) {
-                        for (AppsModel appInfo : getData()) {
-                            if (appInfo.getAppName().toLowerCase().contains(charSequence.toString())) {
-                                results.add(appInfo);
-                            }
-                        }
-                    }
-                    oReturn.values = results;
-                    oReturn.count = results.size();
-                }
-                return oReturn;
-            }
-
-            @SuppressWarnings("unchecked") @Override protected void publishResults(CharSequence constraint, FilterResults results) {
-                insertItems((List<AppsModel>) results.values);
-            }
-        };
     }
 
 }

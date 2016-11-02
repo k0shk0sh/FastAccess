@@ -26,6 +26,21 @@ import icepick.Icepick;
 public abstract class BaseBottomSheetDialog extends BottomSheetDialogFragment {
 
     protected BottomSheetBehavior<View> bottomSheetBehavior;
+    private BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
+        @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                isAlreadyHidden = true;
+                onHidden();
+            }
+        }
+
+        @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            if (slideOffset == -1.0) {
+                isAlreadyHidden = true;
+                onDismissedByScrolling();
+            }
+        }
+    };
     protected boolean isAlreadyHidden;
     @Nullable private Unbinder unbinder;
 
@@ -52,22 +67,8 @@ public abstract class BaseBottomSheetDialog extends BottomSheetDialogFragment {
         View parent = ((View) contentView.getParent());
         bottomSheetBehavior = BottomSheetBehavior.from(parent);
         if (bottomSheetBehavior != null) {
+            bottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        isAlreadyHidden = true;
-                        onHidden();
-                    }
-                }
-
-                @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                    if (slideOffset == -1.0) {
-                        isAlreadyHidden = true;
-                        onDismissedByScrolling();
-                    }
-                }
-            });
         }
         unbinder = ButterKnife.bind(this, contentView);
         onViewCreated(contentView);
@@ -80,15 +81,18 @@ public abstract class BaseBottomSheetDialog extends BottomSheetDialogFragment {
 
     @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
-        if (ViewHelper.isTablet(getContext())) {
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override public void onShow(DialogInterface dialogINterface) {
-                    if (dialog.getWindow() != null) dialog.getWindow().setLayout(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface dialogINterface) {
+                if (ViewHelper.isTablet(getContext())) {
+                    if (dialog.getWindow() != null) {
+                        dialog.getWindow().setLayout(
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT);
+                    }
                 }
-            });
-        }
+                onDialogIsVisible();
+            }
+        });
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -116,8 +120,10 @@ public abstract class BaseBottomSheetDialog extends BottomSheetDialogFragment {
 
     protected void onHidden() {
         dismiss();
-    }
+    }//helper method to notify dialogs
 
-    protected void onDismissedByScrolling() {}
+    protected void onDismissedByScrolling() {}//helper method to notify dialogs
+
+    protected void onDialogIsVisible() {}//helper method to notify dialogs
 
 }

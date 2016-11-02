@@ -9,3 +9,4 @@
 /.idea/
 /app/StyleMe
 /app/src/main/res/values/secrets.xml
+/gradle.properties

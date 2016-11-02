@@ -43,12 +43,12 @@ import static com.fastaccess.helper.AppHelper.getVisibleFragment;
 
 public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMvp.Presenter {
 
-    public static MainPresenter with(MainMvp.View view) {
-        return new MainPresenter(view);
+    private MainPresenter(@NonNull MainMvp.View view) {
+        super(view);
     }
 
-    protected MainPresenter(@NonNull MainMvp.View view) {
-        super(view);
+    public static MainPresenter with(MainMvp.View view) {
+        return new MainPresenter(view);
     }
 
     @Override public void onActivityStarted(@Nullable Bundle savedInstance,
@@ -181,11 +181,11 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
                 .appendQueryParameter("link", Uri.parse(deepLinkBuilder.toString()).toString())
                 .appendQueryParameter("apn", packageName);
         ShareCompat.IntentBuilder.from(mainView)
-                .setType("message/rfc822")
+                .setType("message/*")
                 .setSubject(mainView.getString(R.string.sharing_backup))
                 .setChooserTitle(mainView.getString(R.string.share_my_backup))
                 .setHtmlText("<a href='" + Uri.decode(builder.toString()) + "'>" + mainView.getString(R.string.click_here_html) +
-                        "</a></br><b>~" + mainView.getString(R.string.app_name) + "</b>").startChooser();
+                        "</a><br/><b>~" + mainView.getString(R.string.app_name) + "</b>").startChooser();
     }
 
     @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
