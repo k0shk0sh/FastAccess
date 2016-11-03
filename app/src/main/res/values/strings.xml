@@ -127,4 +127,6 @@
     <string name="choose_email">Choose email</string>
     <string name="failed_to_open_gplus">Can not open google plus.</string>
     <string name="failed_to_open_github">Can not open Github page</string>
+    <string name="follow_me_in">Follow Me In:</string>
+    <string name="hi_i_m_kosh">Hi, I\'m Kosh</string>
 </resources>

@@ -58,7 +58,10 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/layout_margin"
+        android:layout_marginBottom="@dimen/spacing_xs_large"
+        android:layout_marginEnd="@dimen/layout_margin"
+        android:layout_marginStart="@dimen/layout_margin"
+        android:layout_marginTop="@dimen/spacing_xs_large"
         android:clipToPadding="false"
         app:layout_behavior="@string/scroll_behavior">
 
@@ -72,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Hi, I'm Kosh"/>
+                android:text="@string/hi_i_m_kosh"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -82,7 +85,7 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/folder_background"
                 android:maxWidth="200dp"
-                android:padding="@dimen/spacing_normal"
+                android:padding="@dimen/spacing_xs_large"
                 android:src="@drawable/about_me_pic"/>
 
             <com.fastaccess.ui.widgets.FontTextView
@@ -91,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/spacing_xs_large"
-                android:text="Follow Me In:"/>
+                android:text="@string/follow_me_in"/>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
