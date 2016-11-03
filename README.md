@@ -29,13 +29,13 @@ and i'll gladly review it.
 
 # How to build
 
-1- Fork the project.
+1- Fork the project & Clone it to your desktop.
 
 2- Open it from Android Studio (2.2.2 or above recommended).
 
 3- Change Package Name.
 
-4- Create Firebase & download **google-service.json** file and copy it to app folder.
+4- Create Firebase project & Download **google-service.json** file and copy it to app folder.
 
 5- build & run.
 
@@ -47,4 +47,3 @@ Copyright (C) 2015 Kosh.
 
 Licensed under the [GNU Version 3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 license (see the LICENSE file).
-
