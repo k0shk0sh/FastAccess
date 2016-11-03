@@ -128,18 +128,23 @@
 
         <Preference
             android:key="version"
-            android:textColor="@color/white"
             android:title="@string/app_version"/>
 
         <Preference
             android:key="sourceCode"
-            android:textColor="@color/white"
             android:title="@string/open_source"/>
 
         <Preference
             android:key="libraries"
-            android:textColor="@color/white"
             android:title="@string/libs"/>
+
+        <Preference
+            android:key="email_us"
+            android:title="@string/email_us"/>
+
+        <Preference
+            android:key="about_me"
+            android:title="@string/about_me"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

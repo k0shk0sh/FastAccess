@@ -24,11 +24,18 @@ import java.util.Map;
 public class DeviceAppsAdapter extends BaseRecyclerAdapter<AppsModel, DeviceAppsViewHolder,
         DeviceAppsViewHolder.OnItemClickListener<AppsModel>> implements Filterable {
     private Map<String, AppsModel> selection;
+    private boolean selectedApps;
 
     public DeviceAppsAdapter(@NonNull List<AppsModel> data, @Nullable DeviceAppsViewHolder.OnItemClickListener<AppsModel> listener,
                              Map<String, AppsModel> selection) {
+        this(data, listener, selection, false);
+    }
+
+    public DeviceAppsAdapter(@NonNull List<AppsModel> data, @Nullable DeviceAppsViewHolder.OnItemClickListener<AppsModel> listener,
+                             Map<String, AppsModel> selection, boolean selectedApps) {
         super(data, listener);
         this.selection = selection;
+        this.selectedApps = selectedApps;
     }
 
     @Override protected DeviceAppsViewHolder viewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +45,7 @@ public class DeviceAppsAdapter extends BaseRecyclerAdapter<AppsModel, DeviceApps
     @Override protected void onBindView(DeviceAppsViewHolder holder, int position) {
         AppsModel model = getItem(position);
         if (model != null) {
-            holder.bind(model, isSelected(model.getComponentName().toShortString()));
+            holder.bind(model, isSelected(model.getComponentName().toShortString()), selectedApps);
         }
     }
 

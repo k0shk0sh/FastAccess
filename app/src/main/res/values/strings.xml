@@ -112,7 +112,7 @@
     <string name="edit_folder_hint">Click here to edit the folder.</string>
     <string name="delete_folder_hint">Click here to delete the folder, once deleted can\'t be recovered unless if you made previous backup.</string>
     <string name="add_folder_apps_hint">Click here to add apps to this folder.</string>
-    <string name="delete_folder_confirm_msg">This action can not be undo.\\nAre you sure?</string>
+    <string name="delete_folder_confirm_msg">This action can not be undo.\nAre you sure?</string>
     <string name="share_my_backup">Share My Backup</string>
     <string name="no_user">Please login first.</string>
     <string name="confirm_message">Are you sure?</string>
@@ -120,4 +120,11 @@
     <string name="restore_function_not_available">Restore functionality is not available</string>
     <string name="click_here_html">Click here to restore my FA backup.</string>
     <string name="drag_and_drop_hint"><![CDATA[Drag & Drop to sort the selected apps.]]></string>
+    <string name="single_click_to_select_hint">Start selecting apps by clicking on any app.</string>
+    <string name="about_me">About Me</string>
+    <string name="email_us">Email Us</string>
+    <string name="email_subject">[App] Fast Access (Floating Toolbox)</string>
+    <string name="choose_email">Choose email</string>
+    <string name="failed_to_open_gplus">Can not open google plus.</string>
+    <string name="failed_to_open_github">Can not open Github page</string>
 </resources>

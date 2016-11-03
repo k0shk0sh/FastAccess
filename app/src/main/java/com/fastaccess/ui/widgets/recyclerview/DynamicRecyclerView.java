@@ -56,6 +56,7 @@ public class DynamicRecyclerView extends RecyclerView {
             TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
             iconSize = array.getDimensionPixelSize(0, -1);
             if (iconSize > 0) {
+                setHasFixedSize(true);
                 iconSize += getResources().getDimensionPixelSize(R.dimen.spacing_micro);
             }
             array.recycle();

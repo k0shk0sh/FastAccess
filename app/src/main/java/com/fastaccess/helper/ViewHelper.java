@@ -1,6 +1,5 @@
 package com.fastaccess.helper;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
@@ -16,6 +15,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +38,10 @@ import java.util.Arrays;
  * Created by kosh20111 on 10/7/2015 10:42 PM
  */
 public class ViewHelper {
+
+    public interface OnTooltipDismissListener {
+        void onDismissed(@StringRes int resId);
+    }
 
     public static int getPrimaryColor(Context context) {
         TypedValue typedValue = new TypedValue();
@@ -122,10 +126,11 @@ public class ViewHelper {
         return resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    @SuppressWarnings("ConstantConditions") @SuppressLint("PrivateResource")
-    public static void showTooltip(@NonNull final View view, @StringRes int titleResId, @NonNull final String tag, int gravity) {
+    @SuppressWarnings("ConstantConditions,PrivateResource")
+    public static void showTooltip(@NonNull final View view, @StringRes final int titleResId,
+                                   int gravity, @Nullable final OnTooltipDismissListener dismissListener) {
         if (view != null && view.getContext() != null) {
-            if (!PrefHelper.getBoolean(tag)) {
+            if (!PrefHelper.getBoolean(String.valueOf(titleResId))) {
                 new Tooltip.Builder(view)
                         .setText(titleResId)
                         .setTypeface(TypeFaceHelper.getTypeface())
@@ -135,10 +140,11 @@ public class ViewHelper {
                         .setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.primary))
                         .setDismissOnClick(true)
                         .setCancelable(true)
-                        .setTextStyle(android.support.v7.appcompat.R.style.Base_TextAppearance_AppCompat_Title_Inverse)
+                        .setTextStyle(android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Title_Inverse)
                         .setOnDismissListener(new OnDismissListener() {
                             @Override public void onDismiss() {
-                                PrefHelper.set(tag, true);
+                                PrefHelper.set(String.valueOf(titleResId), true);
+                                if (dismissListener != null) dismissListener.onDismissed(titleResId);
                             }
                         })
                         .show();
@@ -146,9 +152,13 @@ public class ViewHelper {
         }
     }
 
-    @SuppressLint("PrivateResource") public static void showTooltip(@NonNull final View view, @StringRes int titleResId,
-                                                                    @NonNull final String tag) {
-        showTooltip(view, titleResId, tag, Gravity.BOTTOM);
+    public static void showTooltip(@NonNull final View view, @StringRes int titleResId) {
+        showTooltip(view, titleResId, Gravity.BOTTOM, null);
+    }
+
+    public static void showTooltip(@NonNull final View view, @StringRes int titleResId,
+                                   @NonNull OnTooltipDismissListener dismissListener) {
+        showTooltip(view, titleResId, Gravity.BOTTOM, dismissListener);
     }
 
     public static Rect getLayoutPosition(@NonNull View view) {

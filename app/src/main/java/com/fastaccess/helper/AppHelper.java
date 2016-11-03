@@ -141,4 +141,21 @@ public class AppHelper {
             return null;
         }
     }
+
+    @SuppressWarnings("StringBufferReplaceableByString") @NonNull public static String getEmailBody() {
+        return new StringBuilder()
+                .append("Version Code: ").append(BuildConfig.VERSION_CODE)
+                .append("\n")
+                .append("Version Name: ").append(BuildConfig.VERSION_NAME)
+                .append("\n")
+                .append("OS Version: ").append(Build.VERSION.SDK_INT)
+                .append("\n")
+                .append("Manufacturer: ").append(Build.MANUFACTURER)
+                .append("\n")
+                .append("Phone Model: ").append(Build.MODEL)
+                .append("\n")
+                .append("--------------------------------------------")
+                .append("\n")
+                .toString();
+    }
 }

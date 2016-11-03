@@ -82,7 +82,7 @@ public class SelectedAppsView extends BaseFragment<SelectedAppsMvp.View, Selecte
     @Override protected void onFragmentCreated(View view, @Nullable Bundle savedInstanceState) {
         recycler.setEmptyView(empty);
         emptyText.setText(R.string.no_apps_selected);
-        adapter = new DeviceAppsAdapter(new ArrayList<AppsModel>(), getPresenter(), selection);
+        adapter = new DeviceAppsAdapter(new ArrayList<AppsModel>(), getPresenter(), selection, true);
         recycler.setAdapter(adapter);
         loader = getLoaderManager().initLoader(0, null, getPresenter());
         if (!selection.isEmpty()) {

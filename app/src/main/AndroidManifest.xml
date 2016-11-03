@@ -71,6 +71,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Transparent_Activity"/>
 
+        <activity
+            android:name=".ui.modules.about.AboutMeView"
+            android:label="@string/about_me"/>
+
         <service
             android:name=".provider.push.PushNotification"
             android:exported="false">

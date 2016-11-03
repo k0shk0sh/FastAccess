@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -26,11 +27,12 @@ import com.fastaccess.data.dao.events.FloatingEventModel;
 import com.fastaccess.helper.ActivityHelper;
 import com.fastaccess.helper.AppHelper;
 import com.fastaccess.helper.FileHelper;
+import com.fastaccess.helper.IconPackHelper;
 import com.fastaccess.helper.InputHelper;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
-import com.fastaccess.helper.IconPackHelper;
+import com.fastaccess.ui.modules.about.AboutMeView;
 import com.fastaccess.ui.modules.settings.dialogs.CustomIconChooserDialog;
 import com.fastaccess.ui.modules.settings.dialogs.IconSizeTransparencyDialog;
 import com.google.common.io.Files;
@@ -172,6 +174,18 @@ public class SettingsFragmentView extends PreferenceFragmentCompat implements Pr
                 return true;
             case "libraries":
                 ActivityHelper.startLibs(getActivity());
+                return true;
+            case "about_me":
+                startActivity(new Intent(getContext(), AboutMeView.class));
+                return true;
+            case "email_us":
+                ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("message/rfc822")
+                        .setEmailTo(new String[]{"fastaccessapps@gmail.com"})
+                        .setSubject(getString(R.string.email_subject))
+                        .setText(AppHelper.getEmailBody())
+                        .setChooserTitle(getString(R.string.choose_email))
+                        .startChooser();
                 return true;
         }
         return false;

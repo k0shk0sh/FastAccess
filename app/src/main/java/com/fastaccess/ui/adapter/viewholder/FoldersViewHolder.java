@@ -2,6 +2,7 @@ package com.fastaccess.ui.adapter.viewholder;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.FolderModel;
 import com.fastaccess.helper.InputHelper;
+import com.fastaccess.helper.ViewHelper;
 import com.fastaccess.ui.widgets.FontTextView;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
@@ -22,7 +24,7 @@ import butterknife.BindView;
  * Created by Kosh on 11 Oct 2016, 7:47 PM
  */
 
-public class FoldersViewHolder extends BaseViewHolder<FolderModel> {
+public class FoldersViewHolder extends BaseViewHolder<FolderModel> implements ViewHelper.OnTooltipDismissListener {
 
     @BindView(R.id.folderImage) ImageView folderImage;
     @BindView(R.id.folderName) FontTextView folderName;
@@ -58,5 +60,16 @@ public class FoldersViewHolder extends BaseViewHolder<FolderModel> {
         String letter = InputHelper.getTwoLetters(folderModel.getFolderName());
         int color = folderModel.getColor() == 0 ? ColorGenerator.MATERIAL.getRandomColor() : folderModel.getColor();
         folderImage.setImageDrawable(builder.build(letter.toUpperCase(), color));
+        if (getAdapterPosition() == 0) {
+            ViewHelper.showTooltip(delete, R.string.delete_folder_hint, this);
+        }
+    }
+
+    @Override public void onDismissed(@StringRes int resId) {
+        if (resId == R.string.delete_folder_hint) {
+            ViewHelper.showTooltip(addApps, R.string.add_folder_apps_hint, this);
+        } else {
+            ViewHelper.showTooltip(editFolder, R.string.edit_folder_hint);
+        }
     }
 }

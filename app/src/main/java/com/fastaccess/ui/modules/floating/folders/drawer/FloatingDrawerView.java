@@ -18,6 +18,7 @@ import com.fastaccess.R;
 import com.fastaccess.data.dao.AppsModel;
 import com.fastaccess.data.dao.FolderModel;
 import com.fastaccess.data.dao.events.ThemePackEventModel;
+import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.ViewHelper;
 import com.fastaccess.provider.loader.SelectedAppsLoader;
 import com.fastaccess.ui.adapter.FloatingAppsAdapter;
@@ -48,6 +49,7 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
     private FloatingAppsAdapter adapter;
     private WindowManager windowManager;
     private FloatingDrawPresenter presenter;
+    private boolean isFinishing;
 
 
     private FloatingDrawerView(@NonNull FloatingFoldersMvp.View view) {
@@ -116,17 +118,10 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
     }
 
     @Override public void onDestroy() {
-        if (windowManager != null) {
+        Logger.e(isFinishing);
+        if (windowManager != null && !isFinishing) {
             if (drawerHolder != null && drawerHolder.appDrawer.isShown()) {
-                drawerHolder.appDrawer.animate().scaleY(0).scaleX(0).withEndAction(new Runnable() {
-                    @Override public void run() {
-                        windowManager.removeView(drawerHolder.appDrawer);
-                        drawerHolder.onDestroy();
-                        if (appsLoader != null) appsLoader.unregisterListener(getPresenter());
-                        EventBus.getDefault().unregister(this);
-                        getPresenter().onDestroy();
-                    }
-                });
+                drawerHolder.appDrawer.animate().scaleY(0).scaleX(0).withStartAction(startActionRunnable).withEndAction(endActionRunnable);
             }
         }
     }
@@ -141,4 +136,19 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
         }
         return presenter;
     }
+
+    private Runnable endActionRunnable = new Runnable() {
+        @Override public void run() {
+            windowManager.removeView(drawerHolder.appDrawer);
+            drawerHolder.onDestroy();
+            if (appsLoader != null) appsLoader.unregisterListener(getPresenter());
+            EventBus.getDefault().unregister(this);
+            getPresenter().onDestroy();
+        }
+    };
+    private Runnable startActionRunnable = new Runnable() {
+        @Override public void run() {
+            isFinishing = true;// prevent onTouchedOutside been called multiple times.
+        }
+    };
 }

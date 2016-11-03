@@ -125,7 +125,7 @@ public class CreateFolderView extends BaseBottomSheetDialog implements CreateFol
     @Override protected void onViewCreated(@NonNull View view) {
         folderNameEditText.setText(fName);
         setupDrawable(fName);
-        ViewHelper.showTooltip(folderImage, R.string.color_picker_hint_folder, "color_picker_folder", Gravity.TOP);
+        ViewHelper.showTooltip(folderImage, R.string.color_picker_hint_folder, Gravity.TOP, null);
     }
 
     @Override public void onColorSelected(int color) {
