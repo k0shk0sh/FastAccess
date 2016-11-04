@@ -216,6 +216,10 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
         startActivity(intent);
     }
 
+    @Override public void onOpenRate() {
+        AppHelper.openAppInPlayStore(this);
+    }
+
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onOpenDrawer();

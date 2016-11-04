@@ -67,6 +67,8 @@ public interface MainMvp {
         void onShareBackup();
 
         void onRestoreFromUserId(@NonNull String userId);
+
+        void onOpenRate();
     }
 
     interface Presenter extends BaseMvp.FAPresenter<View>, OnNavigationItemSelectedListener,

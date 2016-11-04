@@ -48,6 +48,10 @@
                 android:title="@string/stop_service"/>
 
             <item
+                android:id="@+id/rateUs"
+                android:icon="@drawable/ic_star"
+                android:title="@string/rate_fa"/>
+            <item
                 android:id="@+id/settings"
                 android:icon="@drawable/ic_settings"
                 android:title="@string/settings"/>

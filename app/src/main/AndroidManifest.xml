@@ -75,6 +75,10 @@
             android:name=".ui.modules.about.AboutMeView"
             android:label="@string/about_me"/>
 
+        <activity
+            android:name=".ui.modules.whats_new.WhatsNewView"
+            android:label="@string/whats_new"/>
+
         <service
             android:name=".provider.push.PushNotification"
             android:exported="false">

@@ -158,4 +158,13 @@ public class AppHelper {
                 .append("\n")
                 .toString();
     }
+
+    public static void openAppInPlayStore(@NonNull Context context) {
+        final String appPackageName = BuildConfig.APPLICATION_ID;
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
 }

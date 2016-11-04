@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
+import com.fastaccess.BuildConfig;
 import com.fastaccess.R;
 
 /**
@@ -31,6 +32,8 @@ public class PrefConstant {
     public static final String POSITION_Y = "floating_position_y";
     public static final String FA_AUTO_START = "fa_auto_start";
     public static final String FA_IS_HORIZONTAL = "fa_is_horizontal";
+
+    public static final String WHATS_NEW_VERSION = "whats_new_version";
 
     public static void savePosition(int x, int y) {
         boolean isAutoSavePosition = PrefHelper.getBoolean(PrefConstant.FA_AUTO_SAVE_POSITION);
@@ -84,5 +87,13 @@ public class PrefConstant {
 
     public static boolean isHorizontal() {
         return PrefHelper.getBoolean(FA_IS_HORIZONTAL);
+    }
+
+    public static boolean showWhatsNew() {
+        return PrefHelper.getInt(WHATS_NEW_VERSION) != BuildConfig.VERSION_CODE;
+    }
+
+    public static void setWhatsNewVersion() {
+        PrefHelper.set(WHATS_NEW_VERSION, BuildConfig.VERSION_CODE);
     }
 }

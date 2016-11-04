@@ -1,5 +1,6 @@
 package com.fastaccess.ui.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
@@ -15,7 +16,9 @@ import android.view.View;
 import com.fastaccess.BuildConfig;
 import com.fastaccess.R;
 import com.fastaccess.helper.AppHelper;
+import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
+import com.fastaccess.ui.modules.whats_new.WhatsNewView;
 import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 
 import butterknife.BindView;
@@ -53,6 +56,10 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
         Icepick.setDebug(BuildConfig.DEBUG);
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             Icepick.restoreInstanceState(this, savedInstanceState);
+        }
+        if (PrefConstant.showWhatsNew()) {
+            startActivity(new Intent(this, WhatsNewView.class));
+            PrefConstant.setWhatsNewVersion();
         }
         setupToolbarAndStatusBar();
     }

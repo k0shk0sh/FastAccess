@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="162dp"
+        android:background="@color/transparent"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ToolbarStyle"
+        app:elevation="0dp">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="@string/about_me">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/header_background"/>
+
+                <com.fastaccess.ui.widgets.FontButton
+                    android:id="@+id/rate"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_xs_large"
+                    android:drawableEnd="@drawable/ic_star"
+                    android:drawablePadding="@dimen/spacing_xs_large"
+                    android:drawableStart="@drawable/ic_star"
+                    android:text="@string/rate_fa"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_collapseMode="pin">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    app:title="@string/whats_new"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/toolbar_shadow"
+                app:layout_collapseMode="pin"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/scroll_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xs_large"
+            android:layout_marginTop="@dimen/spacing_xs_large"
+            android:orientation="vertical">
+
+
+            <com.fastaccess.ui.widgets.FontTextView
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginEnd="@dimen/spacing_xs_large"
+                android:layout_marginStart="@dimen/spacing_xs_large"
+                android:background="@drawable/bottom_border"
+                android:text="@string/whats_new"
+                android:textColor="@color/primary_light"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardMaxElevation="@dimen/spacing_normal"
+                android:layout_marginBottom="@dimen/spacing_xs_large"
+                android:layout_marginTop="@dimen/spacing_xs_large"
+                app:contentPaddingBottom="@dimen/spacing_xs_large"
+                app:contentPaddingTop="@dimen/spacing_xs_large">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="(New) Revamping of FA from the ground to make it more faster and efficient."/>
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="(New) Now you can Backup &amp; Restore your data from any device."/>
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="(New) Design that makes it easy &amp; friendly to use FA"/>
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="(NEW) Folders mode, now you can categorize your apps under folders."/>
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="FA is an open source app, you can check the source code from the settings screen."/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -129,4 +129,7 @@
     <string name="failed_to_open_github">Can not open Github page</string>
     <string name="follow_me_in">Follow Me In:</string>
     <string name="hi_i_m_kosh">Hi, I\'m Kosh</string>
+    <string name="whats_new">What\'s New</string>
+    <string name="version_name">Version:</string>
+    <string name="rate_fa">Rate Fast Access</string>
 </resources>

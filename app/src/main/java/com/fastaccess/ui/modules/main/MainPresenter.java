@@ -218,6 +218,9 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
             case R.id.shareBackup:
                 getView().onShareBackup();
                 break;
+            case R.id.rateUs:
+                getView().onOpenRate();
+                break;
         }
         return false;
     }

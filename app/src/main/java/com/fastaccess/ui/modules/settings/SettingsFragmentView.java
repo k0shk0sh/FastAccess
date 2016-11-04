@@ -35,6 +35,7 @@ import com.fastaccess.helper.PrefHelper;
 import com.fastaccess.ui.modules.about.AboutMeView;
 import com.fastaccess.ui.modules.settings.dialogs.CustomIconChooserDialog;
 import com.fastaccess.ui.modules.settings.dialogs.IconSizeTransparencyDialog;
+import com.fastaccess.ui.modules.whats_new.WhatsNewView;
 import com.google.common.io.Files;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -186,6 +187,9 @@ public class SettingsFragmentView extends PreferenceFragmentCompat implements Pr
                         .setText(AppHelper.getEmailBody())
                         .setChooserTitle(getString(R.string.choose_email))
                         .startChooser();
+                return true;
+            case "whats_new":
+                startActivity(new Intent(getContext(), WhatsNewView.class));
                 return true;
         }
         return false;
