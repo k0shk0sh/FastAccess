@@ -3,7 +3,7 @@
     <string name="linear_layout_manager" translatable="false">com.fastaccess.ui.widgets.recyclerview.layout_manager.LinearManager</string>
     <string name="grid_layout_manager" translatable="false">com.fastaccess.ui.widgets.recyclerview.layout_manager.GridManager</string>
     <string name="staggered_layout_manager" translatable="false">com.fastaccess.ui.widgets.recyclerview.layout_manager.StaggeredManager</string>
-    <string name="scroll_behavior">@string/appbar_scrolling_view_behavior</string>
+    <string name="scroll_behavior" translatable="false">@string/appbar_scrolling_view_behavior</string>
     <string name="in_progress">In Progress, Please Wait…</string>
     <string name="action">Action</string>
     <string name="settings">Settings</string>
@@ -44,7 +44,6 @@
     <string name="background_title">FA Apps Background</string>
     <string name="floating_mode_title">FA Floating Mode</string>
     <string name="floating_mode_summary">Select FA floating mode.</string>
-    <string name="auto_save_position_title">Auto Save Last Position</string>
     <string name="auto_save_position_summary">Auto save last position of FA floating icon.</string>
     <string name="sticky_title">Sticky FA Floating Icon</string>
     <string name="sticky_summary">Keep FA floating icon attached to screen edges.</string>
@@ -132,4 +131,11 @@
     <string name="whats_new">What\'s New</string>
     <string name="version_name">Version:</string>
     <string name="rate_fa">Rate Fast Access</string>
+    <string name="whats_new_point_1">(New) Revamping of FA from the ground to make it more faster and efficient.</string>
+    <string name="whats_new_point_2"><![CDATA[(New) Now you can Backup & Restore your data from any device.]]></string>
+    <string name="whats_new_point_3"><![CDATA[(New) Design that makes it easy & friendly to use FA]]></string>
+    <string name="whats_new_point_4">(NEW) Folders mode, now you can categorize your apps under folders.</string>
+    <string name="whats_new_point_5"><![CDATA[(NEW)App shortcuts support for Android Nougat & supported launchers.]]></string>
+    <string name="whats_new_point_6">FA is an open source app, you can check the source code from the settings screen.</string>
+    <string name="auto_save_position_title">Auto Save Last Position</string>
 </resources>

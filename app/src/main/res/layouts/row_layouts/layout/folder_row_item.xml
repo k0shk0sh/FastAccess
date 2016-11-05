@@ -72,6 +72,7 @@
                 android:layout_weight="1"
                 android:background="?selectableItemBackground"
                 android:gravity="center"
+                android:maxLines="1"
                 android:padding="@dimen/spacing_normal"
                 android:text="@string/delete"
                 android:textColor="#ff00"/>
@@ -86,6 +87,7 @@
                 android:layout_weight="1"
                 android:background="?selectableItemBackground"
                 android:gravity="center"
+                android:maxLines="1"
                 android:padding="@dimen/spacing_normal"
                 android:text="@string/apps"
                 android:textColor="?colorPrimary"/>
@@ -100,10 +102,10 @@
                 android:layout_weight="1"
                 android:background="?selectableItemBackground"
                 android:gravity="center"
+                android:maxLines="1"
                 android:padding="@dimen/spacing_normal"
                 android:text="@string/edit"
                 android:textColor="?colorAccent"/>
-
 
         </LinearLayout>
     </LinearLayout>

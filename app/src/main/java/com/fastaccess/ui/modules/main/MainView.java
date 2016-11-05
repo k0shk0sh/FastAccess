@@ -238,6 +238,7 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Logger.e(requestCode, resultCode, requestCode == PermissionsHelper.OVERLAY_PERMISSION_REQ_CODE);
         if (requestCode == PermissionsHelper.OVERLAY_PERMISSION_REQ_CODE) {
             if (resultCode == Activity.RESULT_OK) onStartService();//start service since the user wanted to in the first time.
         }

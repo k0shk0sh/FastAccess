@@ -122,7 +122,7 @@
                         android:layout_marginStart="@dimen/spacing_xs_large"
                         android:drawablePadding="@dimen/spacing_xs_large"
                         android:drawableStart="@drawable/ic_dot"
-                        android:text="(New) Revamping of FA from the ground to make it more faster and efficient."
+                        android:text="@string/whats_new_point_1"
                         android:textColor="@color/primary_text"/>
 
                     <com.fastaccess.ui.widgets.FontTextView
@@ -135,7 +135,7 @@
                         android:layout_marginStart="@dimen/spacing_xs_large"
                         android:drawablePadding="@dimen/spacing_xs_large"
                         android:drawableStart="@drawable/ic_dot"
-                        android:text="(New) Now you can Backup &amp; Restore your data from any device."
+                        android:text="@string/whats_new_point_2"
                         android:textColor="@color/primary_text"/>
 
                     <com.fastaccess.ui.widgets.FontTextView
@@ -148,7 +148,7 @@
                         android:layout_marginStart="@dimen/spacing_xs_large"
                         android:drawablePadding="@dimen/spacing_xs_large"
                         android:drawableStart="@drawable/ic_dot"
-                        android:text="(New) Design that makes it easy &amp; friendly to use FA"
+                        android:text="@string/whats_new_point_3"
                         android:textColor="@color/primary_text"/>
 
                     <com.fastaccess.ui.widgets.FontTextView
@@ -161,7 +161,7 @@
                         android:layout_marginStart="@dimen/spacing_xs_large"
                         android:drawablePadding="@dimen/spacing_xs_large"
                         android:drawableStart="@drawable/ic_dot"
-                        android:text="(NEW) Folders mode, now you can categorize your apps under folders."
+                        android:text="@string/whats_new_point_4"
                         android:textColor="@color/primary_text"/>
 
                     <com.fastaccess.ui.widgets.FontTextView
@@ -174,7 +174,20 @@
                         android:layout_marginStart="@dimen/spacing_xs_large"
                         android:drawablePadding="@dimen/spacing_xs_large"
                         android:drawableStart="@drawable/ic_dot"
-                        android:text="FA is an open source app, you can check the source code from the settings screen."
+                        android:text="@string/whats_new_point_5"
+                        android:textColor="@color/primary_text"/>
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="@string/whats_new_point_6"
                         android:textColor="@color/primary_text"/>
 
                 </LinearLayout>
