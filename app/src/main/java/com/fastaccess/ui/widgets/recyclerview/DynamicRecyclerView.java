@@ -63,23 +63,6 @@ public class DynamicRecyclerView extends RecyclerView {
         }
     }
 
-    public void showEmptyView() {
-        Adapter<?> adapter = getAdapter();
-        if (adapter != null) {
-            if (emptyView != null) {
-                if (adapter.getItemCount() == 0) {
-                    showParentOrSelf(false);
-                } else {
-                    showParentOrSelf(true);
-                }
-            }
-        } else {
-            if (emptyView != null) {
-                showParentOrSelf(false);
-            }
-        }
-    }
-
     @Override public void setAdapter(@Nullable Adapter adapter) {
         super.setAdapter(adapter);
         if (adapter != null) {
@@ -96,6 +79,23 @@ public class DynamicRecyclerView extends RecyclerView {
             if (getLayoutManager() instanceof GridLayoutManager) {
                 ((GridLayoutManager) getLayoutManager()).setSpanCount(spanCount);
                 getLayoutManager().requestLayout();
+            }
+        }
+    }
+
+    public void showEmptyView() {
+        Adapter<?> adapter = getAdapter();
+        if (adapter != null) {
+            if (emptyView != null) {
+                if (adapter.getItemCount() == 0) {
+                    showParentOrSelf(false);
+                } else {
+                    showParentOrSelf(true);
+                }
+            }
+        } else {
+            if (emptyView != null) {
+                showParentOrSelf(false);
             }
         }
     }

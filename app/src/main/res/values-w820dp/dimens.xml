@@ -3,4 +3,5 @@
     <integer name="num_columns">6</integer>
     <dimen name="fab_margin">24dp</dimen>
     <integer name="small_spans">2</integer>
+    <dimen name="app_icon_size">144dp</dimen>
 </resources>

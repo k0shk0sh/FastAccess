@@ -60,7 +60,8 @@
 
         <activity
             android:name=".ui.modules.cloud.auth.LoginView"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/SettingsTheme"/>
 
         <activity
             android:name=".ui.modules.cloud.backup.BackupView"
@@ -73,11 +74,13 @@
 
         <activity
             android:name=".ui.modules.about.AboutMeView"
-            android:label="@string/about_me"/>
+            android:label="@string/about_me"
+            android:theme="@style/SettingsTheme"/>
 
         <activity
             android:name=".ui.modules.whats_new.WhatsNewView"
-            android:label="@string/whats_new"/>
+            android:label="@string/whats_new"
+            android:theme="@style/SettingsTheme"/>
 
         <service
             android:name=".provider.push.PushNotification"
