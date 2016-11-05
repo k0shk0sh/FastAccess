@@ -8,6 +8,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">?colorPrimary</item>
     </style>
 
     <style name="SettingsTheme" parent="SettingsTheme.Base">
@@ -17,5 +18,6 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">?colorPrimary</item>
     </style>
 </resources>

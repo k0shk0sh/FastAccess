@@ -175,6 +175,7 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
     @Override public void onShowBadge(@IdRes int itemId) {
         if (!getBadgeProvider().hasBadge(itemId)) {
             getBadgeProvider().show(itemId);
+            onStartService();
         }
     }
 
