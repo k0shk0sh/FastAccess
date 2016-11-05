@@ -2,6 +2,8 @@
 
     <style name="AppTheme" parent="AppTheme.Base"/>
 
+    <style name="SettingsTheme" parent="SettingsTheme.Base"/>
+
     <style name="AppTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>
@@ -15,7 +17,7 @@
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
-    <style name="SettingsTheme" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
+    <style name="SettingsTheme.Base" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/primary_dark</item>

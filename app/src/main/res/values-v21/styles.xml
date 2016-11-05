@@ -9,4 +9,13 @@
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
+
+    <style name="SettingsTheme" parent="SettingsTheme.Base">
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:colorEdgeEffect">?colorPrimary</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
 </resources>
