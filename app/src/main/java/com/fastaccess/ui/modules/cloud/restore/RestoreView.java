@@ -8,7 +8,9 @@ import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 import com.fastaccess.R;
+import com.fastaccess.helper.InputHelper;
 import com.fastaccess.ui.base.BaseActivity;
+import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -85,7 +87,14 @@ public class RestoreView extends BaseActivity<RestoreMvp.View, RestorePresenter>
         if (savedInstanceState == null && getIntent() != null && getIntent().getExtras() != null) {
             userId = getIntent().getExtras().getString(USER_ID_INTENT);
         }
-        getPresenter().onRestore(getDatabase(), userId);
+        if (!InputHelper.isEmpty(userId)) {
+            if (savedInstanceState == null) {
+                MessageDialogView.newInstance(R.string.restore, R.string.restore_warning)
+                        .show(getSupportFragmentManager(), "MessageDialogView");
+            }
+        } else {
+            getPresenter().onRestore(getDatabase(), userId);
+        }
     }
 
     @Override protected void onStop() {
@@ -93,6 +102,20 @@ public class RestoreView extends BaseActivity<RestoreMvp.View, RestorePresenter>
         try {// user might cancel if we never registered the listener
             getDatabase().removeEventListener(getPresenter());
         } catch (Exception ignored) {}
+    }
+
+    @Override public void onMessageDialogActionClicked(boolean isOk, int requestCode) {
+        super.onMessageDialogActionClicked(isOk, requestCode);
+        if (isOk) {
+            getPresenter().onRestore(getDatabase(), userId);
+        } else {
+            finish();
+        }
+    }
+
+    @Override public void onDialogDismissed() {
+        super.onDialogDismissed();
+        finish();
     }
 
     private ProgressDialog getProgressDialog() {
