@@ -73,6 +73,7 @@ public class IconSizeTransparencyDialog extends BaseBottomSheetDialog implements
             seekBar.setMax(300);
             seekBar.setProgress(PrefHelper.getInt(PrefConstant.MANUAL_SIZE));
         } else {
+            seekBar.setMin(isBackground ? 0 : 20);
             seekBar.setProgress(PrefHelper.getInt(isBackground ? PrefConstant.FA_BACKGROUND_ALPHA : PrefConstant.ICON_ALPHA));
         }
     }

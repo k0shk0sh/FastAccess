@@ -60,7 +60,7 @@
             android:title="@string/theme_pack_title"/>
 
         <org.xdty.preference.AppCompatColorPreference
-            android:defaultValue="@color/primary"
+            android:defaultValue="@color/transparent"
             android:key="fa_background"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
