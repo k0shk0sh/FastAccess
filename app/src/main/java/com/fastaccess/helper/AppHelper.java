@@ -15,8 +15,10 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.fastaccess.App;
 import com.fastaccess.BuildConfig;
 import com.fastaccess.data.dao.AppsModel;
+import com.fastaccess.provider.icon.IconCache;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,15 +52,6 @@ public class AppHelper {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-    public static void shareApp(@NonNull Context context) {
-        final String appPackageName = context.getPackageName();
-        try {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-        } catch (Exception e) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-        }
-    }
-
     public static void hideKeyboard(@NonNull View view) {
         hideKeyboard(view, view.getContext());
     }
@@ -73,6 +66,7 @@ public class AppHelper {
         Process process;
         List<AppsModel> result = new ArrayList<>();
         BufferedReader bufferedReader = null;
+        IconCache iconCache = App.getInstance().getIconCache();
         try {
             process = Runtime.getRuntime().exec("pm list packages");
             bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -89,6 +83,7 @@ public class AppHelper {
                             model.setPackageName(resolveInfo.activityInfo.applicationInfo.packageName);
                             model.setActivityInfoName(resolveInfo.activityInfo.name);
                             model.setAppName(resolveInfo.loadLabel(pm).toString());
+                            iconCache.getTitleAndIcon(model, resolveInfo, null);
                             result.add(model);
                         }
                     }
