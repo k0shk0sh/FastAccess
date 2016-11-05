@@ -1,6 +1,5 @@
 package com.fastaccess.ui.modules.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -240,7 +239,8 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
         super.onActivityResult(requestCode, resultCode, data);
         Logger.e(requestCode, resultCode, requestCode == PermissionsHelper.OVERLAY_PERMISSION_REQ_CODE);
         if (requestCode == PermissionsHelper.OVERLAY_PERMISSION_REQ_CODE) {
-            if (resultCode == Activity.RESULT_OK) onStartService();//start service since the user wanted to in the first time.
+            if (PermissionsHelper.isSystemAlertGranted(this)) onStartService();//start service since the user wanted to in the first time but check
+            // first if the permission is granted here otherwise we will run into infinite settings screen being opened.
         }
     }
 

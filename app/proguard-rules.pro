@@ -17,6 +17,8 @@
   *;
 }
 
+-keep class com.fastaccess.ui.widgets.** { *; }
+
 #butterknife
 -keep public class * implements butterknife.Unbinder { public <init>(...); }
 -keep class butterknife.*

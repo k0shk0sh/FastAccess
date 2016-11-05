@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.fastaccess.BuildConfig;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,16 +15,20 @@ import java.util.List;
 public class Logger {
 
     private final static String TAG = "Logger";
+    private static final boolean DEBUG = BuildConfig.DEBUG;
 
     private static void e(@NonNull String tag, @Nullable Object text) {
+        if (!DEBUG) return;
         Log.e(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
     }
 
     private static void d(@NonNull String tag, @Nullable Object text) {
+        if (!DEBUG) return;
         Log.d(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
     }
 
     private static void i(@NonNull String tag, @Nullable Object text) {
+        if (!DEBUG) return;
         Log.i(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
     }
 
