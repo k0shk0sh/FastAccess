@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -159,6 +160,38 @@ public class ViewHelper {
     public static void showTooltip(@NonNull final View view, @StringRes int titleResId,
                                    @NonNull OnTooltipDismissListener dismissListener) {
         showTooltip(view, titleResId, Gravity.BOTTOM, dismissListener);
+    }
+
+    public static void showTooltip(@NonNull Context context, @NonNull final MenuItem view, @StringRes final int titleResId,
+                                   int gravity, @Nullable final OnTooltipDismissListener dismissListener) {
+        if (!PrefHelper.getBoolean(String.valueOf(titleResId))) {
+            new Tooltip.Builder(context, view)
+                    .setText(titleResId)
+                    .setTypeface(TypeFaceHelper.getTypeface())
+                    .setTextColor(Color.WHITE)
+                    .setGravity(gravity)
+                    .setPadding(R.dimen.spacing_xs_large)
+                    .setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
+                    .setDismissOnClick(true)
+                    .setCancelable(true)
+                    .setTextStyle(android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Title_Inverse)
+                    .setOnDismissListener(new OnDismissListener() {
+                        @Override public void onDismiss() {
+                            PrefHelper.set(String.valueOf(titleResId), true);
+                            if (dismissListener != null) dismissListener.onDismissed(titleResId);
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    public static void showTooltip(@NonNull Context context, @NonNull final MenuItem view, @StringRes int titleResId) {
+        showTooltip(context, view, titleResId, Gravity.BOTTOM, null);
+    }
+
+    public static void showTooltip(@NonNull Context context, @NonNull final MenuItem view, @StringRes int titleResId,
+                                   @NonNull OnTooltipDismissListener dismissListener) {
+        showTooltip(context, view, titleResId, Gravity.BOTTOM, dismissListener);
     }
 
     public static Rect getLayoutPosition(@NonNull View view) {

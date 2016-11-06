@@ -33,6 +33,7 @@ import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 import com.fastaccess.ui.modules.about.AboutMeView;
+import com.fastaccess.ui.modules.intro.IntroPagerView;
 import com.fastaccess.ui.modules.settings.dialogs.CustomIconChooserDialog;
 import com.fastaccess.ui.modules.settings.dialogs.IconSizeTransparencyDialog;
 import com.fastaccess.ui.modules.whats_new.WhatsNewView;
@@ -190,6 +191,9 @@ public class SettingsFragmentView extends PreferenceFragmentCompat implements Pr
                 return true;
             case "whats_new":
                 startActivity(new Intent(getContext(), WhatsNewView.class));
+                return true;
+            case "intro":
+                startActivity(new Intent(getContext(), IntroPagerView.class));
                 return true;
         }
         return false;

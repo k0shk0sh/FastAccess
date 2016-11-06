@@ -81,6 +81,10 @@
             android:name=".ui.modules.whats_new.WhatsNewView"
             android:label="@string/whats_new"
             android:theme="@style/SettingsTheme"/>
+        <activity
+            android:name=".ui.modules.intro.IntroPagerView"
+            android:label="@string/whats_new"
+            android:theme="@style/SettingsTheme"/>
 
         <service
             android:name=".provider.push.PushNotification"

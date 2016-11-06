@@ -22,12 +22,15 @@ import com.fastaccess.helper.Bundler;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.NotificationHelper;
 import com.fastaccess.helper.PermissionsHelper;
+import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.provider.service.FloatingService;
 import com.fastaccess.ui.base.BaseActivity;
 import com.fastaccess.ui.modules.apps.device.DeviceAppsView;
 import com.fastaccess.ui.modules.cloud.auth.LoginView;
 import com.fastaccess.ui.modules.cloud.restore.RestoreView;
+import com.fastaccess.ui.modules.intro.IntroPagerView;
 import com.fastaccess.ui.modules.settings.SettingsView;
+import com.fastaccess.ui.modules.whats_new.WhatsNewView;
 import com.fastaccess.ui.widgets.FontEditText;
 import com.fastaccess.ui.widgets.ForegroundImageView;
 import com.fastaccess.ui.widgets.dialog.MessageDialogView;
@@ -132,6 +135,14 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
             fab.show();
         } else {
             fab.hide();
+        }
+        if (PrefConstant.showIntroScreen()) {
+            startActivity(new Intent(this, IntroPagerView.class));
+            PrefConstant.setIntroScreen();
+        }
+        if (PrefConstant.showWhatsNew()) {
+            startActivity(new Intent(this, WhatsNewView.class));
+            PrefConstant.setWhatsNewVersion();
         }
     }
 

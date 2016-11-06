@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.fastaccess.ui.widgets.ViewPagerView
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/spacing_xs_large"
+        android:layout_weight="1"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/spacing_xs_large">
+
+        <com.rd.PageIndicatorView
+            android:id="@+id/pageIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            app:piv_animationType="worm"
+            app:piv_selectedColor="@color/white"
+            app:piv_unselectedColor="?colorPrimary"/>
+
+        <com.fastaccess.ui.widgets.FontTextView
+            android:id="@+id/introDone"
+            style="@style/TextAppearance.AppCompat.Title.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:background="?selectableItemBackgroundBorderless"
+            android:drawablePadding="@dimen/spacing_xs_large"
+            android:drawableStart="@drawable/ic_done"
+            android:text="Done"/>
+    </FrameLayout>
+</LinearLayout>

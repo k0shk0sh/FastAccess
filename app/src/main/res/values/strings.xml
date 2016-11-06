@@ -90,7 +90,10 @@
     <string name="choose_icon">Choose Icon</string>
     <string name="crop_image">Crop Image.</string>
     <string name="no_apps_selected">No Apps Selected, Select ones from Device Apps Tab.</string>
-    <string name="mode_not_available">FA Folder Mode Not Available</string>\
+    <string name="no_apps_selected_floating">No Apps Selected, Please switch to Folders Mode from settings screen if you have any folder created
+        .</string>
+    <string name="no_folders_floating">No Folders Created, Please switch to Apps Mode from settings screen if you have any apps selected.</string>
+    <string name="mode_not_available">FA Folder Mode Not Available</string>
     <string name="folder_mode">FA Folder Mode</string>
     <string name="app_mode">FA App Mode</string>
     <string name="backup_restore">Across Devices Backup &amp; Restore</string>
@@ -118,7 +121,8 @@
     <string name="sharing_backup">Hello there!, I\'m sharing my FA backup with you.</string>
     <string name="restore_function_not_available">Restore functionality is not available</string>
     <string name="click_here_html">Click here to restore my FA backup.</string>
-    <string name="drag_and_drop_hint"><![CDATA[Drag & Drop to sort the selected apps.]]></string>
+    <string name="drag_and_drop_hint"><![CDATA[Drag & Drop to sort the selected apps.\n Single click to select to delete from the trash
+    icon displayed in toolbar.]]></string>
     <string name="single_click_to_select_hint">Start selecting apps by clicking on any app.</string>
     <string name="about_me">About Me</string>
     <string name="email_us">Email Us</string>
@@ -138,4 +142,13 @@
     <string name="whats_new_point_5"><![CDATA[(NEW)App shortcuts support for Android Nougat & supported launchers.]]></string>
     <string name="whats_new_point_6">FA is an open source app, you can check the source code from the settings screen.</string>
     <string name="auto_save_position_title">Auto Save Last Position</string>
+    <string name="intro_one_title">Selecting Apps Actions</string>
+    <string name="intro_one_desc">Upon selecting apps, you get two options:\nSelect All &amp; Add All</string>
+    <string name="intro_folder_title">Creating Folder</string>
+    <string name="intro_folder_desc"><![CDATA[You can customize the folder background by clicking on the colored circle & give a unique name to your folder.]]></string>
+    <string name="intro_two_title">Selected Apps Actions</string>
+    <string name="intro_two_desc">Single click on a selected app will give you two options:\nSelect All &amp; Remove Selected App</string>
+    <string name="intro_three_title"><![CDATA[Drag & Drop]]></string>
+    <string name="intro_three_desc">Long press on a selected app to change its position.</string>
+    <string name="intro_screen">Intro Screen</string>
 </resources>

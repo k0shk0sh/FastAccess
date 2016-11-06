@@ -147,6 +147,10 @@
             android:title="@string/about_me"/>
 
         <Preference
+            android:key="intro"
+            android:title="@string/intro_screen"/>
+
+        <Preference
             android:key="whats_new"
             android:title="@string/whats_new"/>
     </PreferenceCategory>

@@ -2,8 +2,11 @@ package com.fastaccess.ui.modules.floating.apps;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.Loader;
+import android.widget.Toast;
 
+import com.fastaccess.R;
 import com.fastaccess.data.dao.AppsModel;
 import com.fastaccess.provider.loader.SelectedAppsLoader;
 import com.fastaccess.ui.adapter.FloatingAppsAdapter;
@@ -13,6 +16,7 @@ import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kosh on 14 Oct 2016, 9:12 PM
@@ -39,6 +43,13 @@ public class FloatingVHView extends BaseFloatingView<AppsModel> {
             appsLoader.startLoading();
         }
         return appsLoader;
+    }
+
+    @Override public void onLoaderLoaded(@Nullable List<AppsModel> data) {
+        if (data == null || data.isEmpty()) {
+            Toast.makeText(context, R.string.no_apps_selected, Toast.LENGTH_LONG).show();
+        }
+        super.onLoaderLoaded(data);
     }
 
     @Override public BaseRecyclerAdapter<AppsModel, FloatingAppsViewHolder,

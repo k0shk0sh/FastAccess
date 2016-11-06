@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.fastaccess.data.dao.AppsModel;
 import com.fastaccess.ui.adapter.viewholder.FloatingAppsViewHolder;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
+import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder.OnItemClickListener;
 
 import java.util.List;
 
@@ -15,12 +16,12 @@ import java.util.List;
  */
 
 public class FloatingAppsAdapter extends BaseRecyclerAdapter<AppsModel, FloatingAppsViewHolder,
-        FloatingAppsViewHolder.OnItemClickListener<AppsModel>> {
+        OnItemClickListener<AppsModel>> {
 
     private boolean isHorizontal;
 
-    public FloatingAppsAdapter(@NonNull List<AppsModel> data,
-                               @Nullable FloatingAppsViewHolder.OnItemClickListener<AppsModel> listener, boolean isHorizontal) {
+    public FloatingAppsAdapter(@NonNull List<AppsModel> data, @Nullable OnItemClickListener<AppsModel> listener,
+                               boolean isHorizontal) {
         super(data, listener);
         this.isHorizontal = isHorizontal;
     }

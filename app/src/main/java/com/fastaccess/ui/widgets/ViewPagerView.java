@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.fastaccess.R;
+import static android.R.attr.enabled;
 
 
 /**
@@ -19,14 +19,15 @@ public class ViewPagerView extends ViewPager {
     private boolean isEnabled;
 
     public ViewPagerView(Context context) {
-        super(context, null);
+        super(context);
     }
 
     public ViewPagerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerView);
-        isEnabled = a.getBoolean(R.styleable.ViewPagerView_isEnabled, true);
-        a.recycle();
+        int[] attrsArray = {enabled};
+        TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
+        isEnabled = array.getBoolean(0, true);
+        array.recycle();
     }
 
     @Override public boolean isEnabled() {

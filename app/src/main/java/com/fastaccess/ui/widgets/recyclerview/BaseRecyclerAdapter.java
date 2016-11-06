@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.fastaccess.helper.AnimHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,10 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
     @Nullable public P listener;
     private int lastKnowingPosition = -1;
     private boolean enableAnimation = true;
+
+    public BaseRecyclerAdapter() {
+        this(new ArrayList<M>());
+    }
 
     public BaseRecyclerAdapter(@NonNull List<M> data) {
         this(data, null);

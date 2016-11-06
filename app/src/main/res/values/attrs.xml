@@ -3,8 +3,4 @@
     <declare-styleable name="ForegroundImageView">
         <attr name="android:foreground"/>
     </declare-styleable>
-
-    <declare-styleable name="ViewPagerView">
-        <attr name="isEnabled" format="boolean"/>
-    </declare-styleable>
 </resources>
