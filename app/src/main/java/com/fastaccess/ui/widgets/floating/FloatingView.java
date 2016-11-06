@@ -10,11 +10,11 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.fastaccess.R;
 import com.fastaccess.helper.InputHelper;
-import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 import com.github.nisrulz.sensey.Sensey;
@@ -29,7 +29,7 @@ import io.codetail.widget.RevealFrameLayout;
  */
 
 @SuppressLint("ViewConstructor")
-public class FloatingView extends RevealFrameLayout implements TouchTypeDetector.TouchTypListener {
+public class FloatingView extends RevealFrameLayout implements TouchTypeDetector.TouchTypListener, View.OnTouchListener {
 
     private int initialX;
     private int initialY;
@@ -45,6 +45,7 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
         imageView.setAdjustViewBounds(true);
         setupImageView();
         addView(imageView);
+        this.setOnTouchListener(this);
     }
 
     @Override protected void onAttachedToWindow() {
@@ -82,37 +83,7 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
         callback.onLongPressed();
     }
 
-    @Override public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                initialTouchX = event.getRawX();
-                initialTouchY = event.getRawY();
-                imageView.setPressed(true);
-                break;
-            case MotionEvent.ACTION_UP:
-                callback.onStoppedMoving();
-                onMoving(false);
-                imageView.setPressed(false);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                onMoving(true);
-                callback.onViewMoving(initialX + (int) (event.getRawX() - initialTouchX), initialY + (int) (event.getRawY() - initialTouchY));
-                break;
-            case MotionEvent.ACTION_OUTSIDE:
-                callback.onTouchOutside();
-                imageView.setPressed(false);
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    @Override public boolean dispatchTouchEvent(MotionEvent event) {
-        Sensey.getInstance().setupDispatchTouchEvent(event);
-        return super.dispatchTouchEvent(event);
-    }
-
     @Override public boolean dispatchKeyEvent(KeyEvent event) {
-        Logger.e();
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             callback.onBackPressed();
         }
@@ -122,6 +93,33 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
     @Override protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         callback.onConfigChanged(newConfig.orientation);
+    }
+
+    @Override public boolean onTouch(View view, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                initialTouchX = event.getRawX();
+                initialTouchY = event.getRawY();
+                imageView.setPressed(true);
+                break;
+            case MotionEvent.ACTION_UP:
+                setClickable(true);
+                callback.onStoppedMoving();
+                onMoving(false);
+                imageView.setPressed(false);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                setClickable(false);
+                onMoving(true);
+                callback.onViewMoving(initialX + (int) (event.getRawX() - initialTouchX), initialY + (int) (event.getRawY() - initialTouchY));
+                break;
+            case MotionEvent.ACTION_OUTSIDE:
+                callback.onTouchOutside();
+                imageView.setPressed(false);
+                break;
+        }
+        Sensey.getInstance().setupDispatchTouchEvent(event);
+        return false;
     }
 
     public void setupImageView() {

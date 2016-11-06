@@ -46,8 +46,6 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
     private FloatingWindowsViewHolder layoutHolder;
     private Point szWindow = new Point();
     protected boolean isHorizontal;
-    private int faX;
-    private int faY;
 
     @SuppressWarnings("unused") private BaseFloatingView() {
         throw new RuntimeException("can't call me!");

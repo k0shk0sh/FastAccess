@@ -11,6 +11,7 @@ import android.view.animation.AccelerateInterpolator;
 
 import com.fastaccess.R;
 import com.fastaccess.helper.AnimHelper;
+import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 import com.fastaccess.helper.ViewHelper;
@@ -111,6 +112,7 @@ public class BaseFloatingPresenter<M, V extends BaseFloatingMvp.BaseView<M>> ext
         int w = originalParams.width;
         final boolean isMoveRightEdge = originalParams.x + w / 2 <= szWindow.x / 2;
         final int goalPositionX = isMoveRightEdge ? 0 : szWindow.x - w;
+        Logger.e(originalParams.x, goalPositionX, isMoveRightEdge);
         if (!isAttached() || !floatingView.isShown()) return;
         ValueAnimator mMoveEdgeAnimator = ValueAnimator.ofInt(originalParams.x, goalPositionX);
         mMoveEdgeAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -118,7 +120,7 @@ public class BaseFloatingPresenter<M, V extends BaseFloatingMvp.BaseView<M>> ext
                 if (!isAttached() || !floatingView.isShown()) return;
                 originalParams.x = (Integer) animation.getAnimatedValue();
                 windowManager.updateViewLayout(floatingView, originalParams);
-                if (isAttached()) getView().onUpdateXY();
+                getView().onUpdateXY();
             }
         });
         mMoveEdgeAnimator.setDuration(200L);
