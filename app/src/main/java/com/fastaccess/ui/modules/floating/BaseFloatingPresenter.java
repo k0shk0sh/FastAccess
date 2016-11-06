@@ -86,23 +86,36 @@ public class BaseFloatingPresenter<M, V extends BaseFloatingMvp.BaseView<M>> ext
 
     @Override public void onToggleVisibility(final boolean showFloating, @NonNull final WindowManager windowManager,
                                              @NonNull final WindowManager.LayoutParams originalParams, @NonNull final View view,
-                                             @NonNull final FloatingView floatingView, boolean isHorizontal) {
-        AnimHelper.animateVisibility(floatingView, showFloating);
-        AnimHelper.animateVisibility(view, !showFloating, showFloating ? new AnimHelper.AnimationCallback() {
-            @Override public void onAnimationEnd() {
-                if (!isAttached()) return;
-                getView().setupParamsSize();
-            }
+                                             @NonNull final FloatingView floatingView, final boolean isHorizontal) {
+        if (showFloating) {
+            AnimHelper.animateVisibility(view, false, new AnimHelper.AnimationCallback() {
+                @Override public void onAnimationStart() {}
 
-            @Override public void onAnimationStart() {}
-        } : null);
-        if (!showFloating) {
-            if (!isAttached()) return;
-            if (isHorizontal) {
-                final DynamicRecyclerView recycler = (DynamicRecyclerView) view.findViewById(R.id.recycler);
-                originalParams.width = ViewHelper.getWidthFromRecyclerView(recycler, windowManager);
-            }
-            windowManager.updateViewLayout(view, originalParams);
+                @Override public void onAnimationEnd() {
+                    if (!isAttached()) return;
+                    getView().setupParamsSize();
+                    AnimHelper.animateVisibility(floatingView, true);
+                }
+            });
+        } else {
+            AnimHelper.animateVisibility(floatingView, false, new AnimHelper.AnimationCallback() {
+                @Override public void onAnimationEnd() {
+                    AnimHelper.animateVisibility(view, true, new AnimHelper.AnimationCallback() {
+                        @Override public void onAnimationEnd() {}
+
+                        @Override public void onAnimationStart() {
+                            if (!isAttached()) return;
+                            if (isHorizontal) {
+                                final DynamicRecyclerView recycler = (DynamicRecyclerView) view.findViewById(R.id.recycler);
+                                originalParams.width = ViewHelper.getWidthFromRecyclerView(recycler, windowManager);
+                            }
+                            windowManager.updateViewLayout(view, originalParams);
+                        }
+                    });
+                }
+
+                @Override public void onAnimationStart() {}
+            });
         }
     }
 

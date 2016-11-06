@@ -59,7 +59,7 @@ public class AnimHelper {
     @UiThread private static void animateSafeVisibility(final boolean show, @NonNull final View view, @Nullable final AnimationCallback callback) {
         view.clearAnimation();
         if (view.getAnimation() != null) view.getAnimation().cancel();
-        ViewPropertyAnimator animator = view.animate().alpha(show ? 1F : 0F).setInterpolator(new AccelerateInterpolator())
+        ViewPropertyAnimator animator = view.animate().setDuration(200).alpha(show ? 1F : 0F).setInterpolator(new AccelerateInterpolator())
                 .setListener(new AnimatorListenerAdapter() {
                     @Override public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);

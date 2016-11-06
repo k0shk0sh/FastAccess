@@ -201,7 +201,8 @@ public class SettingsFragmentView extends PreferenceFragmentCompat implements Pr
 
     @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key == null) return;
-        if (key.equalsIgnoreCase(PrefConstant.STATUS_BAR_HIDDEN) || key.equalsIgnoreCase(PrefConstant.FA_IS_HORIZONTAL)) {
+        if (key.equalsIgnoreCase(PrefConstant.STATUS_BAR_HIDDEN) || key.equalsIgnoreCase(PrefConstant.FA_IS_HORIZONTAL)
+                || key.equalsIgnoreCase(PrefConstant.FLOATING_MODE)) {
             showToast(R.string.required_restart);
         } else if (key.equalsIgnoreCase(PrefConstant.ICON_SIZE)) {
             sharedPreferences.edit().putInt(PrefConstant.MANUAL_SIZE, 0).apply();
