@@ -15,8 +15,8 @@ android {
         applicationId "com.styleme.floating.toolbox.pro"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 100
-        versionName "10.0.0"
+        versionCode 101
+        versionName "10.0.1"
         buildConfigField "String", "FA_HOST", '"k0shk0sh.github.io/FastAccess"'
         buildConfigField "String", "SHARED_URI", '"sharedUri"'
         signingConfig signingConfigs.signing
