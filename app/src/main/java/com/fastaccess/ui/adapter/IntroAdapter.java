@@ -24,7 +24,7 @@ public class IntroAdapter extends FragmentStatePagerAdapter {
                 IntroPageView.newInstance(R.string.intro_folder_title, R.drawable.intro_screen_folder, R.string.intro_folder_desc),
                 IntroPageView.newInstance(R.string.intro_two_title, R.drawable.intro_screen_two, R.string.intro_two_desc),
                 IntroPageView.newInstance(R.string.intro_three_title, R.drawable.intro_screen_three, R.string.intro_three_desc),
-                IntroPageView.newInstance(R.string.intro_four_title, R.drawable.intro_screen_three, R.string.intro_four_desc));
+                IntroPageView.newInstance(R.string.intro_four_title, R.drawable.intro_screen_four, R.string.intro_four_desc));
     }
 
     @Override public Fragment getItem(int position) {

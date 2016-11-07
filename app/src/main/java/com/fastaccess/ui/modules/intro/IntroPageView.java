@@ -5,6 +5,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -44,7 +45,9 @@ public class IntroPageView extends BaseFragment<IntroPageMvp.View, IntroPagePres
         int descriptionRes = getArguments().getInt("descriptionRes");
         introTitle.setText(titleRes);
         introImage.setImageResource(drawableRes);
+        introImage.setContentDescription(getString(titleRes));
         introDescription.setText(descriptionRes);
+        introDescription.setMovementMethod(new ScrollingMovementMethod());
     }
 
     public static IntroPageView newInstance(@StringRes int titleRes, @DrawableRes int drawableRes, @StringRes int descriptionRes) {

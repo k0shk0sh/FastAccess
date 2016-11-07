@@ -43,6 +43,7 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
         this.callback = callback;
         imageView = new ImageView(context);
         imageView.setAdjustViewBounds(true);
+        imageView.setContentDescription(getResources().getString(R.string.app_name));
         setupImageView();
         addView(imageView);
         this.setOnTouchListener(this);

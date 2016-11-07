@@ -30,7 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:autoLink="all"
             android:gravity="center"
+            android:maxLines="6"
+            android:scrollbars="vertical"
             tools:text="To the sichuan-style raspberries add spinach, margerine, rice sauce and dark avocado."/>
     </LinearLayout>
 
