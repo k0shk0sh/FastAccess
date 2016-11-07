@@ -234,11 +234,11 @@ public class SettingsFragmentView extends PreferenceFragmentCompat implements Pr
     }
 
     @Override public void onPermissionsGranted(int requestCode, List<String> perms) {
-        Logger.e();
+        Logger.e(perms);
     }
 
     @Override public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Logger.e();
+        Logger.e(perms);
     }
 
     @AfterPermissionGranted(IconPackHelper.PICK_ICON) private void pickIcon() {

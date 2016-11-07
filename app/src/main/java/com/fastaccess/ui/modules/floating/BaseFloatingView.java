@@ -7,11 +7,13 @@ import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 
 import com.fastaccess.R;
+import com.fastaccess.data.dao.FolderModel;
 import com.fastaccess.data.dao.events.FloatingEventModel;
 import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.helper.NotificationHelper;
@@ -20,7 +22,9 @@ import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
 import com.fastaccess.provider.service.FloatingService;
 import com.fastaccess.ui.adapter.viewholder.FloatingWindowsViewHolder;
+import com.fastaccess.ui.modules.floating.folders.FloatingFoldersMvp;
 import com.fastaccess.ui.widgets.floating.FloatingView;
+import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,6 +50,7 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
     private FloatingWindowsViewHolder layoutHolder;
     private Point szWindow = new Point();
     protected boolean isHorizontal;
+    private FloatingFoldersMvp.View folderCallback;
 
     @SuppressWarnings("unused") private BaseFloatingView() {
         throw new RuntimeException("can't call me!");
@@ -124,6 +129,7 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
     }
 
     @SuppressWarnings("unchecked") @Override public void onDestroy() {
+        EventBus.getDefault().unregister(this);
         if (windowManager != null) {
             windowManager.removeView(floatingView);
             windowManager.removeView(layoutHolder.tabBar);
@@ -132,10 +138,22 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
         if (getAdapter() != null) getAdapter().clear();
         if (layoutHolder != null) layoutHolder.onDestroy();
         if (getPresenter() != null) getPresenter().onDestroy();
-        EventBus.getDefault().unregister(this);
+        folderCallback = null;
     }
 
     @Override public void onToggleVisibility(boolean showFloating) {
+        if (!showFloating && folderCallback != null) {
+            if (layoutHolder.recycler != null && layoutHolder.recycler.getAdapter() != null) {
+                RecyclerView.Adapter adapter = layoutHolder.recycler.getAdapter();
+                if (adapter.getItemCount() == 1) {
+                    FolderModel folderModel = (FolderModel) ((BaseRecyclerAdapter) adapter).getItem(0);
+                    if (folderModel != null) {
+                        folderCallback.onOpenFolder(floatingView, folderModel);
+                        return;
+                    }
+                }
+            }
+        }
         getPresenter().onToggleVisibility(showFloating, windowManager, originalParams, layoutHolder.tabBar, floatingView, isHorizontal);
     }
 
@@ -172,5 +190,9 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
 
     private void moveToEdge() {
         getPresenter().onMoveToEdge(windowManager, originalParams, floatingView, szWindow);
+    }
+
+    public void setFolderCallback(FloatingFoldersMvp.View folderCallback) {
+        this.folderCallback = folderCallback;
     }
 }

@@ -61,8 +61,11 @@ public class FloatingFoldersView extends BaseFloatingView<FolderModel> implement
     @Override public void onLoaderLoaded(@Nullable List<FolderModel> data) {
         if (data == null || data.isEmpty()) {
             Toast.makeText(context, R.string.no_folders_floating, Toast.LENGTH_LONG).show();
+        } else {
+            setFolderCallback(this);
         }
         super.onLoaderLoaded(data);
+
     }
 
     @Override public BaseRecyclerAdapter getAdapter() {

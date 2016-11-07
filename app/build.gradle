@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.styleme.floating.toolbox.pro"
         minSdkVersion 18

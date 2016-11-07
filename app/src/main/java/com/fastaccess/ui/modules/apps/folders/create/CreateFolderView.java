@@ -22,6 +22,7 @@ import com.fastaccess.helper.ViewHelper;
 import com.fastaccess.ui.base.BaseBottomSheetDialog;
 import com.fastaccess.ui.modules.apps.folders.create.CreateFolderMvp.OnNotifyFoldersAdapter;
 import com.fastaccess.ui.widgets.FontButton;
+import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 
@@ -66,14 +67,18 @@ public class CreateFolderView extends BaseBottomSheetDialog implements CreateFol
         boolean isEmpty = InputHelper.isEmpty(folderName);
         folderName.setError(isEmpty ? getString(R.string.required_field) : null);
         if (!isEmpty) {
-            getFolderModel().setColor(selectedColor);
-            getFolderModel().setFolderName(fName);
-            if (getFolderModel().getCreatedDate() == 0) {
+            FolderModel draft = FolderModel.getFolder(fName);
+            if (draft != null) {
+                MessageDialogView.newInstance(R.string.folder_exists, R.string.folder_exists_msg).show(getChildFragmentManager(),
+                        "MessageDialogView");
+            } else {
+                getFolderModel().setColor(selectedColor);
+                getFolderModel().setFolderName(fName);
                 getFolderModel().setCreatedDate(new Date().getTime());
+                getFolderModel().save();
+                callback.onNotifyChanges();
+                dismiss();
             }
-            getFolderModel().save();
-            callback.onNotifyChanges();
-            dismiss();
         }
     }
 

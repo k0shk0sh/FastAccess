@@ -151,4 +151,9 @@
     <string name="intro_three_title"><![CDATA[Drag & Drop]]></string>
     <string name="intro_three_desc">Long press on a selected app to change its position.</string>
     <string name="intro_screen">Intro Screen</string>
+    <string name="folder_exists">Folder Exists</string>
+    <string name="folder_exists_msg">There is a folder exists with the name you entered, please use different name to create new folder.</string>
+    <string name="intro_four_title">FA Floating Modes</string>
+    <string name="intro_four_desc">FA has two Floating Modes.\nApps(default) show the selected apps when FA is floating.\nFolders shows folders
+        when FA is floating.</string>
 </resources>

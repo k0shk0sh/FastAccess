@@ -3,6 +3,7 @@ package com.fastaccess.data.dao;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
@@ -60,6 +61,11 @@ public class FolderModel extends SugarRecord implements Parcelable {
     public int getAppsCount() {
         appsCount = (int) AppsModel.countApps(getId());
         return appsCount;
+    }
+
+    @Nullable public static FolderModel getFolder(@NonNull String folderName) {
+        return Select.from(FolderModel.class).where(NamingHelper.toSQLNameDefault("folderName") + " = ? COLLATE NOCASE", new String[]{folderName})
+                .first();
     }
 
     public static List<FolderModel> getFolders() {
