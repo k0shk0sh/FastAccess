@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:gravity="center"
-            tools:text="To the sichuan-style raspberries add spinach, margerine, rice sauce and dark avocado."/>
+            tools:text="To the sichuan-style raspberries add spinach, margerine, rice sauce and dark avocado.\nAll lasses burn clear, heavy-hearted woodchucks.\nZirbuss studere in teres tubinga!"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

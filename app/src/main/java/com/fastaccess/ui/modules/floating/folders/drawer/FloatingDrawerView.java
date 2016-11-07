@@ -21,7 +21,7 @@ import com.fastaccess.data.dao.events.ThemePackEventModel;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.helper.ViewHelper;
 import com.fastaccess.provider.loader.SelectedAppsLoader;
-import com.fastaccess.ui.adapter.FloatingAppsAdapter;
+import com.fastaccess.ui.adapter.FloatingFolderAppsAdapter;
 import com.fastaccess.ui.adapter.viewholder.AppDrawerHolder;
 import com.fastaccess.ui.modules.floating.folders.FloatingFoldersMvp;
 
@@ -46,11 +46,10 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
     private final FloatingFoldersMvp.View view;
     private AppDrawerHolder drawerHolder;
     private SelectedAppsLoader appsLoader;
-    private FloatingAppsAdapter adapter;
+    private FloatingFolderAppsAdapter adapter;
     private WindowManager windowManager;
     private FloatingDrawPresenter presenter;
     private boolean isFinishing;
-
 
     private FloatingDrawerView(@NonNull FloatingFoldersMvp.View view) {
         this.view = view;
@@ -86,7 +85,7 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
         this.windowManager = windowManager;
         Context context = view.getContext();
         drawerHolder = new AppDrawerHolder(LayoutInflater.from(view.getContext()).inflate(R.layout.floating_folder_layout, null, false), this);
-        adapter = new FloatingAppsAdapter(new ArrayList<AppsModel>(), getPresenter(), false);
+        adapter = new FloatingFolderAppsAdapter(new ArrayList<AppsModel>(), getPresenter(), false);
         drawerHolder.recycler.setAdapter(adapter);
         drawerHolder.emptyText.setText(R.string.no_apps);
         drawerHolder.recycler.setEmptyView(drawerHolder.emptyText);

@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.fastaccess.R;
+import com.fastaccess.ui.widgets.recyclerview.layout_manager.GridManager;
 
 import static android.R.attr.columnWidth;
 
@@ -58,6 +58,9 @@ public class DynamicRecyclerView extends RecyclerView {
             if (iconSize > 0) {
                 setHasFixedSize(true);
                 iconSize += getResources().getDimensionPixelSize(R.dimen.spacing_micro);
+                if (getLayoutManager() instanceof GridManager) {
+                    ((GridManager) getLayoutManager()).setIconSize(iconSize);
+                }
             }
             array.recycle();
         }
@@ -71,17 +74,17 @@ public class DynamicRecyclerView extends RecyclerView {
         }
     }
 
-    @Override protected void onMeasure(int widthSpec, int heightSpec) {
-        super.onMeasure(widthSpec, heightSpec);
-        int width = MeasureSpec.getSize(widthSpec);
-        if (iconSize > 0 && width != 0) {
-            int spanCount = Math.max(1, width / iconSize);
-            if (getLayoutManager() instanceof GridLayoutManager) {
-                ((GridLayoutManager) getLayoutManager()).setSpanCount(spanCount);
-                getLayoutManager().requestLayout();
-            }
-        }
-    }
+//    @Override protected void onMeasure(int widthSpec, int heightSpec) {
+//        super.onMeasure(widthSpec, heightSpec);
+//        int width = MeasureSpec.getSize(widthSpec);
+//        if (iconSize > 0 && width != 0) {
+//            int spanCount = Math.max(1, width / iconSize);
+//            if (getLayoutManager() instanceof GridLayoutManager) {
+//                ((GridLayoutManager) getLayoutManager()).setSpanCount(spanCount);
+//                getLayoutManager().requestLayout();
+//            }
+//        }
+//    }
 
     public void showEmptyView() {
         Adapter<?> adapter = getAdapter();

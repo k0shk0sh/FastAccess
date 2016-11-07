@@ -14,7 +14,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -27,6 +30,7 @@ public class BackupRestoreModel {
     private List<FolderModel> folders;
     private List<AppsModel> appsModels;
     private Map<String, Object> settings;
+    private String backupDate;
 
     public String getUid() {
         return uid;
@@ -60,11 +64,21 @@ public class BackupRestoreModel {
         this.settings = settings;
     }
 
+    public String getBackupDate() {
+        return backupDate;
+    }
+
+    public void setBackupDate(String backupDate) {
+        this.backupDate = backupDate;
+    }
+
     @Nullable public static BackupRestoreModel backup() {
         BackupRestoreModel model = new BackupRestoreModel();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser == null) return null;
         model.setUid(firebaseUser.getUid());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mma", Locale.getDefault());
+        model.setBackupDate(simpleDateFormat.format(new Date().getTime()));
         model.setFolders(FolderModel.getFolders());
         model.setSettings(PrefHelper.getAll());
         model.setAppsModels(AppsModel.getApps());
