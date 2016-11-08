@@ -13,6 +13,7 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
@@ -53,45 +54,42 @@ public class FastBitmapDrawable extends Drawable {
 
     public FastBitmapDrawable(Bitmap b) {
         mAlpha = 255;
+        if (b == null) {
+            Drawable colorDrawable = new ColorDrawable(Color.parseColor("#2A456B"));
+            b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(b);
+            colorDrawable.draw(c);
+        }
         mBitmap = b;
-        setBounds(0, 0, b.getWidth(), b.getHeight());
+
+        setBounds(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
     }
 
-    @Override
-    public void draw(@NonNull Canvas canvas) {
+    @Override public void draw(@NonNull Canvas canvas) {
         final Rect r = getBounds();
         // Draw the bitmap into the bounding rect
         canvas.drawBitmap(mBitmap, null, r, mPaint);
     }
 
-    @Override
-    public void setColorFilter(ColorFilter cf) {
+    @Override public void setColorFilter(ColorFilter cf) {
         // No op
     }
 
-    @Override
-    public int getOpacity() {
+    @Override public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
     }
 
-    @Override
-    public void setAlpha(int alpha) {
+    @Override public void setAlpha(int alpha) {
         mAlpha = alpha;
         mPaint.setAlpha(alpha);
     }
 
-    @Override
-    public void setFilterBitmap(boolean filterBitmap) {
+    @Override public void setFilterBitmap(boolean filterBitmap) {
         mPaint.setFilterBitmap(filterBitmap);
         mPaint.setAntiAlias(filterBitmap);
     }
 
-    public int getAlpha() {
-        return mAlpha;
-    }
-
-    @Override
-    public int getIntrinsicWidth() {
+    @Override public int getIntrinsicWidth() {
         int width = getBounds().width();
         if (width == 0) {
             width = mBitmap.getWidth();
@@ -99,8 +97,11 @@ public class FastBitmapDrawable extends Drawable {
         return width;
     }
 
-    @Override
-    public int getIntrinsicHeight() {
+    @Override public int getAlpha() {
+        return mAlpha;
+    }
+
+    @Override public int getIntrinsicHeight() {
         int height = getBounds().height();
         if (height == 0) {
             height = mBitmap.getHeight();
@@ -108,13 +109,11 @@ public class FastBitmapDrawable extends Drawable {
         return height;
     }
 
-    @Override
-    public int getMinimumWidth() {
+    @Override public int getMinimumWidth() {
         return getBounds().width();
     }
 
-    @Override
-    public int getMinimumHeight() {
+    @Override public int getMinimumHeight() {
         return getBounds().height();
     }
 
