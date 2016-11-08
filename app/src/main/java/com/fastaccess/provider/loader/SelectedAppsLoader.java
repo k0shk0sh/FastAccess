@@ -34,8 +34,11 @@ public class SelectedAppsLoader extends AsyncTaskLoader<List<AppsModel>> {
     }
 
     @Override public List<AppsModel> loadInBackground() {
+        List<AppsModel> models = new ArrayList<>();
         List<AppsModel> savedApps = folderId == -1 ? AppsModel.getApps() : AppsModel.getApps(folderId);
-        if (savedApps == null || savedApps.isEmpty()) return new ArrayList<>();
+        if (savedApps == null || savedApps.isEmpty()) {
+            return models;
+        }
         IconCache iconCache = App.getInstance().getIconCache();
         for (AppsModel model : savedApps) {
             Intent intent = new Intent();
@@ -43,11 +46,12 @@ public class SelectedAppsLoader extends AsyncTaskLoader<List<AppsModel>> {
             ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
             if (resolveInfo != null) {
                 iconCache.getTitleAndIcon(model, resolveInfo, null);
+                models.add(model);
             } else {
                 model.delete();//app is uninstalled!
             }
         }
-        return savedApps;
+        return models;
     }
 
     @Override public void deliverResult(List<AppsModel> apps) {

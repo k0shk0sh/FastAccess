@@ -34,12 +34,14 @@ public class GridManager extends GridLayoutManager {
     }
 
     private void updateCount() {
-        int spanCount = Math.max(1, getWidth() / iconSize);
-        if (spanCount < 1) {
-            spanCount = 1;
+        if (iconSize > 1) {
+            int spanCount = Math.max(1, getWidth() / iconSize);
+            if (spanCount < 1) {
+                spanCount = 1;
+            }
+            Logger.e(spanCount);
+            this.setSpanCount(spanCount);
         }
-        Logger.e(spanCount);
-        this.setSpanCount(spanCount);
     }
 
     public int getIconSize() {
