@@ -99,10 +99,10 @@
     <string name="backup_restore">Across Devices Backup &amp; Restore</string>
     <string name="backup">Backup</string>
     <string name="restore">Restore</string>
-    <string name="sign_in_title"><![CDATA[Sign-In to backup/restore your\n FA settings & data across devices]]></string>
+    <string name="sign_in_title"><![CDATA[Sign-In to backup/restore your\n FA settings, Apps & Folders across devices]]></string>
     <string name="sign_in_with_google">Sign-In with Google+</string>
     <string name="failed_login">Failed Sign-In</string>
-    <string name="successfully_backup"><![CDATA[Successfully Backup, now you can restore all your data & settings from any device.]]></string>
+    <string name="successfully_backup"><![CDATA[Successfully Backup, now you can restore all your FA settings, Apps & Folders from any device.]]></string>
     <string name="login_first_msg">You must Sign-In first</string>
     <string name="backup_in_progress">Backup in progress, Please wai…</string>
     <string name="successfully_restored">Successfully Restored, App restart is required</string>
