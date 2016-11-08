@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.fastaccess.R;
 import com.fastaccess.ui.widgets.recyclerview.layout_manager.GridManager;
 
 import static android.R.attr.columnWidth;
@@ -57,7 +56,7 @@ public class DynamicRecyclerView extends RecyclerView {
             iconSize = array.getDimensionPixelSize(0, -1);
             if (iconSize > 0) {
                 setHasFixedSize(true);
-                iconSize += getResources().getDimensionPixelSize(R.dimen.spacing_micro);
+//                iconSize += getResources().getDimensionPixelSize(R.dimen.spacing_micro);
                 if (getLayoutManager() instanceof GridManager) {
                     ((GridManager) getLayoutManager()).setIconSize(iconSize);
                 }
