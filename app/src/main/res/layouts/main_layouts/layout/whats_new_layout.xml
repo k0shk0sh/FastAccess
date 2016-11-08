@@ -98,6 +98,58 @@
                 android:text="@string/whats_new"
                 android:textColor="@color/primary_light"/>
 
+
+            <com.fastaccess.ui.widgets.FontTextView
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_xs_large"
+                android:layout_marginStart="@dimen/spacing_xs_large"
+                android:background="@drawable/bottom_border"
+                android:text="Version 10.0.2"
+                android:textColor="@color/primary_light"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xs_large"
+                android:layout_marginTop="@dimen/spacing_xs_large"
+                app:cardMaxElevation="@dimen/spacing_normal"
+                app:contentPaddingBottom="@dimen/spacing_xs_large"
+                app:contentPaddingTop="@dimen/spacing_xs_large">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.fastaccess.ui.widgets.FontTextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_xs_large"
+                        android:layout_marginStart="@dimen/spacing_xs_large"
+                        android:drawablePadding="@dimen/spacing_xs_large"
+                        android:drawableStart="@drawable/ic_dot"
+                        android:text="(Improvement) Improved Icon size for Folders &amp; Apps."
+                        android:textColor="@color/primary_text"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <com.fastaccess.ui.widgets.FontTextView
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_xs_large"
+                android:layout_marginStart="@dimen/spacing_xs_large"
+                android:background="@drawable/bottom_border"
+                android:text="Version 10.0.1"
+                android:textColor="@color/primary_light"/>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,6 +218,17 @@
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+            <com.fastaccess.ui.widgets.FontTextView
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_xs_large"
+                android:layout_marginStart="@dimen/spacing_xs_large"
+                android:background="@drawable/bottom_border"
+                android:text="Version 10.0.0"
+                android:textColor="@color/primary_light"/>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
