@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.KeyEvent;
@@ -38,7 +39,7 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
     private ImageView imageView;
     private FloatingTouchCallback callback;
 
-    public FloatingView(Context context, FloatingTouchCallback callback) {
+    public FloatingView(@NonNull Context context, @NonNull FloatingTouchCallback callback) {
         super(context);
         this.callback = callback;
         imageView = new ImageView(context);
@@ -67,33 +68,33 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
     @Override public void onThreeFingerSingleTap() {}//op-out
 
     @Override public void onDoubleTap() {
-        callback.onDoubleTapped();
+        if (callback != null) callback.onDoubleTapped();
     }
 
     @Override public void onScroll(int scrollDirection) {}//op-out
 
     @Override public void onSingleTap() {
-        callback.onSingleTapped();
+        if (callback != null) callback.onSingleTapped();
     }
 
     @Override public void onSwipe(int swipeDirection) {
-        callback.onSwipe(swipeDirection);
+        if (callback != null) callback.onSwipe(swipeDirection);
     }
 
     @Override public void onLongPress() {
-        callback.onLongPressed();
+        if (callback != null) callback.onLongPressed();
     }
 
     @Override public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            callback.onBackPressed();
+            if (callback != null) callback.onBackPressed();
         }
         return super.dispatchKeyEvent(event);
     }
 
     @Override protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        callback.onConfigChanged(newConfig.orientation);
+        if (callback != null) callback.onConfigChanged(newConfig.orientation);
     }
 
     @Override public boolean onTouch(View view, MotionEvent event) {
@@ -105,17 +106,18 @@ public class FloatingView extends RevealFrameLayout implements TouchTypeDetector
                 break;
             case MotionEvent.ACTION_UP:
                 setClickable(true);
-                callback.onStoppedMoving();
+                if (callback != null) callback.onStoppedMoving();
                 onMoving(false);
                 imageView.setPressed(false);
                 break;
             case MotionEvent.ACTION_MOVE:
                 setClickable(false);
                 onMoving(true);
-                callback.onViewMoving(initialX + (int) (event.getRawX() - initialTouchX), initialY + (int) (event.getRawY() - initialTouchY));
+                if (callback != null)
+                    callback.onViewMoving(initialX + (int) (event.getRawX() - initialTouchX), initialY + (int) (event.getRawY() - initialTouchY));
                 break;
             case MotionEvent.ACTION_OUTSIDE:
-                callback.onTouchOutside();
+                if (callback != null) callback.onTouchOutside();
                 imageView.setPressed(false);
                 break;
         }

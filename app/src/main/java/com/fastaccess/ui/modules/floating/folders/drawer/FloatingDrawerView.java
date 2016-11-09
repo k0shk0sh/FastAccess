@@ -120,7 +120,7 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
         Logger.e(isFinishing);
         if (windowManager != null && !isFinishing) {
             if (drawerHolder != null && drawerHolder.appDrawer.isShown()) {
-                drawerHolder.appDrawer.animate().scaleY(0).scaleX(0).withStartAction(startActionRunnable).withEndAction(endActionRunnable);
+                drawerHolder.appDrawer.animate().alpha(0).scaleY(0).scaleX(0).withStartAction(startActionRunnable).withEndAction(endActionRunnable);
             }
         }
     }
@@ -138,6 +138,7 @@ public class FloatingDrawerView implements FloatingDrawerMvp.View {
 
     private Runnable endActionRunnable = new Runnable() {
         @Override public void run() {
+            drawerHolder.appDrawer.setVisibility(View.GONE);
             windowManager.removeView(drawerHolder.appDrawer);
             drawerHolder.onDestroy();
             if (appsLoader != null) appsLoader.unregisterListener(getPresenter());

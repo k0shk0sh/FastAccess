@@ -1,9 +1,7 @@
 package com.fastaccess.ui.adapter.viewholder;
 
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +14,7 @@ import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 import com.fastaccess.ui.widgets.recyclerview.touch.ItemTouchHelperViewHolder;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 
 /**
@@ -25,15 +24,13 @@ import butterknife.BindView;
 public class DeviceAppsViewHolder extends BaseViewHolder<AppsModel> implements ItemTouchHelperViewHolder {
     @BindView(R.id.appIcon) ImageView appIcon;
     @BindView(R.id.cardView) CardView cardView;
-    @ColorInt private final int selectedColor;
-    @ColorInt private final int normalColor;
+    @BindColor(R.color.light_gray) int selectedColor;
+    @BindColor(R.color.cardview_light_background) int normalColor;
     private boolean selected;
     private boolean selectedApps;
 
     public DeviceAppsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
-        selectedColor = ActivityCompat.getColor(itemView.getContext(), R.color.light_gray);
-        normalColor = ActivityCompat.getColor(itemView.getContext(), R.color.cardview_light_background);
         appIcon.setOnClickListener(this);
         appIcon.setOnLongClickListener(this);
     }

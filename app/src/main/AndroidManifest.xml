@@ -114,6 +114,9 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.fastaccess.data.dao"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_fa_notification"/>
     </application>
 
 </manifest>
