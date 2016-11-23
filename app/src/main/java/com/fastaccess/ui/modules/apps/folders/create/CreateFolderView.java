@@ -101,7 +101,7 @@ public class CreateFolderView extends BaseBottomSheetDialog implements CreateFol
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        if (getPresenter() != null && getParentFragment() instanceof OnNotifyFoldersAdapter) {
+        if (getParentFragment() != null && getParentFragment() instanceof OnNotifyFoldersAdapter) {
             callback = (OnNotifyFoldersAdapter) getParentFragment();
         } else if (context instanceof OnNotifyFoldersAdapter) {
             callback = (OnNotifyFoldersAdapter) context;

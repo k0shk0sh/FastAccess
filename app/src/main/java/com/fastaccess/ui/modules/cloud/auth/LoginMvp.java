@@ -33,7 +33,6 @@ public interface LoginMvp {
 
         void onSignedIn(@NonNull GoogleSignInAccount account);
 
-
         void onFirebaseUser(@NonNull FirebaseUser user);
     }
 
