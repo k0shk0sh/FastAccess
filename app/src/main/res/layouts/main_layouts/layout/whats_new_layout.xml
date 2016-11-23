@@ -149,7 +149,6 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/spacing_xs_large"
                     android:layout_marginStart="@dimen/spacing_xs_large"
-                    android:layout_marginTop="@dimen/spacing_xs_large"
                     android:background="@drawable/bottom_border"
                     android:text="Version 10.0.2"
                     android:textColor="@color/primary_light"/>
