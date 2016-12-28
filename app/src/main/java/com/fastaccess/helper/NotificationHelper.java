@@ -95,14 +95,17 @@ public class NotificationHelper {
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
-    public static Notification getNonCancellableNotification(@NonNull Context content, @NonNull String title, @NonNull String msg,
-                                                             @DrawableRes int iconId, @NonNull PendingIntent pendingIntent) {
-        return new NotificationCompat.Builder(content)
+    public static Notification getNonCancellableNotification(@NonNull Context context, @NonNull String title, @NonNull String msg,
+                                                             @DrawableRes int iconId, @NonNull PendingIntent pendingIntent,
+                                                             @NonNull PendingIntent stopServiceIntent) {
+        return new NotificationCompat.Builder(context)
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .setContentTitle(title)
                 .setContentText(msg)
                 .setSmallIcon(iconId)
+                .addAction(R.drawable.ic_stop, context.getString(R.string.stop_service), stopServiceIntent)
+                .addAction(R.drawable.ic_fa_notification, context.getString(R.string.click_to_open_fa), pendingIntent)
                 .setContentIntent(pendingIntent)
                 .build();
     }

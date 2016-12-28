@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.fastaccess.R;
 import com.fastaccess.helper.InputHelper;
 import com.fastaccess.ui.base.BaseActivity;
+import com.fastaccess.ui.modules.cloud.backup.BackupView;
 import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -129,7 +130,7 @@ public class RestoreView extends BaseActivity<RestoreMvp.View, RestorePresenter>
 
     private DatabaseReference getDatabase() {
         if (database == null) {
-            database = FirebaseDatabase.getInstance().getReference();
+            database = FirebaseDatabase.getInstance().getReference(BackupView.BACKUP_DATABASE_NAME);
         }
         return database;
     }

@@ -37,7 +37,7 @@
     <string name="select_apps">Select Apps</string>
     <string name="add_all">Add All</string>
     <string name="remove_all">Remove All</string>
-    <string name="click_to_open_fa">Click to open FA</string>
+    <string name="click_to_open_fa">Open FA</string>
     <string name="click_to_start_service">Click here to start FA service</string>
     <string name="about">About</string>
     <string name="background_summery">Background color of FA apps list.</string>

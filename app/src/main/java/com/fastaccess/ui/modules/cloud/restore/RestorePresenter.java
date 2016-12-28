@@ -8,7 +8,6 @@ import com.fastaccess.data.dao.BackupRestoreModel;
 import com.fastaccess.helper.InputHelper;
 import com.fastaccess.helper.Logger;
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
-import com.fastaccess.ui.modules.cloud.backup.BackupView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,9 +41,7 @@ public class RestorePresenter extends BasePresenter<RestoreMvp.View> implements 
         } else {
             getView().onShowProgress();
             Query query = databaseReference
-                    .child(BackupView.BACKUP_DATABASE_NAME)
-                    .child(userId)
-                    .limitToFirst(1);
+                    .child(userId);
             query.keepSynced(true);
             query.addListenerForSingleValueEvent(this);
         }
@@ -52,8 +49,7 @@ public class RestorePresenter extends BasePresenter<RestoreMvp.View> implements 
 
     @Override public void onDataChange(DataSnapshot dataSnapshot) {
         if (!isAttached()) return;
-        if (dataSnapshot != null) {
-            Logger.e(dataSnapshot);
+        if (dataSnapshot != null && dataSnapshot.hasChildren()) {
             FirebaseUser user = getView().user();
             if (InputHelper.isEmpty(userId)) {
                 if (user != null) userId = user.getUid();
@@ -64,9 +60,8 @@ public class RestorePresenter extends BasePresenter<RestoreMvp.View> implements 
                 getView().finishOnError();
                 return;
             }
-            if (dataSnapshot.hasChildren()) {
-                BackupRestoreModel.restore(dataSnapshot.getValue(BackupRestoreModel.class));
-            }
+            Logger.e(dataSnapshot);
+            BackupRestoreModel.restore(dataSnapshot.getValue(BackupRestoreModel.class));
             getView().onHideProgress();
             getView().onRestoreCompleted();
         } else {

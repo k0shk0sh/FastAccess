@@ -24,6 +24,7 @@ import com.fastaccess.ui.modules.main.MainView;
 public class FloatingService extends Service {
     private FloatingVHView floatingVHView;
     private FloatingFoldersView floatingFoldersView;
+    public static final String STOP_FLAG = "stop_flag";
 
     @Override public void onCreate() {
         super.onCreate();
@@ -40,10 +41,13 @@ public class FloatingService extends Service {
         } else {
             floatingVHView = FloatingVHView.with(this, PrefConstant.isHorizontal());
         }
-        startForeground(NotificationHelper.NOTIFICATION_ID, NotificationHelper.getNonCancellableNotification(this,
-                getString(R.string.app_name), getString(R.string.click_to_open_fa),
-                PrefHelper.getBoolean(PrefConstant.STATUS_BAR_HIDDEN) ? R.drawable.ic_notification : R.drawable.ic_fa_notification,
-                PendingIntent.getActivity(this, 0, new Intent(this, MainView.class), PendingIntent.FLAG_UPDATE_CURRENT)));
+        Intent stopServiceIntent = new Intent(this, FloatingService.class);
+        stopServiceIntent.putExtra(STOP_FLAG, true);
+        startForeground(NotificationHelper.NOTIFICATION_ID,
+                NotificationHelper.getNonCancellableNotification(this, getString(R.string.app_name), getString(R.string.click_to_open_fa),
+                        PrefHelper.getBoolean(PrefConstant.STATUS_BAR_HIDDEN) ? R.drawable.ic_notification : R.drawable.ic_fa_notification,
+                        PendingIntent.getActivity(this, 0, new Intent(this, MainView.class), PendingIntent.FLAG_UPDATE_CURRENT),
+                        PendingIntent.getService(this, 0, stopServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT)));
     }
 
     @Nullable @Override public IBinder onBind(Intent intent) {
@@ -52,6 +56,10 @@ public class FloatingService extends Service {
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+        if (intent != null && intent.getBooleanExtra(STOP_FLAG, false)) {
+            stopForeground(true);
+            stopSelf();
+        }
         return START_STICKY;
     }
 

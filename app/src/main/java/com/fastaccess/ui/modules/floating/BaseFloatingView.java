@@ -16,7 +16,6 @@ import com.fastaccess.R;
 import com.fastaccess.data.dao.FolderModel;
 import com.fastaccess.data.dao.events.FloatingEventModel;
 import com.fastaccess.data.dao.events.ThemePackEventModel;
-import com.fastaccess.helper.NotificationHelper;
 import com.fastaccess.helper.PermissionsHelper;
 import com.fastaccess.helper.PrefConstant;
 import com.fastaccess.helper.PrefHelper;
@@ -104,7 +103,7 @@ public abstract class BaseFloatingView<M> implements BaseFloatingMvp.BaseView<M>
     }
 
     @Override public void onLongPressed() {
-        NotificationHelper.collapseFAService(context, getAdapter().getItemCount());
+//        NotificationHelper.collapseFAService(context, getAdapter().getItemCount());
     }
 
     @Override public void onDoubleTapped() {

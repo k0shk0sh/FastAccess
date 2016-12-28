@@ -1,8 +1,8 @@
 package com.fastaccess.ui.modules.floating.folders.drawer;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
 import android.view.View;
@@ -33,9 +33,9 @@ public class FloatingDrawPresenter extends BasePresenter<FloatingDrawerMvp.View>
     @Override public void onItemClick(int position, View v, AppsModel item) {
         try {
             Context context = v.getContext();
-            PackageManager manager = context.getPackageManager();
-            Intent intent = manager.getLaunchIntentForPackage(item.getPackageName());
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(item.getPackageName(), item.getActivityInfoName()));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {// app uninstalled/not found
             e.printStackTrace();

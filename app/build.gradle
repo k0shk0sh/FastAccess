@@ -15,8 +15,8 @@ android {
         applicationId "com.styleme.floating.toolbox.pro"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 103
-        versionName "10.0.3"
+        versionCode 104
+        versionName "10.0.4"
         buildConfigField "String", "FA_HOST", '"k0shk0sh.github.io/FastAccess"'
         buildConfigField "String", "SHARED_URI", '"sharedUri"'
         signingConfig signingConfigs.signing
@@ -55,8 +55,8 @@ repositories {
 }
 dependencies {
     ext {
-        supportVerion = "25.0.1"
-        firebase = "10.0.0"
+        supportVerion = "25.1.0"
+        firebase = "10.0.1"
     }
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "com.android.support:appcompat-v7:${supportVerion}"
