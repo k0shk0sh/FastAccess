@@ -34,6 +34,7 @@ public class PrefConstant {
     public static final String FA_IS_HORIZONTAL = "fa_is_horizontal";
     public static final String WHATS_NEW_VERSION = "whats_new_version";
     public static final String INTRO_SCREEN = "intro_screen";
+    public static final String STOP_FLAG = "stop_flag";
 
     public static void savePosition(int x, int y) {
         boolean isAutoSavePosition = PrefHelper.getBoolean(PrefConstant.FA_AUTO_SAVE_POSITION);
@@ -103,5 +104,9 @@ public class PrefConstant {
 
     public static void setIntroScreen() {
         PrefHelper.set(INTRO_SCREEN, true);
+    }
+
+    public static boolean isLongPressEnabled() {
+        return PrefHelper.getBoolean("fa_long_press");
     }
 }

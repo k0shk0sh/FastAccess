@@ -114,7 +114,7 @@ public class NotificationHelper {
         context.stopService(new Intent(context, FloatingService.class));
         Intent notificationIntent = new Intent(context, FloatingService.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, notificationIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
         int icon = R.drawable.ic_fa_notification;
         long finalTime = System.currentTimeMillis();

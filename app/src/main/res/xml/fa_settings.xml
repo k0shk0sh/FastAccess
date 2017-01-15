@@ -28,6 +28,12 @@
 
         <SwitchPreference
             android:defaultValue="true"
+            android:key="fa_long_press"
+            android:summary="@string/long_press_summery"
+            android:title="@string/long_press_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
             android:key="fa_auto_save_position"
             android:summary="@string/auto_save_position_summary"
             android:title="@string/auto_save_position_title"/>

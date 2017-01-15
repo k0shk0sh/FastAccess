@@ -97,7 +97,7 @@
                     android:layout_marginStart="@dimen/spacing_xs_large"
                     android:layout_marginTop="@dimen/spacing_xs_large"
                     android:background="@drawable/bottom_border"
-                    android:text="Version 10.0.4"
+                    android:text="Version 10.0.5"
                     android:textColor="@color/primary_light"/>
 
                 <android.support.v7.widget.CardView
@@ -124,7 +124,7 @@
                             android:layout_marginStart="@dimen/spacing_xs_large"
                             android:drawablePadding="@dimen/spacing_xs_large"
                             android:drawableStart="@drawable/ic_dot"
-                            android:text="(New) Long Press stop FA won't work anymore, instead you can stop FA via Notification bar.."
+                            android:text="(New) Long Press stop FA now can be enabled from settings screen.(Default is disabled)"
                             android:textColor="@color/primary_text"/>
 
                         <com.fastaccess.ui.widgets.FontTextView
@@ -137,7 +137,7 @@
                             android:layout_marginStart="@dimen/spacing_xs_large"
                             android:drawablePadding="@dimen/spacing_xs_large"
                             android:drawableStart="@drawable/ic_dot"
-                            android:text="(Fix) Fix for Samsung Contact &amp; Phone App."
+                            android:text="(Improvement) Improved how apps are opened."
                             android:textColor="@color/primary_text"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

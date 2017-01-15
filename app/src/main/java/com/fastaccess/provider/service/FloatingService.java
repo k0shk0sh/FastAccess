@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.fastaccess.R;
+import com.fastaccess.helper.Bundler;
 import com.fastaccess.helper.InputHelper;
 import com.fastaccess.helper.NotificationHelper;
 import com.fastaccess.helper.PrefConstant;
@@ -17,6 +18,8 @@ import com.fastaccess.ui.modules.floating.apps.FloatingVHView;
 import com.fastaccess.ui.modules.floating.folders.FloatingFoldersView;
 import com.fastaccess.ui.modules.main.MainView;
 
+import static com.fastaccess.helper.PrefConstant.STOP_FLAG;
+
 /**
  * Created by Kosh on 13 Oct 2016, 7:32 PM
  */
@@ -24,7 +27,6 @@ import com.fastaccess.ui.modules.main.MainView;
 public class FloatingService extends Service {
     private FloatingVHView floatingVHView;
     private FloatingFoldersView floatingFoldersView;
-    public static final String STOP_FLAG = "stop_flag";
 
     @Override public void onCreate() {
         super.onCreate();
@@ -42,7 +44,7 @@ public class FloatingService extends Service {
             floatingVHView = FloatingVHView.with(this, PrefConstant.isHorizontal());
         }
         Intent stopServiceIntent = new Intent(this, FloatingService.class);
-        stopServiceIntent.putExtra(STOP_FLAG, true);
+        stopServiceIntent.putExtras(Bundler.start().put(STOP_FLAG, true).end());
         startForeground(NotificationHelper.NOTIFICATION_ID,
                 NotificationHelper.getNonCancellableNotification(this, getString(R.string.app_name), getString(R.string.click_to_open_fa),
                         PrefHelper.getBoolean(PrefConstant.STATUS_BAR_HIDDEN) ? R.drawable.ic_notification : R.drawable.ic_fa_notification,
@@ -56,9 +58,9 @@ public class FloatingService extends Service {
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        if (intent != null && intent.getBooleanExtra(STOP_FLAG, false)) {
+        if (intent != null && intent.getExtras() != null && intent.getExtras().getBoolean(PrefConstant.STOP_FLAG)) {
+            NotificationHelper.collapseFAService(this, 0);
             stopForeground(true);
-            stopSelf();
         }
         return START_STICKY;
     }

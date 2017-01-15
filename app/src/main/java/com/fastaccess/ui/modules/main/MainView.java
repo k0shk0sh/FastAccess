@@ -141,8 +141,8 @@ public class MainView extends BaseActivity<MainMvp.View, MainPresenter> implemen
             PrefConstant.setIntroScreen();
         }
         if (PrefConstant.showWhatsNew()) {
-            startActivity(new Intent(this, WhatsNewView.class));
             PrefConstant.setWhatsNewVersion();
+            startActivity(new Intent(this, WhatsNewView.class));
         }
     }
 

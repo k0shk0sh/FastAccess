@@ -135,12 +135,6 @@
     <string name="whats_new">What\'s New</string>
     <string name="version_name">Version:</string>
     <string name="rate_fa">Rate Fast Access</string>
-    <string name="whats_new_point_1">(New) Revamping of FA from the ground to make it more faster and efficient.</string>
-    <string name="whats_new_point_2"><![CDATA[(New) Now you can Backup & Restore your data from any device.]]></string>
-    <string name="whats_new_point_3"><![CDATA[(New) Design that makes it easy & friendly to use FA]]></string>
-    <string name="whats_new_point_4">(NEW) Folders mode, now you can categorize your apps under folders.</string>
-    <string name="whats_new_point_5"><![CDATA[(NEW)App shortcuts support for Android Nougat & supported launchers.]]></string>
-    <string name="whats_new_point_6">FA is an open source app, you can check the source code from the settings screen.</string>
     <string name="auto_save_position_title">Auto Save Last Position</string>
     <string name="intro_one_title">Selecting Apps Actions</string>
     <string name="intro_one_desc">Upon selecting apps, you get two options:\nSelect All &amp; Add All</string>
@@ -155,4 +149,6 @@
     <string name="folder_exists_msg">There is a folder exists with the name you entered, please use different name to create new folder.</string>
     <string name="intro_four_title">FA Floating Modes</string>
     <string name="intro_four_desc">FA has two Floating Modes\n Apps &amp; Folders.\n By default Apps is selected.</string>
+    <string name="long_press_summery">Enable long press on FA icon to hide it.</string>
+    <string name="long_press_title">FA Long Press.</string>
 </resources>
