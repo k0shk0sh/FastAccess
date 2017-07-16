@@ -43,7 +43,7 @@ and i'll gladly review it.
 
 # Copyright Notice
 
-Copyright (C) 2015 Kosh. 
+Copyright (C) 2015 Kosh.
 
 Licensed under the [GNU Version 3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 license (see the LICENSE file).
